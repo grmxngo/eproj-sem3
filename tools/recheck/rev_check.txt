@@ -1,0 +1,12 @@
+ANALYSIS: count of <w:ins> = 0 0
+ANALYSIS: count of <w:del> = 0 0
+ANALYSIS: count of <w:delText> = 0 0
+ANALYSIS: count of <w:commentReference> = 0 0
+ANALYSIS: count of <w:comment> = 0 0
+ANALYSIS: parts = []
+SPEC: count of <w:ins> = 1 0
+SPEC: count of <w:del> = 0 0
+SPEC: count of <w:delText> = 0 0
+SPEC: count of <w:commentReference> = 0 0
+SPEC: count of <w:comment> = 0 0
+SPEC: parts = []

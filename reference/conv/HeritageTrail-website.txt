@@ -1,0 +1,76 @@
+﻿
+
+
+
+
+
+
+
+
+Contents
+
+Name and Work of the website:	2
+Website Requirement:	2
+The inner links or function of the website:	2
+	In the ADMIN Module	2
+	USER Module	3
+
+
+
+
+
+
+
+
+
+
+
+
+Name and Work of the website:
+
+HeritageTrail website needs to be developed which will provide information about various historical places, heritage sites, monuments and cultural landmarks. These heritage sites will provide information about their history, importance, architecture and cultural background. The website must flash the details of all the activities or the events which are going to happen or conducted. It must also allow adding new heritage site. HeritageTrail has been established to provide users a single platform to explore and learn about heritage places.
+Website Requirement:
+
+The website is designed with the aim to provide users with information about historical and cultural heritage. Various different types of heritage places and information are provided for their benefit. Following is the requirement of the website:
+    • The home page of the website must have these menus like “Home”, “Heritage Sites”, “Explore”, “About us”, “Events”, “Gallery”, “REGISTER”. The look of the page must be designed with no blank space left.
+    • The designing section will work with two modules:
+        ◦ ADMIN
+        ◦ USER
+    • ADMIN: Admin module will manage all other content of the website like editing heritage sites, about us, events, contact us, gallery and so on.
+    • USER: User can see and navigate the content of the website and also can register their account and select the desired heritage site to view its details. Also they can ask others to explore the heritage site by sending mail to their respective ID’s.
+    • Navigation of the project must be user friendly and uniform.
+
+The inner links or function of the website:
+
+    • In the ADMIN Module
+        ◦ Heritage Sites: In the Heritage Sites the list or other category must be included in the application which when user wish to view can select their concern section. For eg: Forts, Palaces, Museums, Temples, Monuments and other historical places.
+        ◦ Other Heritage Locations: Various other historical and cultural locations associated with the organisation must be listed with images (can be more précised).
+        ◦ About us: The link will have various sub links and for each link a page must be designed whose information part can be edited by the admin member. Sub link such as
+            ▪ What we do
+            ▪ Our mission
+            ▪ Our team
+            ▪ Our achievements
+            ▪ Our supporters
+            ▪ Read About us
+        ◦ Contact Us : Contact Us page must be designed.
+        ◦ Can view all the registered Member of the website.
+        ◦ Heritage Site Link: This link will have sub link such as
+            ▪ Site Name
+            ▪ Location
+            ▪ Historical Background
+            ▪ Architecture and Significance
+        ◦ List of Other associated Heritage Sites: Admin can add the details of the heritage sites.
+        ◦ Our Programmes: Details of the programmes conducted for heritage awareness, cultural activities, exhibitions and heritage walks.
+        ◦ Replying queries.
+        ◦ Adding Gallery section : Images of different heritage sites and programmes conducted must be added by the admin
+
+
+    • USER Module
+Users can view the page of the website but content details cannot be edited by them. User Task includes:
+    • Registering their account. (need to enter few personal and professional data).
+    • Can search and view the details of heritage sites.
+    • Can view the location, history, architecture, images and other details of the selected heritage site.
+    • Can send mail to invite other friends to explore the heritage site.
+    • Raise query.
+    • Can send the interest to take part in the upcoming programmes or heritage events.
+        ◦ 

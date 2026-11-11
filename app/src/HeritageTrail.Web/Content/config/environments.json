@@ -1,0 +1,26 @@
+{
+  "environments": {
+    "Staging": {
+      "appPort": 5181,
+      "mongoPort": 27018,
+      "database": "heritagetrail_staging",
+      "dbPath": "artifacts/mongo/staging",
+      "uploads": "artifacts/uploads/staging",
+      "mailOutbox": "artifacts/mail/staging",
+      "seedMode": "Reset",
+      "badge": "STAGING — mock data",
+      "atomsGallery": true
+    },
+    "Production": {
+      "appPort": 5182,
+      "mongoPort": 27019,
+      "database": "heritagetrail_prod",
+      "dbPath": "artifacts/mongo/prod",
+      "uploads": "artifacts/uploads/prod",
+      "mailOutbox": "artifacts/mail/prod",
+      "seedMode": "Once",
+      "badge": null,
+      "atomsGallery": false
+    }
+  }
+}

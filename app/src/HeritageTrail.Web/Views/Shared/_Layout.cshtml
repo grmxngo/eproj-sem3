@@ -1,0 +1,45 @@
+@using HeritageTrail.Web.Services
+@inject TokenProvider Tokens
+@inject EnvironmentInfo Env
+@{
+    var title = ViewData["Title"] as string ?? "HeritageTrail";
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>@title — HeritageTrail</title>
+    <style>@Html.Raw(Tokens.ToCss())</style>
+    <link rel="stylesheet" href="/css/atoms.css" />
+</head>
+<body>
+@if (Env.Badge is not null)
+{
+    <div class="env-badge">@Env.Badge</div>
+}
+<header class="site-head">
+    <a class="wordmark" href="/">HeritageTrail</a>
+    <nav class="nav-stub" aria-label="Primary">
+        <a href="/">Home</a>
+        <a href="#">Heritage Sites</a>
+        <a href="#">Explore</a>
+        <a href="#">About us</a>
+        <a href="#">Events</a>
+        <a href="#">Gallery</a>
+        <a class="nav-register" href="#">REGISTER</a>
+    </nav>
+</header>
+<main class="page">
+    @RenderBody()
+</main>
+<footer class="site-foot">
+    <span>HeritageTrail · @Env.Name pipeline</span>
+    <span class="foot-links">
+        <a href="/healthz">health</a>
+        <a href="/atoms">atoms</a>
+    </span>
+</footer>
+<script src="/js/motion.js"></script>
+</body>
+</html>

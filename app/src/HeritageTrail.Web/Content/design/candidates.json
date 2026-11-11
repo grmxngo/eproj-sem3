@@ -1,0 +1,95 @@
+{
+  "batch": 1,
+  "note": "Preview-only candidates. Promoted into tokens.json only after the user picks in chat (docs/design/decisions.md).",
+  "palettes": [
+    {
+      "id": "A",
+      "name": "Lacquer & Gold — sơn mài Hà Nội",
+      "desc": "Đỏ sơn mài trầm + vàng lá; men ngọc cho nền phụ",
+      "color": {
+        "bg": "#160D0A",
+        "surface": "#24130E",
+        "surfaceRaised": "#321A12",
+        "ink": "#F2E8D5",
+        "inkMuted": "#B9A48C",
+        "accent": "#D9A441",
+        "onAccent": "#1A0F05",
+        "accentAlt": "#C8452C",
+        "border": "#F2E8D526",
+        "success": "#8FAE5C",
+        "warning": "#E0B050",
+        "danger": "#D4553D"
+      }
+    },
+    {
+      "id": "B",
+      "name": "Stone & Moss — đá và rêu",
+      "desc": "Xanh rêu đêm + đá vôi + vàng cổ; cảm giác di sản ngoài trời",
+      "color": {
+        "bg": "#0B1F17",
+        "surface": "#11261C",
+        "surfaceRaised": "#173224",
+        "ink": "#EDE7D9",
+        "inkMuted": "#A9B3A0",
+        "accent": "#C9A227",
+        "onAccent": "#141005",
+        "accentAlt": "#B4552D",
+        "border": "#EDE7D926",
+        "success": "#7FAE5C",
+        "warning": "#D9A441",
+        "danger": "#D4553D"
+      }
+    },
+    {
+      "id": "C",
+      "name": "Indigo Temple — sơn môn chàm",
+      "desc": "Chàm đêm + vàng nghi lễ + teal; hiện đại kiểu bảo tàng",
+      "color": {
+        "bg": "#0E1626",
+        "surface": "#14203A",
+        "surfaceRaised": "#1B2A4A",
+        "ink": "#F1EADB",
+        "inkMuted": "#A7B0C4",
+        "accent": "#D4AF37",
+        "onAccent": "#120D00",
+        "accentAlt": "#2E8C86",
+        "border": "#F1EADB24",
+        "success": "#6FAF8A",
+        "warning": "#D4AF37",
+        "danger": "#D4564E"
+      }
+    }
+  ],
+  "typography": [
+    {
+      "id": "T1",
+      "name": "Classical heritage",
+      "desc": "Serif cổ điển cho tiêu đề — cảm giác bảo tàng, hồ sơ di sản",
+      "display": "'Palatino Linotype','Book Antiqua',Georgia,serif",
+      "body": "'Segoe UI','Segoe UI Variable Text',system-ui,sans-serif",
+      "fontNote": "Display serif: Palatino/Georgia. Body: Segoe UI. Bản chọn sẽ self-host font tương đương (vd. Marcellus + Inter)."
+    },
+    {
+      "id": "T2",
+      "name": "Museum modern",
+      "desc": "Grotesk hiện đại cho tiêu đề — sạch, trung tính, dễ đọc đa ngôn ngữ",
+      "display": "'Bahnschrift','Segoe UI Variable Display','Segoe UI',system-ui,sans-serif",
+      "body": "'Segoe UI','Segoe UI Variable Text',system-ui,sans-serif",
+      "fontNote": "Display grotesk: Bahnschrift/Segoe UI Variable Display. Bản chọn sẽ self-host font tương đương (vd. Space Grotesk + Inter)."
+    },
+    {
+      "id": "T3",
+      "name": "Signage hybrid",
+      "desc": "Tiêu đề condensed kiểu bảng hiệu + thân humanist — mạnh, có chất 'đường dẫn di sản'",
+      "display": "'Franklin Gothic Medium','Bahnschrift SemiBold Condensed','Segoe UI',sans-serif",
+      "body": "'Trebuchet MS','Segoe UI',system-ui,sans-serif",
+      "fontNote": "Display condensed: Franklin Gothic/Bahnschrift. Body: Trebuchet/Segoe UI. Bản chọn sẽ self-host font tương đương (vd. Barlow Condensed + Source Sans)."
+    }
+  ],
+  "radiusOptions": [
+    { "id": "R1", "name": "Sharp heritage", "sm": "2px", "md": "4px", "lg": "6px" },
+    { "id": "R2", "name": "Soft modern", "sm": "4px", "md": "10px", "lg": "16px" },
+    { "id": "R3", "name": "Organic", "sm": "6px", "md": "14px", "lg": "24px" }
+  ],
+  "motionNote": "120ms cho hover nhỏ, 200ms cơ bản, 320ms chuyển section, 480ms hero reveal; easeOut cho vào, easeIn cho thoát. Reduced-motion sẽ tắt hết."
+}

@@ -1,0 +1,38 @@
+@using System.Text.Json.Nodes
+@using HeritageTrail.Web.Services
+@inject TokenProvider Tokens
+@{
+    Layout = null;
+    var palette = (JsonObject)ViewData["Palette"]!;
+    var color = palette["color"]!.AsObject();
+    var sb = new System.Text.StringBuilder();
+    foreach (var (k, v) in color)
+    {
+        if (v is JsonValue jv && jv.GetValueKind() == System.Text.Json.JsonValueKind.String)
+        {
+            sb.Append("--color-").Append(CssNaming.Kebab(k)).Append(':').Append(jv.GetValue<string>()).Append(';');
+        }
+    }
+    string S(JsonNode? n, string fallback = "") => n is JsonValue v && v.GetValueKind() == System.Text.Json.JsonValueKind.String ? v.GetValue<string>() : fallback;
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Batch 1 — Palette @S(palette["id"])</title>
+    <style>@Html.Raw(Tokens.ToCss())</style>
+    <style>:root{@Html.Raw(sb.ToString())}</style>
+    <link rel="stylesheet" href="/css/atoms.css" />
+</head>
+<body class="specimen">
+    <div class="specimen-bar">
+        <span class="spec-id">A-01 · PALETTE @S(palette["id"])</span>
+        <span class="spec-name">@S(palette["name"])</span>
+        <span class="spec-desc">@S(palette["desc"])</span>
+    </div>
+    <div class="specimen-wrap">
+        @await Html.PartialAsync("~/Views/Atoms/Batch1/_Slice.cshtml")
+    </div>
+</body>
+</html>

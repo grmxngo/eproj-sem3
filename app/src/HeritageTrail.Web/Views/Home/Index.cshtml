@@ -1,0 +1,11 @@
+@{
+    ViewData["Title"] = "Home";
+}
+<div class="specimen-bar">
+    <span class="spec-id">PIPELINE CHECK</span>
+    <span class="spec-name">tokens.json → CSS vars → atoms</span>
+    <span class="spec-desc">trang tạm của Phase A — atom thật sẽ thay sau khi bạn duyệt batch</span>
+</div>
+<div class="specimen-wrap">
+    @await Html.PartialAsync("~/Views/Atoms/Batch1/_Slice.cshtml")
+</div>

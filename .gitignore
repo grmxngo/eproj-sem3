@@ -1,0 +1,25 @@
+# .NET build outputs
+bin/
+obj/
+*.user
+*.suo
+.vs/
+TestResults/
+*.db
+*.db-shm
+*.db-wal
+
+# Runtime artifacts (staging/prod isolated data)
+artifacts/
+
+# Node (tooling only, not part of app)
+node_modules/
+
+# OS
+Thumbs.db
+.DS_Store
+
+# Sources: keep originals out of git only if large binary batches later
+sources/*.tmp
+
+tools/recheck/lo_profile/

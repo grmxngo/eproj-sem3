@@ -1,0 +1,184 @@
+analysis: 177 paragraphs, 5 tables
+  0 P Phân tích nghiệp vụ – HeritageTrail WebsitePhân tích nghiệp vụ – HeritageTrail WebsitePhân
+  1 P Nguồn: Heritage-Project Specification.docx, HeritageTrail-website.doc, Readme-Student Guid
+  2 P 0. Nguyên tắc để không sai nghiệp vụ0. Nguyên tắc để không sai nghiệp vụ0. Nguyên tắc để k
+  3 P Mọi yêu cầu bên dưới đều có mã truy vết T-xx trỏ về đúng câu trong spec (mục 1). Không có 
+  4 P Nội dung ghi [SPEC] là spec nói rõ. Nội dung ghi [GIẢ ĐỊNH] là mình suy ra vì spec mơ hồ h
+  5 P Spec gốc không nêu chi tiết field, luồng, validation. Phần đó là thiết kế của BA, hợp lý n
+  6 P Khuyến nghị quan trọng nhất: gửi một mail DOUBT: cho eProjects Team với danh sách câu hỏi 
+  7 P 1. Trích xuất yêu cầu gốc (Traceability)1. Trích xuất yêu cầu gốc (Traceability)1. Trích x
+  8 P Từ HeritageTrail-website.doc – Name and WorkTừ HeritageTrail-website.doc – Name and WorkTừ
+  9 P T01 Website cung cấp thông tin về historical places, heritage sites, monuments, cultural l
+ 10 P T02 Mỗi site có thông tin: history, importance, architecture, cultural background.T02T02 M
+ 11 P T03 Website phải "flash" chi tiết mọi activities/events sắp diễn ra hoặc đã được tổ chức (
+ 12 P T04 Phải cho phép thêm heritage site mới.T04T04 Phải cho phép  Phải cho phép thêm heritage
+ 13 P T05 Mục tiêu: một nền tảng duy nhất để explore và tìm hiểu heritage places.T05T05 Mục tiêu
+ 14 P Website RequirementWebsite RequirementWebsite Requirement
+ 15 P T06 Home page có menu: Home, Heritage Sites, Explore, About us, Events, Gallery, REGISTER.
+ 16 P T07 Hai module: ADMIN và USER.T07T07 Hai module: ADMIN và USER. Hai module: ADMIN và USER.
+ 17 P T08 ADMIN quản lý toàn bộ nội dung khác: heritage sites, about us, events, contact us, gal
+ 18 P T09 USER xem và điều hướng nội dung, đăng ký tài khoản, chọn heritage site để xem chi tiết
+ 19 P T10 Navigation thân thiện và đồng nhất.T10T10 Navigation thân thiện và đồng nhất. Navigati
+ 20 P Inner links – ADMINInner links – ADMINInner links – ADMIN
+ 21 P T11 Heritage Sites: có danh sách/category để user chọn mục quan tâm. Ví dụ: Forts, Palaces
+ 22 P T12 Other Heritage Locations: liệt kê các địa điểm di sản/văn hóa khác gắn với tổ chức, kè
+ 23 P T13 About us có sub link, mỗi sub link là một trang, phần thông tin do admin sửa được: Wha
+ 24 P T14 Contact Us: phải thiết kế trang Contact Us.T14T14 Contact Us: phải thiết kế trang Cont
+ 25 P T15 Admin xem được tất cả registered member.T15T15 Admin xem được tất cả registered member
+ 26 P T16 Heritage Site link có sub link/field: Site Name, Location, Historical Background, Arch
+ 27 P T17 List of Other associated Heritage Sites: admin thêm chi tiết các heritage site.T17T17 
+ 28 P T18 Our Programmes: chi tiết các chương trình heritage awareness, cultural activities, exh
+ 29 P T19 Admin trả lời queries.T19T19 Admin trả lời queries. Admin trả lời queries.
+ 30 P T20 Admin thêm Gallery: ảnh các heritage site và các programme đã tổ chức.T20T20 Admin thê
+ 31 P USER ModuleUSER ModuleUSER Module
+ 32 P T21 User xem được trang nhưng không sửa được nội dung.T21T21 User xem được trang nhưng  Us
+ 33 P T22 Đăng ký tài khoản, nhập "few personal and professional data".T22T22 Đăng ký tài khoản,
+ 34 P T23 Search và xem chi tiết heritage site.T23T23 Search và xem chi tiết heritage site. Sear
+ 35 P T24 Xem location, history, architecture, images và chi tiết khác của site đã chọn.T24T24 X
+ 36 P T25 Gửi mail mời bạn bè khám phá heritage site.T25T25 Gửi mail mời bạn bè khám phá heritag
+ 37 P T26 Raise query.T26T26 Raise query. Raise query.
+ 38 P T27 Gửi "interest" để tham gia upcoming programmes / heritage events.T27T27 Gửi "interest"
+ 39 P Specification + Readme (phần quy trình, xem mục 13)Specification + Readme (phần quy trình,
+ 40 P T28 Standards: mọi code block có comment; giải thích logic; có Project Report gồm synopsis
+ 41 P T29 Backup dữ liệu hằng ngày.T29T29 Backup dữ liệu hằng ngày. Backup dữ liệu hằng ngày.
+ 42 P T30 Bộ tài liệu 13 mục (Certificate of Completion … Final Check List).T30T30 Bộ tài liệu 1
+ 43 P T31 2 status mail, subject bắt đầu bằng STATUS:, DOUBT: hoặc PROJECT SUBMISSION:; nộp kèm 
+ 44 P T32 Software: MongoDB 6.0+, NodeJS 18.x, Python SDK 3.x, Visual Studio 2022 Professional, 
+ 45 P T33 Nộp 1 ZIP duy nhất: source, tài liệu (có login credentials), DB backup, file liên quan
+ 46 P 2. Actors và ma trận phân quyền2. Actors và ma trận phân quyền2. Actors và ma trận phân qu
+ 47 P Spec chỉ nêu ADMIN và USER (T07). Mình tách Guest (chưa đăng ký) vì T09 và T22 chỉ có ý ng
+ 48 T 
+ 49 P Quy tắc chốt: user không bao giờ có quyền ghi vào nội dung website (T21). Quyền admin được
+ 50 P 3. Sitemap3. Sitemap3. Sitemap
+ 51 P Public (theo T06)Public (theo T06)Public (theo T06)
+ 52 P Home → banner events sắp tới (T03), featured sites, footer có ContactHome → banner events 
+ 53 P Heritage Sites → danh sách theo Category → Site DetailHeritage Sites → danh sách theo Cate
+ 54 P Explore → khám phá tất cả site, Other Heritage Locations kèm ảnh [GIẢ ĐỊNH #2]Explore → kh
+ 55 P About us → What we do / Our mission / Our team / Our achievements / Our supporters / Read 
+ 56 P Events → danh sách Programmes (upcoming và past) → Event DetailEvents → danh sách Programm
+ 57 P Gallery → ảnh theo site và theo programmeGallery → ảnh theo site và theo programmeGallery 
+ 58 P REGISTER (đồng thời Login)REGISTER (đồng thời Login)REGISTER (đồng thời Login)
+ 59 P Contact Us (T14, đặt ở footer và trang riêng; spec không đưa vào menu chính)Contact Us (T1
+ 60 P Sau đăng nhập – User: My Profile, My Queries, My Interests, Invite Friend.Sau đăng nhập – 
+ 61 P Admin: Dashboard, Categories, Heritage Sites, Other/Associated Sites, About Us pages, Prog
+ 62 P 4. Yêu cầu chức năng chi tiết4. Yêu cầu chức năng chi tiết4. Yêu cầu chức năng chi tiết
+ 63 P 4.1 Module User/Public4.1 Module User/Public4.1 Module User/Public
+ 64 P FR-01 Home page (T03, T06, T10)FR-01 Home pageFR-01 Home page (T03, T06, T10) (T03, T06, T
+ 65 P Menu đúng 7 mục theo thứ tự ở T06. Layout full-width, không có vùng trống.Menu đúng 7 mục 
+ 66 P Khu "flash": carousel hoặc ticker hiển thị các event sắp diễn ra (và nổi bật event đang di
+ 67 P Khối featured sites, link nhanh tới Register.Khối featured sites, link nhanh tới Register.
+ 68 P Acceptance: Home hiển thị được ≥ 1 event upcoming khi có dữ liệu; nếu không có, hiện thông
+ 69 P FR-02 Register (T22)FR-02 RegisterFR-02 Register (T22) (T22)
+ 70 P Input: Full name, Email, Password, Confirm password, Phone, Address/City; thông tin profes
+ 71 P Validation: bắt buộc Name, Email, Password; email đúng format và unique; password ≥ 8 ký t
+ 72 P Xử lý: hash password, role = user, tạo bản ghi User.Xử lý: hash password, role = Xử lý: ha
+ 73 P Output: thông báo thành công, chuyển sang Login. Trùng email → báo lỗi, không tạo bản ghi.
+ 74 P FR-03 Login / Logout (hỗ trợ T09, T22) [GIẢ ĐỊNH #4: spec không mô tả đăng nhập nhưng có đ
+ 75 P Một form dùng chung cho User và Admin; chuyển hướng theo role. Sai thông tin → thông báo c
+ 76 P Session hết hạn khi logout hoặc idle.Session hết hạn khi logout hoặc idle.Session hết hạn 
+ 77 P FR-04 Heritage Sites theo Category (T11)FR-04 Heritage Sites theo CategoryFR-04 Heritage S
+ 78 P Hiển thị Category (Forts, Palaces, Museums, Temples, Monuments, Other historical places) đ
+ 79 P Category là dữ liệu do admin quản lý, danh sách trên chỉ là seed ban đầu.Category là dữ li
+ 80 P FR-05 Search (T23)FR-05 SearchFR-05 Search (T23) (T23)
+ 81 P Tìm theo từ khóa trên Site Name, Location, Category; kết hợp lọc category. Không phân biệt
+ 82 P FR-06 Site Detail (T16, T24, T02)FR-06 Site DetailFR-06 Site Detail (T16, T24, T02) (T16, 
+ 83 P Hiển thị: Site Name, Location, Historical Background, Architecture and Significance, ảnh (
+ 84 P Guest cũng xem được (T21).Guest cũng xem được (T21).Guest cũng xem được (T21).
+ 85 P FR-07 Explore (T05, T12) [GIẢ ĐỊNH #2]FR-07 ExploreFR-07 Explore (T05, T12)  (T05, T12) [G
+ 86 P Trang khám phá toàn bộ site + khu "Other Heritage Locations" liệt kê địa điểm khác kèm ảnh
+ 87 P FR-08 About Us (T13)FR-08 About UsFR-08 About Us (T13) (T13)
+ 88 P 6 trang con đúng tên spec; mỗi trang là nội dung văn bản (và ảnh nếu có) do admin sửa. Use
+ 89 P FR-09 Events / Programmes (T03, T18)FR-09 Events / ProgrammesFR-09 Events / Programmes (T0
+ 90 P Danh sách programme, chia Upcoming và Past/Conducted; lọc theo loại: Heritage awareness, C
+ 91 P Event Detail: tiêu đề, loại, mô tả, ngày giờ, địa điểm, site liên quan, ảnh.Event Detail: 
+ 92 P FR-10 Gửi interest cho event (T27)FR-10 Gửi interest cho eventFR-10 Gửi interest cho event
+ 93 P Chỉ cho event upcoming, user đã đăng nhập. Mỗi user chỉ một interest cho mỗi event; bấm lạ
+ 94 P Admin thấy danh sách user quan tâm từng event (FR-A9).Admin thấy danh sách user quan tâm t
+ 95 P FR-11 Gallery (T20)FR-11 GalleryFR-11 Gallery (T20) (T20)
+ 96 P Grid ảnh, lọc theo Heritage Site hoặc Programme, xem phóng to (lightbox), có caption.Grid 
+ 97 P FR-12 Invite friend qua mail (T09, T25)FR-12 Invite friend qua mailFR-12 Invite friend qua
+ 98 P Input: một hoặc nhiều email bạn bè, lời nhắn tùy chọn; site được chọn lấy từ trang Site De
+ 99 P Xử lý: validate email, gửi mail (tên người gửi, tên site, mô tả ngắn, link site) qua SMTP,
+100 P Lỗi gửi → báo user, không ghi trạng thái "sent". Giới hạn số mail mỗi ngày mỗi user để chố
+101 P FR-13 Raise query (T26)FR-13 Raise queryFR-13 Raise query (T26) (T26)
+102 P Input: Subject, Message. Cần đăng nhập để admin trả lời được tới đúng người [GIẢ ĐỊNH #7].
+103 P FR-14 Contact Us (T14)FR-14 Contact UsFR-14 Contact Us (T14) (T14)
+104 P Trang hiển thị thông tin liên hệ tổ chức (do admin sửa) và form gửi tin nhắn (Name, Email,
+105 P 4.2 Module Admin4.2 Module Admin4.2 Module Admin
+106 P FR-A1 Admin login và Dashboard. Tài khoản admin được seed sẵn (T33 yêu cầu ghi credentials
+107 P FR-A2 Quản lý Category (T11). CRUD; tên unique. Xóa Category đang có site → chặn hoặc bắt 
+108 P FR-A3 Quản lý Heritage Site (T04, T16). CRUD với field: Site Name, Category, Location, His
+109 P FR-A4 Quản lý Other / Associated Heritage Sites (T12, T17). CRUD các địa điểm khác kèm ảnh
+110 P FR-A5 Quản lý About Us (T13). Sửa nội dung 6 trang cố định. Không cho xóa hoặc đổi tên tra
+111 P FR-A6 Quản lý Contact Us (T08, T14). Sửa thông tin liên hệ; xem tin nhắn gửi từ form.FR-A6
+112 P FR-A7 Xem Member (T15). Danh sách read-only: tên, email, phone, nghề nghiệp, tổ chức, ngày
+113 P FR-A8 Quản lý Programme/Event (T18). CRUD với Title, Type, Description, Start/End date, Ve
+114 P FR-A9 Xem danh sách quan tâm event (T27). Với mỗi event, admin thấy các user đã gửi intere
+115 P FR-A10 Quản lý Gallery (T20). Upload, sửa caption, xóa ảnh; gán ảnh vào Heritage Site hoặc
+116 P FR-A11 Trả lời Query (T19). Xem danh sách theo trạng thái, mở chi tiết, nhập reply, lưu; t
+117 P 5. Business rules5. Business rules5. Business rules
+118 P BR-01 User không có quyền sửa nội dung website (T21). Mọi route ghi nội dung yêu cầu role 
+119 P BR-02 Email đăng ký là duy nhất, không phân biệt hoa thường.BR-02BR-02 Email đăng ký là du
+120 P BR-03 Password lưu dạng hash (bcrypt), không bao giờ lưu hoặc hiển thị plain text.BR-03BR-
+121 P BR-04 Chỉ user đã đăng nhập mới được Invite, Raise query, gửi Interest.BR-04BR-04 Chỉ user
+122 P BR-05 Mỗi cặp (user, event) chỉ có tối đa một Interest.BR-05BR-05 Mỗi cặp (user, event) ch
+123 P BR-06 Interest chỉ nhận cho event Upcoming (startDate ≥ hôm nay). Event Past hiển thị nhưn
+124 P BR-07 Event có End ≥ Start. Phân loại Upcoming/Past tính theo ngày hiện tại, không lưu cứn
+125 P BR-08 Không xóa Category đang có Heritage Site.BR-08BR-08 Không xóa Category đang có Herit
+126 P BR-09 Query đi theo vòng đời Open → Answered → Closed; không quay ngược.BR-09BR-09 Query đ
+127 P BR-10 About Us có đúng 6 trang cố định (T13); admin chỉ sửa nội dung.BR-10BR-10 About Us c
+128 P BR-11 Ảnh upload: jpg, png, webp; giới hạn dung lượng (ví dụ 5 MB); đổi tên file ngẫu nhiê
+129 P BR-12 Admin không đăng ký qua form public; tài khoản admin được seed.BR-12BR-12 Admin khôn
+130 P BR-13 Danh sách member không hiển thị mật khẩu và chỉ admin xem được.BR-13BR-13 Danh sách 
+131 P BR-14 Mail mời chỉ gửi cho email đúng format; ghi log để chống lạm dụng.BR-14BR-14 Mail mờ
+132 P 6. Mô hình dữ liệu (MongoDB)6. Mô hình dữ liệu (MongoDB)6. Mô hình dữ liệu (MongoDB)
+133 P Dấu * = bắt buộc, U = unique.Dấu Dấu ** = bắt buộc,  = bắt buộc, UU = unique. = unique.
+134 P User: name*, email* U, passwordHash*, phone, address, occupation, organization, role* (use
+135 P Category: name* U, description.CategoryCategory: : name* Uname* U, , descriptiondescriptio
+136 P HeritageSite: name*, categoryId*, location*, historicalBackground*, architectureSignifican
+137 P Event (Programme): title*, type* (awareness|cultural|exhibition|walk), description, siteId
+138 P EventInterest: eventId*, userId*, createdAt; unique (eventId, userId).EventInterestEventIn
+139 P GalleryItem: imageUrl*, caption, refType (site|event), refId.GalleryItemGalleryItem: : ima
+140 P AboutPage: slug* U (what-we-do|mission|team|achievements|supporters|about), title, content
+141 P Query: userId*, subject*, message*, status (Open|Answered|Closed), reply, repliedAt, creat
+142 P ContactInfo (một bản ghi) và ContactMessage: name, email, message, createdAt.ContactInfoCo
+143 P Invitation: fromUserId*, toEmail*, siteId*, sentAt, status.InvitationInvitation: : fromUse
+144 P Quan hệ: Category 1–N HeritageSite; HeritageSite 1–N GalleryItem (qua refId); Event N–N Us
+145 P 7. Use case và luồng xử lý7. Use case và luồng xử lý7. Use case và luồng xử lý
+146 P UC-01 Register. Guest mở Register, nhập form, hệ thống validate, kiểm tra email trùng, has
+147 P UC-02 Search và xem Site. Nhập từ khóa hoặc chọn Category, hệ thống trả danh sách, chọn si
+148 P UC-03 Invite friend. User đăng nhập mở Site Detail, bấm Invite, nhập email, hệ thống valid
+149 P UC-04 Raise query và nhận phản hồi. User gửi query (Open); admin xem danh sách, trả lời (A
+150 P UC-05 Interest vào event. User mở Event Upcoming, bấm Interested, hệ thống kiểm tra đăng n
+151 P UC-06 Admin thêm Heritage Site mới (T04). Admin chọn Add Site, nhập các field, upload ảnh,
+152 P UC-07 Admin quản lý Event. Thêm, sửa, xóa event; xem user quan tâm. Xóa event có Interest 
+153 P UC-08 Admin sửa About Us. Chọn một trong 6 trang, sửa nội dung, lưu; trang public cập nhật
+154 P 8. Danh sách màn hình8. Danh sách màn hình8. Danh sách màn hình
+155 P Public: Home, Heritage Sites (theo Category), Site Detail, Search result, Explore, About U
+156 P User: My Profile, Invite Friend, Raise Query, My Queries, My Interests.User: My Profile, I
+157 P Admin: Dashboard, Category list/form, Site list/form, Associated Sites list/form, About Us
+158 P 9. Bảng validation9. Bảng validation9. Bảng validation
+159 T 
+160 P Các con số cụ thể (độ dài, 5 MB, 5 email) là lựa chọn của BA, không phải spec; chỉnh được 
+161 P 10. Yêu cầu phi chức năng10. Yêu cầu phi chức năng10. Yêu cầu phi chức năng
+162 P Giao diện responsive, navigation đồng nhất mọi trang (T10), không có vùng trống (T06).Giao
+163 P Bảo mật: hash password, kiểm tra quyền ở server, chống XSS và NoSQL injection, validate cả
+164 P Tính toàn vẹn: ràng buộc unique, kiểm tra khóa ngoại trước khi xóa.Tính toàn vẹn: ràng buộ
+165 P Mã nguồn: mọi code block có comment và logic được giải thích (T28).Mã nguồn: Mã nguồn: mọi
+166 P Backup: sao lưu DB hằng ngày (T29); cuối dự án xuất DB backup để nộp.Backup: sao lưu DB hằ
+167 P Stack đề xuất: Node.js 18, Express, MongoDB 6, EJS, Nodemailer, Multer. Nằm trong danh sác
+168 P 11. Test cases chính (Unit Testing Check List)11. Test cases chính (Unit Testing Check Lis
+169 T 
+170 P 12. Điểm mờ, giả định và câu hỏi cho mentor12. Điểm mờ, giả định và câu hỏi cho mentor12. 
+171 P Đây là danh sách phải xác nhận. Gửi một mail DOUBT: (T31) với các câu sau.Đây là danh sách
+172 T 
+173 P 13. Quy trình eProject và gói nộp13. Quy trình eProject và gói nộp13. Quy trình eProject v
+174 P Status report (2 lần). Lần 1 sau khoảng 10 ngày kể từ ngày bắt đầu; lần 2 cách lần 1 khoản
+175 P Feedback form (eProject_Feeback_Form.xls): cùng phần Student/eProject Details, rồi chọn từ
+176 P Subject mail: STATUS:, DOUBT: hoặc PROJECT SUBMISSION:.Subject mail:Subject mail:  STATUS:
+177 P Bộ tài liệu (T30): Certificate of Completion, Table of Contents, Problem Definition, Custo
+178 P Gói ZIP nộp (T33): source code đầy đủ, tài liệu có login credentials (admin và user mẫu, D
+179 P 14. Ma trận truy vết rút gọn14. Ma trận truy vết rút gọn14. Ma trận truy vết rút gọn
+180 T 
+
+spec media: ['word/media/image1.jpeg']
