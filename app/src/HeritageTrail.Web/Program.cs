@@ -54,7 +54,7 @@ using (var scope = app.Services.CreateScope())
     var logger = scope.ServiceProvider.GetRequiredService<ILogger<Program>>();
     try
     {
-        await SeedService.RunAsync(db, envConfig, logger);
+        await SeedService.RunAsync(db, envConfig, logger, app.Environment);
     }
     catch (Exception ex)
     {

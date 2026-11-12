@@ -1,20 +1,44 @@
 [
   {
-    "slug": "angkor-wat",
-    "file": "File:Angkor - Zentrum des Königreichs der Khmer (CC BY-SA 4.0) cy.webm",
-    "url": "https://upload.wikimedia.org/wikipedia/commons/transcoded/2/24/Angkor_-_Zentrum_des_K%C3%B6nigreichs_der_Khmer_%28CC_BY-SA_4.0%29_cy.webm/Angkor_-_Zentrum_des_K%C3%B6nigreichs_der_Khmer_%28CC_BY-SA_4.0%29_cy.webm.480p.vp9.webm",
-    "bytes": 10199418
+    "slug": "taj-mahal",
+    "file": "File:Eu.Video-Taj Mahal.webm",
+    "url": "https://upload.wikimedia.org/wikipedia/commons/transcoded/1/11/Eu.Video-Taj_Mahal.webm/Eu.Video-Taj_Mahal.webm.240p.vp9.webm",
+    "bytes": 2171854
   },
   {
-    "slug": "petra",
-    "file": "File:Petra fortress july2026 20260714 140122 (1).webm",
-    "url": "https://upload.wikimedia.org/wikipedia/commons/transcoded/0/02/Petra_fortress_july2026_20260714_140122_%281%29.webm/Petra_fortress_july2026_20260714_140122_%281%29.webm.1080p.vp9.webm",
-    "bytes": 2881505
+    "slug": "forbidden-city",
+    "file": "File:Japan, Tokyo - Imperial Palace cherry blossoms 2014.webm",
+    "url": "https://upload.wikimedia.org/wikipedia/commons/transcoded/9/9f/Japan%2C_Tokyo_-_Imperial_Palace_cherry_blossoms_2014.webm/Japan%2C_Tokyo_-_Imperial_Palace_cherry_blossoms_2014.webm.240p.vp9.webm",
+    "bytes": 2427162
   },
   {
-    "slug": "machu-picchu",
-    "file": "File:Machu Picchu Timelapse—Cloudy Morning 01.webm",
-    "url": "https://upload.wikimedia.org/wikipedia/commons/transcoded/a/a9/Machu_Picchu_Timelapse%E2%80%94Cloudy_Morning_01.webm/Machu_Picchu_Timelapse%E2%80%94Cloudy_Morning_01.webm.480p.vp9.webm",
-    "bytes": 554976
+    "slug": "acropolis-museum",
+    "file": "File:Acropolis.webm",
+    "url": "https://upload.wikimedia.org/wikipedia/commons/transcoded/d/d7/Acropolis.webm/Acropolis.webm.240p.vp9.webm",
+    "bytes": 1045329
+  },
+  {
+    "slug": "colosseum",
+    "file": "File:Colosseum, Rome 113323.webm",
+    "url": "https://upload.wikimedia.org/wikipedia/commons/transcoded/b/b0/Colosseum%2C_Rome_113323.webm/Colosseum%2C_Rome_113323.webm.240p.vp9.webm",
+    "bytes": 1486883
+  },
+  {
+    "slug": "giza",
+    "file": "File:Les Pyramides, 1897.webm",
+    "url": "https://upload.wikimedia.org/wikipedia/commons/transcoded/b/b9/Les_Pyramides%2C_1897.webm/Les_Pyramides%2C_1897.webm.240p.vp9.webm",
+    "bytes": 1263484
+  },
+  {
+    "slug": "alhambra",
+    "file": "File:Alhambra fountain by Mikani.webm",
+    "url": "https://upload.wikimedia.org/wikipedia/commons/transcoded/f/f1/Alhambra_fountain_by_Mikani.webm/Alhambra_fountain_by_Mikani.webm.240p.vp9.webm",
+    "bytes": 215711
+  },
+  {
+    "slug": "rapa-nui",
+    "file": "File:Eyes looking at the sky.webm",
+    "url": "https://upload.wikimedia.org/wikipedia/commons/transcoded/8/82/Eyes_looking_at_the_sky.webm/Eyes_looking_at_the_sky.webm.240p.vp9.webm",
+    "bytes": 2529179
   }
 ]

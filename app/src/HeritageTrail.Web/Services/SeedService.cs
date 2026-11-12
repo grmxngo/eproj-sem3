@@ -11,7 +11,7 @@ public static class SeedService
 {
     private static string Img(string slug, int i, string ext = ".jpg") => $"/images/sites/{slug}/img{i}{ext}";
 
-    public static async Task RunAsync(MongoContext db, EnvironmentConfig config, ILogger logger)
+    public static async Task RunAsync(MongoContext db, EnvironmentConfig config, ILogger logger, IWebHostEnvironment env)
     {
         await db.EnsureIndexesAsync();
 
@@ -61,7 +61,6 @@ public static class SeedService
                 ArchitectureSignificance = "Five towers stand for Mount Meru; the moat is 190 m wide and the outer gallery holds more than 1,000 metres of bas-reliefs.",
                 CulturalBackground = "UNESCO World Heritage since 1992; the temple remains a living Buddhist site.",
                 Images = new() { Img("angkor-wat", 0), Img("angkor-wat", 1), Img("angkor-wat", 2), Img("angkor-wat", 3) },
-                Video = "/videos/angkor-wat.webm",
                 Facts = new() { "Built in the 12th century under Suryavarman II", "The moat is 190 m wide", "UNESCO World Heritage since 1992" }
             },
             new HeritageSite
@@ -71,7 +70,6 @@ public static class SeedService
                 ArchitectureSignificance = "The Treasury facade is 39 m tall, cut directly into the cliff; the Siq is a 1.2 km natural gorge.",
                 CulturalBackground = "UNESCO World Heritage since 1985.",
                 Images = new() { Img("petra", 0), Img("petra", 1), Img("petra", 2), Img("petra", 3) },
-                Video = "/videos/petra.webm",
                 Facts = new() { "Carved by the Nabataeans from the 4th c. BCE", "The Treasury facade is 39 m tall", "UNESCO World Heritage since 1985" }
             },
             new HeritageSite
@@ -81,7 +79,6 @@ public static class SeedService
                 ArchitectureSignificance = "More than 200 structures sit on a 2,430 m ridge; the stones are fitted without mortar.",
                 CulturalBackground = "UNESCO World Heritage since 1983.",
                 Images = new() { Img("machu-picchu", 0), Img("machu-picchu", 1), Img("machu-picchu", 2, ".jpeg"), Img("machu-picchu", 3) },
-                Video = "/videos/machu-picchu.webm",
                 Facts = new() { "15th-century Inca estate", "Ridge at 2,430 m", "UNESCO World Heritage since 1983" }
             },
             new HeritageSite
@@ -222,6 +219,16 @@ public static class SeedService
                 Facts = new() { "Greek city founded 10th c. BCE", "Library of Celsus built c. 110 CE", "UNESCO World Heritage since 2015" }
             }
         };
+        // Footage: any site with a downloaded clip at wwwroot/videos/{slug}.webm gets it.
+        var webRoot = env.WebRootPath ?? Path.Combine(env.ContentRootPath, "wwwroot");
+        foreach (var site in sites)
+        {
+            if (File.Exists(Path.Combine(webRoot, "videos", site.Slug + ".webm")))
+            {
+                site.Video = $"/videos/{site.Slug}.webm";
+            }
+        }
+
         await db.Sites.InsertManyAsync(sites);
 
         var now = DateTime.UtcNow.Date;
