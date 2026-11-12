@@ -25,14 +25,6 @@
     {
         <style>:root{@Html.Raw(radiusVars)}</style>
     }
-    @if (ViewData["SpaceVars"] is string spaceVars)
-    {
-        <style>:root{@Html.Raw(spaceVars)}</style>
-    }
-    @if (ViewData["ButtonCss"] is string buttonCss && !string.IsNullOrWhiteSpace(buttonCss))
-    {
-        <style>@Html.Raw(buttonCss)</style>
-    }
 </head>
 <body>
 @if (Env.Badge is not null)

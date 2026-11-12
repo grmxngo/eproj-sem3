@@ -12,18 +12,16 @@ public sealed class HomeController : Controller
     private readonly MongoContext _db;
     private readonly CandidatesProvider _candidates;
     private readonly EnvironmentInfo _env;
-    private readonly TokenProvider _tokens;
 
-    public HomeController(MongoContext db, CandidatesProvider candidates, EnvironmentInfo env, TokenProvider tokens)
+    public HomeController(MongoContext db, CandidatesProvider candidates, EnvironmentInfo env)
     {
         _db = db;
         _candidates = candidates;
         _env = env;
-        _tokens = tokens;
     }
 
     [HttpGet("/")]
-    public async Task<IActionResult> Index(string? palette = null, string? type = null, string? radius = null, string? density = null, string? hero = null, string? buttons = null, string? events = null, string? cards = null, string? gallery = null)
+    public async Task<IActionResult> Index(string? palette = null, string? type = null, string? radius = null, string? hero = null, string? events = null, string? cards = null, string? gallery = null)
     {
         var now = DateTime.UtcNow;
         ViewData["Upcoming"] = await _db.Events.Find(e => e.StartDate >= now).SortBy(e => e.StartDate).Limit(4).ToListAsync();
@@ -44,16 +42,6 @@ public sealed class HomeController : Controller
 
         var galleryKey = (gallery ?? "g1").ToLowerInvariant();
         ViewData["GalleryStyle"] = galleryKey is "g2" or "g3" ? galleryKey : "g1";
-
-        if (!string.IsNullOrWhiteSpace(buttons) && _env.IsStaging)
-        {
-            ViewData["ButtonCss"] = buttons.ToLowerInvariant() switch
-            {
-                "b2" => ".btn{border-radius:999px;text-transform:none;letter-spacing:0;font-size:var(--fs-body);padding:var(--space-sm) var(--space-lg);}",
-                "b3" => ".btn{background:transparent;border:0;border-bottom:1px solid currentColor;border-radius:0;text-transform:none;letter-spacing:0;font-size:var(--fs-body);padding:0 0 4px;box-shadow:none;}.btn-primary{background:transparent;color:var(--color-accent);box-shadow:none;}.btn-ghost{color:var(--color-ink);}.btn:hover{transform:none;box-shadow:none;opacity:.8;}",
-                _ => ""
-            };
-        }
 
         if (!string.IsNullOrWhiteSpace(palette) && _env.IsStaging)
         {
@@ -91,32 +79,6 @@ public sealed class HomeController : Controller
                     $"--radius-md:{s["md"]!.GetValue<string>()};" +
                     $"--radius-lg:{s["lg"]!.GetValue<string>()};" +
                     $"--radius-pill:{s["pill"]!.GetValue<string>()};";
-            }
-        }
-
-        if (!string.IsNullOrWhiteSpace(density) && _env.IsStaging)
-        {
-            var factor = density.ToLowerInvariant() switch
-            {
-                "d1" => 0.85,
-                "d2" => 1.0,
-                "d3" => 1.18,
-                _ => 0
-            };
-            if (factor > 0 && _tokens.Node("fluid")?["space"] is JsonObject space)
-            {
-                var sb = new System.Text.StringBuilder();
-                foreach (var (k, v) in space)
-                {
-                    if (v is JsonValue jv && jv.GetValueKind() == System.Text.Json.JsonValueKind.String)
-                    {
-                        sb.Append("--space-").Append(CssNaming.Kebab(k)).Append(":calc(")
-                          .Append(jv.GetValue<string>()).Append(" * ")
-                          .Append(factor.ToString(System.Globalization.CultureInfo.InvariantCulture))
-                          .Append(");");
-                    }
-                }
-                ViewData["SpaceVars"] = sb.ToString();
             }
         }
 
