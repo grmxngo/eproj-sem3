@@ -2,8 +2,13 @@
 @{
     var site = (HeritageSite)ViewData["Site"]!;
     var events = (List<Event>)ViewData["Events"]!;
+    var credits = ViewData["Credits"] as Dictionary<string, string>;
     ViewData["Title"] = site.Name;
     var hero = site.Images.Count > 0 ? site.Images[0] : "/images/preview/hero.jpg";
+    string CreditFor(string local, int viewNo) =>
+        credits is not null && credits.TryGetValue(local, out var c)
+            ? c
+            : $"{site.Name} — view {viewNo}";
 }
 <nav class="breadcrumb">
     <a href="/">Home</a> / <a href="/heritage-sites">Heritage Sites</a> / <span>@site.Name</span>
@@ -109,7 +114,7 @@
             {
                 <figure class="tile">
                     <img class="art" src="@site.Images[i]" alt="@site.Name — image @(i + 1)" />
-                    <figcaption>@site.Name, @site.Location</figcaption>
+                    <figcaption>@CreditFor(site.Images[i], i + 1)</figcaption>
                 </figure>
             }
         </div>

@@ -3,6 +3,7 @@ using HeritageTrail.Web.Models;
 using Microsoft.AspNetCore.Mvc;
 using MongoDB.Bson;
 using MongoDB.Driver;
+using System.Text.Json.Nodes;
 using System.Text.RegularExpressions;
 
 namespace HeritageTrail.Web.Controllers;
@@ -10,8 +11,13 @@ namespace HeritageTrail.Web.Controllers;
 public sealed class SitesController : Controller
 {
     private readonly MongoContext _db;
+    private readonly IWebHostEnvironment _env;
 
-    public SitesController(MongoContext db) => _db = db;
+    public SitesController(MongoContext db, IWebHostEnvironment env)
+    {
+        _db = db;
+        _env = env;
+    }
 
     [HttpGet("/heritage-sites")]
     public async Task<IActionResult> Index(string? q, string? cat)
@@ -49,6 +55,37 @@ public sealed class SitesController : Controller
         var events = await _db.Events.Find(e => e.SiteId == site.Id).SortBy(e => e.StartDate).ToListAsync();
         ViewData["Site"] = site;
         ViewData["Events"] = events;
+        ViewData["Credits"] = LoadCredits();
         return View();
+    }
+
+    /// <summary>Image attribution from the fetch pipeline (wwwroot/images/sites/credits.json).</summary>
+    private Dictionary<string, string> LoadCredits()
+    {
+        var map = new Dictionary<string, string>();
+        try
+        {
+            var path = Path.Combine(_env.WebRootPath ?? Path.Combine(_env.ContentRootPath, "wwwroot"),
+                "images", "sites", "credits.json");
+            if (!System.IO.File.Exists(path)) return map;
+
+            var root = JsonNode.Parse(System.IO.File.ReadAllText(path))?.AsArray();
+            if (root is null) return map;
+
+            foreach (var item in root)
+            {
+                var local = item?["local"]?.GetValue<string>();
+                if (local is null) continue;
+                var artist = Regex.Replace(item?["artist"]?.GetValue<string>() ?? "", "<[^>]+>", "").Trim();
+                var license = item?["license"]?.GetValue<string>() ?? "";
+                var text = string.IsNullOrWhiteSpace(artist) ? "Wikimedia Commons" : $"© {artist} · {license}";
+                map[local] = text;
+            }
+        }
+        catch
+        {
+            // attribution is best-effort; the caption falls back to a plain label
+        }
+        return map;
     }
 }

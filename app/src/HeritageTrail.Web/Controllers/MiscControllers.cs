@@ -104,3 +104,22 @@ public sealed class InviteController : Controller
         return Redirect($"/heritage-sites/{slug}");
     }
 }
+
+
+/// <summary>/explore — browse sites grouped by category (visual overview; the searchable index is /heritage-sites).</summary>
+public sealed class ExploreController : Controller
+{
+    private readonly MongoContext _db;
+
+    public ExploreController(MongoContext db) => _db = db;
+
+    [HttpGet("/explore")]
+    public async Task<IActionResult> Index()
+    {
+        var sites = await _db.Sites.Find(FilterDefinition<HeritageSite>.Empty).SortBy(s => s.Name).ToListAsync();
+        var categories = await _db.Categories.Find(FilterDefinition<Category>.Empty).ToListAsync();
+        ViewData["Sites"] = sites;
+        ViewData["Categories"] = categories;
+        return View();
+    }
+}

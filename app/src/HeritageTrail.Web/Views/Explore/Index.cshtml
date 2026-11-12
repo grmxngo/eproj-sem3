@@ -1,0 +1,40 @@
+@using HeritageTrail.Web.Models
+@{
+    ViewData["Title"] = "Explore";
+    var sites = (List<HeritageSite>)ViewData["Sites"]!;
+    var categories = (List<Category>)ViewData["Categories"]!;
+    var imgs = new[] { "/images/preview/card1.jpg", "/images/preview/card2.jpg", "/images/preview/card3.jpg", "/images/preview/hero.jpg" };
+    string ImgOf(HeritageSite s, int i) => s.Images.Count > 0 ? s.Images[0] : imgs[i % imgs.Length];
+}
+<section class="page-head">
+    <p class="eyebrow">Explore · worldwide</p>
+    <h1>Explore heritage</h1>
+    <p class="lede">The sites grouped by what they are — open a category, then a site, to read what survives there.</p>
+</section>
+
+@foreach (var category in categories)
+{
+    var inCategory = sites.Where(s => s.Category == category.Name).ToList();
+    if (inCategory.Count == 0) continue;
+    <section>
+        <div class="section-head">
+            <h2>@category.Name</h2>
+            <a href="/heritage-sites?cat=@Uri.EscapeDataString(category.Name)">Filter these sites →</a>
+        </div>
+        <div class="cards">
+            @{ var i = 0; }
+            @foreach (var s in inCategory)
+            {
+                <a class="site-card" href="/heritage-sites/@s.Slug">
+                    <div class="card-media"><img src="@ImgOf(s, i)" alt="@s.Name" /></div>
+                    <div class="card-body">
+                        <p class="card-kicker">@s.Location</p>
+                        <h2 class="card-title">@s.Name</h2>
+                        <p class="card-fact">@s.ArchitectureSignificance</p>
+                    </div>
+                </a>
+                i++;
+            }
+        </div>
+    </section>
+}
