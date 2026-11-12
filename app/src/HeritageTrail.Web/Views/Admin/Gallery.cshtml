@@ -29,9 +29,10 @@
 <div class="section-head">
     <h2>Add image</h2>
 </div>
-<form method="post" action="/admin/gallery" class="stack admin-form">
+<form method="post" action="/admin/gallery" class="stack admin-form" enctype="multipart/form-data">
     @Html.AntiForgeryToken()
-    <label>Image URL <input name="imageUrl" placeholder="/images/preview/card1.jpg" required /></label>
+    <label>Upload image <input type="file" name="photo" accept=".jpg,.jpeg,.png,.webp" /></label>
+    <label>… or Image URL <input name="imageUrl" placeholder="/images/preview/card1.jpg" /></label>
     <label>Caption <input name="caption" required /></label>
     <label>Reference
         <select name="refType">

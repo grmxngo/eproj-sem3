@@ -1,16 +1,24 @@
 @using HeritageTrail.Web.Models
 @{
     var items = (List<GalleryItem>)ViewData["Items"]!;
+    var imgs = new[] { "/images/preview/card1.jpg", "/images/preview/card2.jpg", "/images/preview/card3.jpg", "/images/preview/hero.jpg" };
     ViewData["Title"] = "Gallery";
 }
-<h1 class="page-title">Gallery</h1>
-<div class="gallery-grid">
+<section class="page-head">
+    <p class="eyebrow">Programmes</p>
+    <h1>Gallery</h1>
+    <p class="lede">Images of heritage sites and programmes we have run.</p>
+</section>
+<div class="gallery-grid gallery-lead">
+    @{ var i = 0; }
     @foreach (var item in items)
     {
+        var src = string.IsNullOrWhiteSpace(item.ImageUrl) ? imgs[i % imgs.Length] : item.ImageUrl;
         <figure class="tile">
-            <div class="art" aria-hidden="true"></div>
-            <figcaption>@item.Caption @(item.Credit is null ? "" : $"· {item.Credit}")</figcaption>
+            <img class="art" src="@src" alt="@item.Caption" />
+            <figcaption>@item.Caption @(string.IsNullOrWhiteSpace(item.Credit) ? "" : $"· {item.Credit}")</figcaption>
         </figure>
+        i++;
     }
 </div>
 @if (items.Count == 0)

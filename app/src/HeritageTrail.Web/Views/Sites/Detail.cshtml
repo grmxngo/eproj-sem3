@@ -3,69 +3,91 @@
     var site = (HeritageSite)ViewData["Site"]!;
     var events = (List<Event>)ViewData["Events"]!;
     ViewData["Title"] = site.Name;
+    var hero = site.Images.Count > 0 && !string.IsNullOrWhiteSpace(site.Images[0])
+        ? site.Images[0]
+        : "/images/preview/hero.jpg";
 }
 <nav class="breadcrumb">
     <a href="/">Home</a> / <a href="/heritage-sites">Heritage Sites</a> / <span>@site.Name</span>
 </nav>
 
-<article class="detail">
-    <p class="card-kicker">@site.Category</p>
-    <h1 class="page-title">@site.Name</h1>
-    <p class="detail-meta">@site.Location</p>
-    <div class="detail-media media-art" aria-hidden="true"></div>
+<section class="detail-hero">
+    <img src="@hero" alt="@site.Name" />
+    <div class="hero-copy">
+        <p class="eyebrow">@site.Category · @site.Location</p>
+        <h1 class="display">@site.Name</h1>
+    </div>
+</section>
 
-    <section>
-        <h2>Historical background</h2>
-        <p>@site.HistoricalBackground</p>
-    </section>
-    <section>
-        <h2>Architecture and significance</h2>
-        <p>@site.ArchitectureSignificance</p>
-    </section>
-    @if (!string.IsNullOrWhiteSpace(site.CulturalBackground))
-    {
+<div class="detail-cols">
+    <article class="detail">
         <section>
-            <h2>Cultural background</h2>
-            <p>@site.CulturalBackground</p>
+            <h2><span class="sec-num">01</span>Historical background</h2>
+            <p>@site.HistoricalBackground</p>
         </section>
-    }
-
-    @if (events.Count > 0)
-    {
         <section>
-            <h2>Programmes at this site</h2>
-            <div class="event-list">
-                @foreach (var ev in events)
-                {
-                    <a class="event-row" href="/events/@ev.Slug">
-                        <div class="event-date">
-                            <span class="event-day">@ev.StartDate.ToString("ddd")</span>
-                            <span class="event-month">@ev.StartDate.ToString("HH:mm")</span>
-                        </div>
-                        <div class="event-body">
-                            <h3 class="event-title">@ev.Title</h3>
-                            <p class="event-meta">@ev.Venue</p>
-                        </div>
-                        <span class="event-cta">View →</span>
-                    </a>
-                }
+            <h2><span class="sec-num">02</span>Architecture and significance</h2>
+            <p>@site.ArchitectureSignificance</p>
+        </section>
+        @if (!string.IsNullOrWhiteSpace(site.CulturalBackground))
+        {
+            <section>
+                <h2><span class="sec-num">03</span>Cultural background</h2>
+                <p>@site.CulturalBackground</p>
+            </section>
+        }
+
+        @if (events.Count > 0)
+        {
+            <section class="home-band">
+                <div class="band-head">
+                    <h2><span class="sec-num">04</span>Programmes at this site</h2>
+                    <a href="/events">All events →</a>
+                </div>
+                <div class="band-grid band-grid-typo">
+                    @foreach (var ev in events)
+                    {
+                        <a class="band-card band-card-typo" href="/events/@ev.Slug">
+                            <span class="band-day">@ev.StartDate.ToString("dd")</span>
+                            <span class="band-month">@ev.StartDate.ToString("MMM") · @ev.StartDate.ToString("HH:mm")</span>
+                            <h3>@ev.Title</h3>
+                            <p>@ev.Venue</p>
+                            <span class="band-cta">Interested →</span>
+                        </a>
+                    }
+                </div>
+            </section>
+        }
+
+        <section id="invite">
+            <div class="section-head">
+                <h2><span class="sec-num">05</span>Invite a friend</h2>
             </div>
+            @if (User.Identity?.IsAuthenticated == true)
+            {
+                <form method="post" action="/heritage-sites/@site.Slug/invite" class="inline-form">
+                    @Html.AntiForgeryToken()
+                    <input name="email" type="email" placeholder="friend@email.com" required />
+                    <button class="btn btn-primary" type="submit">Send invite</button>
+                </form>
+            }
+            else
+            {
+                <p><a href="/auth/login?returnUrl=/heritage-sites/@site.Slug">Log in</a> to invite a friend.</p>
+            }
         </section>
-    }
+    </article>
 
-    <section class="invite">
-        <h2>Invite a friend</h2>
-        @if (User.Identity?.IsAuthenticated == true)
-        {
-            <form method="post" action="/heritage-sites/@site.Slug/invite" class="inline-form">
-                @Html.AntiForgeryToken()
-                <input name="email" type="email" placeholder="friend@email.com" required />
-                <button class="btn btn-primary" type="submit">Send invite</button>
-            </form>
-        }
-        else
-        {
-            <p><a href="/auth/login?returnUrl=/heritage-sites/@site.Slug">Log in</a> to invite a friend.</p>
-        }
-    </section>
-</article>
+    <aside class="site-facts site-facts-dark">
+        <p class="eyebrow">What to know</p>
+        <ul class="auth-list">
+            @foreach (var f in site.Facts)
+            {
+                <li>@f</li>
+            }
+        </ul>
+        <div class="action-row" style="margin-top: var(--space-sm)">
+            <a class="btn btn-primary" href="#invite">Invite a friend</a>
+        </div>
+    </aside>
+</div>

@@ -32,7 +32,8 @@ public sealed class SitesController : Controller
         var sites = await _db.Sites.Find(filter).SortBy(s => s.Name).ToListAsync();
         var categories = await _db.Categories.Find(FilterDefinition<Category>.Empty).ToListAsync();
 
-        ViewData["Sites"] = sites;
+        ViewData["Sites"] = sites.Where(s => !s.IsAssociated).ToList();
+        ViewData["Associated"] = sites.Where(s => s.IsAssociated).ToList();
         ViewData["Categories"] = categories;
         ViewData["Q"] = q;
         ViewData["Cat"] = cat;

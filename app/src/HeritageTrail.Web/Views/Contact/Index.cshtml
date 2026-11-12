@@ -3,19 +3,29 @@
     var info = ViewData["Info"] as ContactInfo;
     ViewData["Title"] = "Contact";
 }
-<h1 class="page-title">Contact us</h1>
+<section class="page-head">
+    <p class="eyebrow">Contact</p>
+    <h1>Contact us</h1>
+    <p class="lede">Ask the organisation — we answer every query.</p>
+</section>
 
-@if (info is not null)
-{
-    <p class="detail-meta">@info.Address · @info.Phone · @info.Email</p>
-    <p class="empty">@info.Note</p>
-}
-
-<h2 class="section-title">Send a message</h2>
-<form method="post" action="/contact" class="stack" style="max-width: 34rem">
-    @Html.AntiForgeryToken()
-    <label>Name <input name="name" required /></label>
-    <label>Email <input type="email" name="email" required /></label>
-    <label>Message <textarea name="message" rows="4" required></textarea></label>
-    <button class="btn btn-primary" type="submit">Send</button>
-</form>
+<div class="auth-cols">
+    <form method="post" action="/contact" class="stack form-mono form-f1">
+        @Html.AntiForgeryToken()
+        <label>Name <input name="name" required /></label>
+        <label>Email <input type="email" name="email" required /></label>
+        <label>Message <textarea name="message" rows="4" required></textarea></label>
+        <div class="action-row">
+            <button class="btn btn-primary" type="submit">Send</button>
+        </div>
+    </form>
+    <aside class="auth-margin">
+        <p class="eyebrow">Office</p>
+        <ul class="auth-list">
+            <li>@info?.Address</li>
+            <li>@info?.Phone</li>
+            <li>@info?.Email</li>
+        </ul>
+        <p class="mono-note">@info?.Note</p>
+    </aside>
+</div>

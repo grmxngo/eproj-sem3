@@ -5,50 +5,71 @@
     var past = (List<Event>)ViewData["Past"]!;
     var interested = (List<string>)ViewData["Interested"]!;
 }
-<div class="section-head" style="margin-top: var(--space-lg)">
-    <h2>Upcoming programmes</h2>
-</div>
-<div class="event-list">
-    @foreach (var ev in upcoming)
-    {
-        <a class="event-row" href="/events/@ev.Slug">
-            <div class="event-date">
-                <span class="event-day">@ev.StartDate.ToString("ddd")</span>
-                <span class="event-month">@ev.StartDate.ToString("HH:mm")</span>
-            </div>
-            <div class="event-body">
-                <h3 class="event-title">@ev.Title</h3>
-                <p class="event-meta">@ev.Venue</p>
-            </div>
-            <span class="event-cta">@(interested.Contains(ev.Id) ? "Interested ✓" : "View →")</span>
-        </a>
-    }
-    @if (upcoming.Count == 0)
-    {
-        <p class="empty">No upcoming programmes right now.</p>
-    }
-</div>
+<section class="page-head">
+    <p class="eyebrow">Programmes</p>
+    <h1>Events</h1>
+    <p class="lede">Walks, talks and exhibitions — what's next and what we have already run.</p>
+</section>
 
-<div class="section-head">
-    <h2>Past programmes</h2>
-</div>
-<div class="event-list">
-    @foreach (var ev in past)
-    {
-        <a class="event-row" href="/events/@ev.Slug">
-            <div class="event-date">
-                <span class="event-day">@ev.StartDate.ToString("MMM")</span>
-                <span class="event-month">@ev.StartDate.ToString("dd")</span>
-            </div>
-            <div class="event-body">
-                <h3 class="event-title">@ev.Title</h3>
-                <p class="event-meta">@ev.Venue</p>
-            </div>
-            <span class="event-cta">View →</span>
-        </a>
-    }
-    @if (past.Count == 0)
-    {
-        <p class="empty">No past programmes yet.</p>
-    }
-</div>
+@if (upcoming.Count > 0)
+{
+    var lead = upcoming[0];
+    <a class="lead-card" href="/events/@lead.Slug">
+        <img src="/images/preview/hero.jpg" alt="@lead.Title — preview" />
+        <div class="lead-overlay">
+            <p class="eyebrow">Next · @lead.StartDate.ToString("ddd dd MMM · HH:mm")</p>
+            <h2 class="lead-title">@lead.Title</h2>
+            <p class="lead-fact">@lead.Venue</p>
+        </div>
+    </a>
+}
+
+<section class="home-band">
+    <div class="band-head">
+        <h2>What's on</h2>
+        <a href="/events">All upcoming</a>
+    </div>
+    <div class="band-grid band-grid-typo">
+        @foreach (var ev in upcoming.Skip(1).Take(3))
+        {
+            <a class="band-card band-card-typo" href="/events/@ev.Slug">
+                <span class="band-day">@ev.StartDate.ToString("dd")</span>
+                <span class="band-month">@ev.StartDate.ToString("MMM") · @ev.StartDate.ToString("HH:mm")</span>
+                <h3>@ev.Title</h3>
+                <p>@ev.Venue</p>
+                <span class="band-cta">@(interested.Contains(ev.Id) ? "Interested ✓" : "Interested →")</span>
+            </a>
+        }
+        @if (upcoming.Count <= 1)
+        {
+            <p class="empty" style="color: var(--color-bg)">No more programmes announced.</p>
+        }
+    </div>
+</section>
+
+<section>
+    <div class="section-head">
+        <h2>Past programmes</h2>
+        <span class="eyebrow" style="margin:0">conducted</span>
+    </div>
+    <div class="event-list">
+        @foreach (var ev in past)
+        {
+            <a class="event-row" href="/events/@ev.Slug">
+                <div class="event-date">
+                    <span class="event-day">@ev.StartDate.ToString("MMM")</span>
+                    <span class="event-month">@ev.StartDate.ToString("dd")</span>
+                </div>
+                <div class="event-body">
+                    <h3 class="event-title">@ev.Title</h3>
+                    <p class="event-meta">@ev.Venue</p>
+                </div>
+                <span class="event-cta">View →</span>
+            </a>
+        }
+        @if (past.Count == 0)
+        {
+            <p class="empty">No past programmes yet.</p>
+        }
+    </div>
+</section>

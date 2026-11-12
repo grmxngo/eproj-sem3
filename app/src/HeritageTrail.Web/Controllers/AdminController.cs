@@ -1,5 +1,6 @@
 using HeritageTrail.Web.Data;
 using HeritageTrail.Web.Models;
+using HeritageTrail.Web.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MongoDB.Driver;
@@ -11,11 +12,23 @@ namespace HeritageTrail.Web.Controllers;
 public sealed class AdminController : Controller
 {
     private readonly MongoContext _db;
+    private readonly MailOutbox _outbox;
+    private readonly UploadsStore _uploads;
 
-    public AdminController(MongoContext db) => _db = db;
+    public AdminController(MongoContext db, MailOutbox outbox, UploadsStore uploads)
+    {
+        _db = db;
+        _outbox = outbox;
+        _uploads = uploads;
+    }
 
     private static string Slugify(string value) =>
         Regex.Replace(value.Trim().ToLowerInvariant(), "[^a-z0-9]+", "-").Trim('-');
+
+    private static List<string> ParseFacts(string? text) =>
+        string.IsNullOrWhiteSpace(text)
+            ? new List<string>()
+            : text.Split('\n', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries).ToList();
 
     [HttpGet("/admin")]
     public async Task<IActionResult> Index()
@@ -62,7 +75,7 @@ public sealed class AdminController : Controller
     public async Task<IActionResult> SiteSave(
         string? id, string name, string? slug, string category, string location,
         string historicalBackground, string architectureSignificance,
-        string? culturalBackground, string? imagesCsv, bool isAssociated)
+        string? culturalBackground, string? imagesCsv, string? factsText, bool isAssociated)
     {
         if (string.IsNullOrWhiteSpace(name) || string.IsNullOrWhiteSpace(location))
         {
@@ -86,6 +99,7 @@ public sealed class AdminController : Controller
                 ArchitectureSignificance = architectureSignificance,
                 CulturalBackground = culturalBackground,
                 Images = images,
+                Facts = ParseFacts(factsText),
                 IsAssociated = isAssociated
             });
             TempData["Notice"] = "Site created.";
@@ -103,6 +117,7 @@ public sealed class AdminController : Controller
                     .Set(s => s.ArchitectureSignificance, architectureSignificance)
                     .Set(s => s.CulturalBackground, culturalBackground)
                     .Set(s => s.Images, images)
+                    .Set(s => s.Facts, ParseFacts(factsText))
                     .Set(s => s.IsAssociated, isAssociated));
             TempData["Notice"] = "Site updated.";
         }
@@ -242,7 +257,8 @@ public sealed class AdminController : Controller
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> QueryReply(string id, string reply)
     {
-        if (!string.IsNullOrWhiteSpace(reply))
+        var query = await _db.Queries.Find(q => q.Id == id).FirstOrDefaultAsync();
+        if (query is not null && !string.IsNullOrWhiteSpace(reply))
         {
             await _db.Queries.UpdateOneAsync(
                 q => q.Id == id,
@@ -250,7 +266,12 @@ public sealed class AdminController : Controller
                     .Set(q => q.Reply, reply.Trim())
                     .Set(q => q.Status, "Answered")
                     .Set(q => q.RepliedAt, DateTime.UtcNow));
-            TempData["Notice"] = "Reply saved.";
+            var user = await _db.Users.Find(u => u.Id == query.UserId).FirstOrDefaultAsync();
+            if (user is not null)
+            {
+                _outbox.Send(user.Email, $"Reply: {query.Subject}", reply);
+            }
+            TempData["Notice"] = "Reply saved and sent.";
         }
         return RedirectToAction(nameof(Queries));
     }
@@ -291,14 +312,26 @@ public sealed class AdminController : Controller
 
     [HttpPost("/admin/gallery")]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> GalleryAdd(string caption, string imageUrl, string refType, string? credit)
+    public async Task<IActionResult> GalleryAdd(string caption, string? imageUrl, string refType, string? credit, IFormFile? photo)
     {
-        if (!string.IsNullOrWhiteSpace(caption) && !string.IsNullOrWhiteSpace(imageUrl))
+        var finalUrl = string.IsNullOrWhiteSpace(imageUrl) ? null : imageUrl.Trim();
+        if (photo is { Length: > 0 })
+        {
+            var (url, error) = await _uploads.SaveAsync(photo);
+            if (url is null)
+            {
+                TempData["Notice"] = error;
+                return RedirectToAction(nameof(Gallery));
+            }
+            finalUrl = url;
+        }
+
+        if (!string.IsNullOrWhiteSpace(caption) && !string.IsNullOrWhiteSpace(finalUrl))
         {
             await _db.Gallery.InsertOneAsync(new GalleryItem
             {
                 Caption = caption.Trim(),
-                ImageUrl = imageUrl.Trim(),
+                ImageUrl = finalUrl,
                 RefType = refType,
                 Credit = credit
             });
@@ -346,5 +379,46 @@ public sealed class AdminController : Controller
         }
         TempData["Notice"] = "Contact info saved.";
         return RedirectToAction(nameof(Contact));
+    }
+
+    [HttpGet("/admin/categories")]
+    public async Task<IActionResult> Categories()
+    {
+        var categories = await _db.Categories.Find(FilterDefinition<Category>.Empty).ToListAsync();
+        var sites = await _db.Sites.Find(FilterDefinition<HeritageSite>.Empty).ToListAsync();
+        ViewData["Categories"] = categories;
+        ViewData["Counts"] = sites.GroupBy(s => s.Category).ToDictionary(g => g.Key, g => g.Count());
+        return View();
+    }
+
+    [HttpPost("/admin/categories")]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> CategoryAdd(string name)
+    {
+        if (!string.IsNullOrWhiteSpace(name))
+        {
+            await _db.Categories.InsertOneAsync(new Category { Name = name.Trim() });
+            TempData["Notice"] = "Category added.";
+        }
+        return RedirectToAction(nameof(Categories));
+    }
+
+    [HttpPost("/admin/categories/{id}/delete")]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> CategoryDelete(string id)
+    {
+        var category = await _db.Categories.Find(c => c.Id == id).FirstOrDefaultAsync();
+        if (category is null) return RedirectToAction(nameof(Categories));
+
+        var inUse = await _db.Sites.CountDocumentsAsync(s => s.Category == category.Name) > 0;
+        if (inUse)
+        {
+            TempData["Notice"] = $"Cannot delete \"{category.Name}\" — sites still use this category.";
+            return RedirectToAction(nameof(Categories));
+        }
+
+        await _db.Categories.DeleteOneAsync(c => c.Id == id);
+        TempData["Notice"] = "Category deleted.";
+        return RedirectToAction(nameof(Categories));
     }
 }

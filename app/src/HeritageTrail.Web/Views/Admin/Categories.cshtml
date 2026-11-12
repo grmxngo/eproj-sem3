@@ -1,0 +1,36 @@
+@using HeritageTrail.Web.Models
+@{
+    ViewData["Title"] = "Admin · Categories";
+    var categories = (List<Category>)ViewData["Categories"]!;
+    var counts = (Dictionary<string, int>)ViewData["Counts"]!;
+}
+<div class="section-head">
+    <h2>Categories</h2>
+    <span class="eyebrow" style="margin:0">@categories.Count categories</span>
+</div>
+<table class="table">
+    <tr><th>Name</th><th>Sites</th><th class="actions"></th></tr>
+    @foreach (var c in categories)
+    {
+        var n = counts.TryGetValue(c.Name, out var v) ? v : 0;
+        <tr>
+            <td>@c.Name</td>
+            <td>@n</td>
+            <td class="actions">
+                <form method="post" action="/admin/categories/@c.Id/delete" style="display:inline">
+                    @Html.AntiForgeryToken()
+                    <button class="inline-del" type="submit">Delete</button>
+                </form>
+            </td>
+        </tr>
+    }
+</table>
+
+<div class="section-head">
+    <h2>Add category</h2>
+</div>
+<form method="post" action="/admin/categories" class="inline-form">
+    @Html.AntiForgeryToken()
+    <input name="name" placeholder="Category name" required />
+    <button class="btn btn-primary" type="submit">Add</button>
+</form>

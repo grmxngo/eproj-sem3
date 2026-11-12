@@ -10,6 +10,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>@title — HeritageTrail</title>
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <style>@Html.Raw(Tokens.ToCss())</style>
     <link rel="stylesheet" href="/css/atoms.css" />
     @if (ViewData["PaletteVars"] is string paletteVars)
@@ -39,7 +40,15 @@
     <div class="env-badge">@Env.Badge</div>
 }
 <header class="site-head">
-    <a class="wordmark" href="/">HeritageTrail</a>
+    <a class="brand wordmark" href="/">
+        <svg class="logo-mark" viewBox="0 0 64 64" aria-hidden="true">
+            <path class="mark-path" d="M8 50 C 20 40, 12 26, 30 24 S 50 30, 56 12" />
+            <circle cx="8" cy="50" r="4" fill="currentColor" />
+            <circle cx="56" cy="12" r="4" fill="currentColor" />
+            <circle cx="32" cy="24" r="3" fill="var(--color-accent-alt)" />
+        </svg>
+        HeritageTrail
+    </a>
     <nav class="nav-stub" aria-label="Primary">
         <a href="/">Home</a>
         <a href="/heritage-sites">Heritage Sites</a>

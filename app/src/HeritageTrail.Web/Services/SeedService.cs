@@ -118,6 +118,30 @@ public static class SeedService
         };
         await db.Sites.InsertManyAsync(sites);
 
+        // Meaningful, non-obvious facts per site (shown in the detail sidebar).
+        var factsBySlug = new Dictionary<string, string[]>
+        {
+            ["angkor-wat"] = new[] { "Built in the 12th century under Suryavarman II", "The moat is 190 m wide", "UNESCO World Heritage since 1992" },
+            ["petra"] = new[] { "Carved by the Nabataeans from the 4th c. BCE", "The Treasury facade is 39 m tall", "UNESCO World Heritage since 1985" },
+            ["machu-picchu"] = new[] { "15th-century Inca estate", "Ridge at 2,430 m", "UNESCO World Heritage since 1983" },
+            ["taj-mahal"] = new[] { "Built 1632–1653", "White Makrana marble", "UNESCO World Heritage since 1983" },
+            ["great-wall"] = new[] { "Sections from the 7th c. BCE", "Surveyed length 21,196 km", "UNESCO World Heritage since 1987" },
+            ["forbidden-city"] = new[] { "Built 1406–1420", "980 buildings survive", "Seat of 24 Ming and Qing emperors" },
+            ["topkapi-palace"] = new[] { "Ottoman residence from the 1460s", "Four courtyards behind the Imperial Gate", "UNESCO World Heritage since 1985" },
+            ["acropolis-museum"] = new[] { "Opened 2009", "4,000 objects on display", "Top floor aligns with the Parthenon" }
+        };
+        foreach (var (slug, facts) in factsBySlug)
+        {
+            await db.Sites.UpdateOneAsync(
+                s => s.Slug == slug,
+                Builders<HeritageSite>.Update.Set(s => s.Facts, facts.ToList()));
+        }
+
+        // Locations associated with the organisation (T12/T17).
+        await db.Sites.UpdateManyAsync(
+            s => s.Slug == "topkapi-palace" || s.Slug == "acropolis-museum",
+            Builders<HeritageSite>.Update.Set(s => s.IsAssociated, true));
+
         var now = DateTime.UtcNow.Date;
         HeritageSite Site(string slug) => sites.First(s => s.Slug == slug);
 

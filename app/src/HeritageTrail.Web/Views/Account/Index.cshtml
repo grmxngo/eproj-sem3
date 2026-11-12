@@ -5,52 +5,71 @@
     var queries = (List<Query>)ViewData["Queries"]!;
     var invitations = (List<Invitation>)ViewData["Invitations"]!;
 }
-<h1 class="page-title">My account</h1>
+<section class="page-head">
+    <p class="eyebrow">Membership</p>
+    <h1>My account</h1>
+    <p class="lede">Programme interests, invitations and queries — one place.</p>
+</section>
 
-<h2 class="section-title">My interests</h2>
-<ul class="account-list">
-    @foreach (var ev in events)
+<section>
+    <div class="section-head">
+        <h2>My interests</h2>
+        <span class="eyebrow" style="margin:0">@events.Count programmes</span>
+    </div>
+    <ul class="account-list">
+        @foreach (var ev in events)
+        {
+            <li><a href="/events/@ev.Slug">@ev.Title</a> — @ev.StartDate.ToString("ddd dd MMM · HH:mm"), @ev.Venue</li>
+        }
+    </ul>
+    @if (events.Count == 0)
     {
-        <li><a href="/events/@ev.Slug">@ev.Title</a> — @ev.StartDate.ToString("ddd dd MMM · HH:mm"), @ev.Venue</li>
+        <p class="empty">No interests yet — open a programme and press Interested.</p>
     }
-</ul>
-@if (events.Count == 0)
-{
-    <p class="empty">No interests yet — open a programme and press Interested.</p>
-}
+</section>
 
-<h2 class="section-title">My queries</h2>
-<form method="post" action="/account/queries" class="stack" style="max-width: 34rem">
-    @Html.AntiForgeryToken()
-    <label>Subject <input name="subject" required /></label>
-    <label>Message <textarea name="message" rows="3" required></textarea></label>
-    <button class="btn btn-primary" type="submit">Send query</button>
-</form>
-<ul class="account-list">
-    @foreach (var q in queries)
+<section>
+    <div class="section-head">
+        <h2>My queries</h2>
+        <span class="eyebrow" style="margin:0">@queries.Count sent</span>
+    </div>
+    <form method="post" action="/account/queries" class="stack form-mono form-f1" style="max-width: 34rem">
+        @Html.AntiForgeryToken()
+        <label>Subject <input name="subject" required /></label>
+        <label>Message <textarea name="message" rows="3" required></textarea></label>
+        <button class="btn btn-primary" type="submit">Send query</button>
+    </form>
+    <ul class="account-list">
+        @foreach (var q in queries)
+        {
+            <li>
+                <b>@q.Subject</b> — @q.Status
+                @if (!string.IsNullOrWhiteSpace(q.Reply))
+                {
+                    <span> · Reply: @q.Reply</span>
+                }
+            </li>
+        }
+    </ul>
+    @if (queries.Count == 0)
     {
-        <li>
-            <b>@q.Subject</b> — @q.Status
-            @if (!string.IsNullOrWhiteSpace(q.Reply))
-            {
-                <span> · Reply: @q.Reply</span>
-            }
-        </li>
+        <p class="empty">No queries yet.</p>
     }
-</ul>
-@if (queries.Count == 0)
-{
-    <p class="empty">No queries yet.</p>
-}
+</section>
 
-<h2 class="section-title">My invitations</h2>
-<ul class="account-list">
-    @foreach (var i in invitations)
+<section>
+    <div class="section-head">
+        <h2>My invitations</h2>
+        <span class="eyebrow" style="margin:0">@invitations.Count sent</span>
+    </div>
+    <ul class="account-list">
+        @foreach (var i in invitations)
+        {
+            <li>@i.ToEmail — @i.SentAt.ToString("dd MMM yyyy")</li>
+        }
+    </ul>
+    @if (invitations.Count == 0)
     {
-        <li>@i.ToEmail — @i.SentAt.ToString("dd MMM yyyy")</li>
+        <p class="empty">No invitations sent yet — open a site and invite a friend.</p>
     }
-</ul>
-@if (invitations.Count == 0)
-{
-    <p class="empty">No invitations sent yet — open a site and invite a friend.</p>
-}
+</section>

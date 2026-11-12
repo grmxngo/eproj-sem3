@@ -2,10 +2,31 @@
 @{
     ViewData["Title"] = "Heritage Sites";
     var sites = (List<HeritageSite>)ViewData["Sites"]!;
+    var associated = (List<HeritageSite>)ViewData["Associated"]!;
     var categories = (List<Category>)ViewData["Categories"]!;
     var q = ViewData["Q"] as string;
     var cat = ViewData["Cat"] as string;
+    var imgs = new[] { "/images/preview/card1.jpg", "/images/preview/card2.jpg", "/images/preview/card3.jpg", "/images/preview/hero.jpg" };
+    var hasLead = sites.Count > 0 && string.IsNullOrWhiteSpace(q) && string.IsNullOrWhiteSpace(cat);
 }
+<section class="page-head">
+    <p class="eyebrow">Explore · worldwide</p>
+    <h1>Heritage sites</h1>
+    <p class="lede">What survives at each site — with dates, access and the facts behind the photo.</p>
+</section>
+
+@if (hasLead)
+{
+    var lead = sites[0];
+    <a class="lead-card" href="/heritage-sites/@lead.Slug">
+        <img src="/images/preview/hero.jpg" alt="@lead.Name — preview" />
+        <div class="lead-overlay">
+            <p class="eyebrow">Featured · @lead.Category · @lead.Location</p>
+            <h2 class="lead-title">@lead.Name</h2>
+        </div>
+    </a>
+}
+
 <form class="searchbar" method="get" action="/heritage-sites">
     <input type="search" name="q" value="@q" placeholder="Search sites or locations" aria-label="Search heritage sites" />
     <button class="btn btn-primary" type="submit">Search</button>
@@ -19,21 +40,46 @@
     }
 </div>
 
-<div class="cards">
+<div class="site-index">
+    @{ var i = 0; }
     @foreach (var s in sites)
     {
-        <a class="site-card" href="/heritage-sites/@s.Slug">
-            <div class="card-media" aria-hidden="true"></div>
-            <div class="card-body">
-                <p class="card-kicker">@s.Category</p>
-                <h2 class="card-title">@s.Name</h2>
-                <p class="card-fact">@s.Location</p>
+        <a class="site-row" href="/heritage-sites/@s.Slug">
+            <span class="num">@((i + 1).ToString("00"))</span>
+            <div class="info">
+                <p class="card-kicker">@s.Category · @s.Location</p>
+                <h2 class="row-title">@s.Name</h2>
             </div>
+            <div class="thumb"><img src="@imgs[i % imgs.Length]" alt="@s.Name — preview" /></div>
         </a>
+        i++;
     }
 </div>
 
 @if (sites.Count == 0)
 {
     <p class="empty">No heritage site found for this search.</p>
+}
+
+@if (associated.Count > 0)
+{
+    <div class="section-head" style="margin-top: var(--space-xl)">
+        <h2>Associated locations</h2>
+        <span class="eyebrow" style="margin:0">with the organisation</span>
+    </div>
+    <div class="site-index">
+        @{ var a = 0; }
+        @foreach (var s in associated)
+        {
+            <a class="site-row" href="/heritage-sites/@s.Slug">
+                <span class="num">@((a + 1).ToString("00"))</span>
+                <div class="info">
+                    <p class="card-kicker">Associated · @s.Category · @s.Location</p>
+                    <h2 class="row-title">@s.Name</h2>
+                </div>
+                <div class="thumb"><img src="@imgs[a % imgs.Length]" alt="@s.Name — preview" /></div>
+            </a>
+            a++;
+        }
+    </div>
 }

@@ -37,6 +37,7 @@ public sealed class HeritageSite
     public string ArchitectureSignificance { get; set; } = "";
     public string? CulturalBackground { get; set; }
     public List<string> Images { get; set; } = new();
+    public List<string> Facts { get; set; } = new();
     public bool IsAssociated { get; set; }
     public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 }

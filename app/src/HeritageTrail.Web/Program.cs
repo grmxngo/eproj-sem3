@@ -1,6 +1,7 @@
 using HeritageTrail.Web.Data;
 using HeritageTrail.Web.Services;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.Extensions.FileProviders;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -18,6 +19,8 @@ builder.Services.AddSingleton<TokenProvider>();
 builder.Services.AddSingleton<CandidatesProvider>();
 builder.Services.AddSingleton<MongoContext>();
 builder.Services.AddSingleton<AuthService>();
+builder.Services.AddSingleton<MailOutbox>();
+builder.Services.AddSingleton<UploadsStore>();
 builder.Services.AddControllersWithViews();
 
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
@@ -46,6 +49,16 @@ using (var scope = app.Services.CreateScope())
 }
 
 app.UseStaticFiles();
+
+var uploadsRoot = Path.GetFullPath(Path.Combine(app.Environment.ContentRootPath, "..", "..", "..", ".."));
+var uploadsPath = Path.Combine(uploadsRoot, envConfig.Uploads);
+Directory.CreateDirectory(uploadsPath);
+app.UseStaticFiles(new StaticFileOptions
+{
+    FileProvider = new PhysicalFileProvider(uploadsPath),
+    RequestPath = "/uploads"
+});
+
 app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();

@@ -1,5 +1,6 @@
 using HeritageTrail.Web.Data;
 using HeritageTrail.Web.Models;
+using HeritageTrail.Web.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MongoDB.Driver;
@@ -64,7 +65,13 @@ public sealed class ContactController : Controller
 public sealed class InviteController : Controller
 {
     private readonly MongoContext _db;
-    public InviteController(MongoContext db) => _db = db;
+    private readonly MailOutbox _outbox;
+
+    public InviteController(MongoContext db, MailOutbox outbox)
+    {
+        _db = db;
+        _outbox = outbox;
+    }
 
     [Authorize]
     [HttpPost("/heritage-sites/{slug}/invite")]
@@ -76,13 +83,18 @@ public sealed class InviteController : Controller
 
         if (!string.IsNullOrWhiteSpace(email) && email.Contains('@'))
         {
+            var from = User.FindFirstValue(ClaimTypes.NameIdentifier)!;
             await _db.Invitations.InsertOneAsync(new Invitation
             {
-                FromUserId = User.FindFirstValue(ClaimTypes.NameIdentifier)!,
+                FromUserId = from,
                 ToEmail = email.Trim(),
                 SiteId = site.Id
             });
-            TempData["Notice"] = "Invitation recorded.";
+            _outbox.Send(
+                email.Trim(),
+                $"{User.Identity?.Name} invites you to explore {site.Name}",
+                $"Explore {site.Name} — {site.Location}: https://127.0.0.1:5181/heritage-sites/{site.Slug}");
+            TempData["Notice"] = "Invitation sent.";
         }
         else
         {

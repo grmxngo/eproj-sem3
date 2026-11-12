@@ -8,14 +8,22 @@
     <a href="/">Home</a> / <a href="/about/what-we-do">About us</a> / <span>@about.Title</span>
 </nav>
 
-<article class="detail">
-    <h1 class="page-title">@about.Title</h1>
-    <p>@about.Content</p>
-</article>
+<section class="page-head">
+    <p class="eyebrow">About us</p>
+    <h1>@about.Title</h1>
+</section>
 
-<div class="chips" style="margin: var(--space-lg) 0">
-    @foreach (var p in pages)
-    {
-        <a class="chip" href="/about/@p.Slug">@p.Title</a>
-    }
+<div class="detail-cols">
+    <article class="detail">
+        <p>@about.Content</p>
+    </article>
+    <aside class="site-facts">
+        <p class="eyebrow">About pages</p>
+        <ul class="auth-list">
+            @foreach (var p in pages)
+            {
+                <li><a href="/about/@p.Slug" style="color: var(--color-accent)">@p.Title</a></li>
+            }
+        </ul>
+    </aside>
 </div>

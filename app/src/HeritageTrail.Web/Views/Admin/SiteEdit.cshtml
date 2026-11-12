@@ -41,6 +41,7 @@
     <div class="form-block">
         <h3>Media &amp; flags</h3>
         <div class="form-grid">
+            <label class="full">Facts (one per line — shown in the site sidebar) <textarea name="factsText" rows="3">@string.Join("\n", site.Facts)</textarea></label>
             <label class="full">Image URLs (comma separated) <input name="imagesCsv" value="@string.Join(", ", site.Images)" /></label>
             <label class="check"><input type="checkbox" name="isAssociated" value="true" checked="@(site.IsAssociated ? "checked" : null)" /> Associated site</label>
         </div>
