@@ -1,30 +1,14 @@
-@using System.Text.Json.Nodes
 @{
     ViewData["Title"] = "Atom gallery (staging)";
-    var palettes = (JsonArray)ViewData["Palettes"]!;
-    var typography = (JsonArray)ViewData["Typography"]!;
-    string S(JsonNode? n, string fallback = "") => n is JsonValue v && v.GetValueKind() == System.Text.Json.JsonValueKind.String ? v.GetValue<string>() : fallback;
 }
-<div class="specimen-bar">
-    <span class="spec-id">ATOM GALLERY</span>
-    <span class="spec-desc">staging only · mỗi batch = ảnh gửi chat để bạn duyệt</span>
+<div class="section-head">
+    <h2>Atom gallery</h2>
+    <span class="eyebrow" style="margin:0">staging only · all values from tokens.json</span>
 </div>
-
-<section class="spec-section">
-    <h2>Batch 1 — Foundations</h2>
-    <table class="token-table">
-        <tr><th>URL</th><th>Atom</th></tr>
-        @foreach (var p in palettes)
-        {
-            <tr><td><a href="/atoms/batch1/palette/@S(p!["id"])">/atoms/batch1/palette/@S(p["id"])</a></td><td>A-01 Color — @S(p["name"])</td></tr>
-        }
-        <tr><td><a href="/atoms/batch1/type">/atoms/batch1/type</a></td><td>A-02 Typography — @(typography.Count) options</td></tr>
-        <tr><td><a href="/atoms/batch1/tokens">/atoms/batch1/tokens</a></td><td>A-03/04/05 Spacing · Radius · Motion</td></tr>
-        <tr><td><a href="/atoms/batch1/clamp">/atoms/batch1/clamp</a></td><td>A-06 Clamp demo (screenshot at 360/768/1440)</td></tr>
-    </table>
-</section>
-
-<section class="spec-section">
-    <h2>Chưa mở (chờ duyệt batch trước)</h2>
-    <p class="lede">Batch 2 logo, Batch 3 chrome, Batch 4 core atoms, Batch 5 forms, Batch 6 admin, Batch 7 compositions, Batch 8 page pass.</p>
-</section>
+<p class="lede" style="max-width:60ch">
+    Mọi atom đều render từ tokens.json (SSOT): color, typography, spacing, radius, motion, ui.
+    Toàn bộ preview cũ (palette/type exploration) đã xoá sau khi chốt design system H3 · T1 · R1 · D2 · Hero C · B1 · E3 · S1 · G1 · F1 · A1.
+</p>
+<div class="action-row">
+    <a class="btn btn-primary" href="/atoms/complete">Open complete atom set</a>
+</div>

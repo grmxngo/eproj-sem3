@@ -33,6 +33,7 @@ public sealed partial class TokenProvider
         AddGroup(sb, "radius-", _root["radius"]?.AsObject());
         AddGroup(sb, "shadow-", _root["shadow"]?.AsObject());
         AddGroup(sb, "motion-", _root["motion"]?.AsObject());
+        AddGroup(sb, "ui-", _root["ui"]?.AsObject());
 
         if (_root["layout"] is JsonObject layout)
         {

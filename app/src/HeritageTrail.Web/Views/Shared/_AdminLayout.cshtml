@@ -18,22 +18,21 @@
     <link rel="stylesheet" href="/css/atoms.css" />
     <style>
         .admin-root { background: var(--color-bg); }
-        .admin-top { display: flex; justify-content: space-between; align-items: center; gap: 16px; background: var(--color-ink); color: var(--color-bg); padding: 12px 24px; font-size: var(--fs-small); }
+        .admin-top { display: flex; justify-content: space-between; align-items: center; gap: var(--space-md); background: var(--color-ink); color: var(--color-bg); padding: var(--ui-topbar-padding); font-size: var(--fs-small); }
         .admin-brand { font-family: var(--font-display); font-size: var(--fs-h3); color: var(--color-bg); text-decoration: none; }
         .admin-brand span { font-family: var(--font-mono); font-size: var(--fs-micro); letter-spacing: .12em; text-transform: uppercase; color: var(--color-accent-alt); margin-left: 8px; }
-        .admin-top-right { display: flex; gap: 16px; align-items: center; }
+        .admin-top-right { display: flex; gap: var(--space-md); align-items: center; }
         .admin-top-right a, .admin-top-right .linkbtn { color: var(--color-bg); text-decoration: none; opacity: .8; font-size: var(--fs-small); }
         .admin-top-right .linkbtn { background: none; border: 0; cursor: pointer; font: inherit; }
         .admin-top-right a:hover, .admin-top-right .linkbtn:hover { opacity: 1; }
-        .admin-shell { display: grid; grid-template-columns: 220px 1fr; min-height: calc(100vh - 54px); }
+        .admin-shell { display: grid; grid-template-columns: var(--ui-sidebar-width) 1fr; min-height: calc(100vh - 54px); }
         .admin-side { border-right: 1px solid var(--color-border); padding: var(--space-md); background: var(--color-surface); }
         .admin-side nav { display: flex; flex-direction: column; gap: 2px; position: sticky; top: var(--space-md); }
-        .admin-side a { display: block; padding: 8px 10px; color: var(--color-ink-muted); text-decoration: none; border-left: 2px solid transparent; font-size: var(--fs-small); }
+        .admin-side a { display: block; padding: var(--ui-side-item-padding); color: var(--color-ink-muted); text-decoration: none; border-left: 2px solid transparent; font-size: var(--fs-small); }
         .admin-side a:hover { color: var(--color-ink); }
         .admin-side a.on { border-left-color: var(--color-accent); color: var(--color-ink); background: var(--color-bg); }
         .admin-main { padding: var(--space-lg); max-width: 1200px; }
         .admin-main .section-head { margin-top: 0; }
-        .admin-main .table td, .admin-main .table th { padding: 10px; }
         .admin-main .stat-cards { margin-bottom: var(--space-lg); }
     </style>
 </head>
