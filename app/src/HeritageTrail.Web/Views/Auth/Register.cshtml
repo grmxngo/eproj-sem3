@@ -1,0 +1,44 @@
+@{
+    ViewData["Title"] = "Register";
+    var layout = ViewData["AuthLayout"] as string ?? "a1";
+}
+@if (layout == "a2")
+{
+    <section class="auth-doc auth-a2">
+        <div>
+            <p class="eyebrow">HeritageTrail · membership</p>
+            <h1>One account,<br />every site.</h1>
+            <p class="lede">Programmes, invitations and queries — held in one account.</p>
+        </div>
+        <div class="auth-panel">
+            <p class="eyebrow">Register</p>
+            @await Html.PartialAsync("_Form")
+        </div>
+    </section>
+}
+else if (layout == "a3")
+{
+    <section class="auth-center">
+        <img class="strip" src="/images/preview/register.jpg" alt="Visitors on a walk — preview" />
+        <p class="eyebrow">HeritageTrail · membership</p>
+        <h1>Create your account</h1>
+        @await Html.PartialAsync("_Form")
+    </section>
+}
+else
+{
+    <section class="auth-doc">
+        <p class="eyebrow">HeritageTrail · membership</p>
+        <h1>Create your account</h1>
+        <p class="lede">Join programmes, invite friends, ask the organisation.</p>
+        <div class="auth-cols">
+            <div>
+                @await Html.PartialAsync("_Form")
+            </div>
+            <aside class="auth-margin">
+                <img src="/images/preview/register.jpg" alt="Visitors on a walk — preview" />
+                <p class="mono-note">Programme walk — preview photo</p>
+            </aside>
+        </div>
+    </section>
+}

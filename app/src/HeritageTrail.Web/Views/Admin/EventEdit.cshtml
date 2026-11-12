@@ -1,0 +1,61 @@
+@using HeritageTrail.Web.Models
+@{
+    var ev = (Event)ViewData["Event"]!;
+    var sites = (List<HeritageSite>)ViewData["Sites"]!;
+    var isNew = string.IsNullOrWhiteSpace(ev.Slug);
+    string Start(DateTime d) => d == default ? "" : d.ToString("yyyy-MM-ddTHH:mm");
+}
+<div class="section-head">
+    <h2>@(isNew ? "New programme" : "Edit programme")</h2>
+    <a href="/admin/events">← Back to programmes</a>
+</div>
+<form method="post" action="/admin/events" class="stack admin-form">
+    @Html.AntiForgeryToken()
+    <input type="hidden" name="id" value="@(isNew ? "" : ev.Id)" />
+
+    <div class="form-block">
+        <h3>Basics</h3>
+        <div class="form-grid">
+            <label>Title <input name="title" value="@ev.Title" required /></label>
+            <label>Slug (optional) <input name="slug" value="@ev.Slug" placeholder="auto from title" /></label>
+            <label>Type
+                <select name="type">
+                    <option value="walk" selected="@(ev.Type == "walk" ? "selected" : null)">Heritage walk</option>
+                    <option value="cultural" selected="@(ev.Type == "cultural" ? "selected" : null)">Cultural activity</option>
+                    <option value="exhibition" selected="@(ev.Type == "exhibition" ? "selected" : null)">Exhibition</option>
+                    <option value="awareness" selected="@(ev.Type == "awareness" ? "selected" : null)">Awareness / talk</option>
+                </select>
+            </label>
+            <label>Site
+                <select name="siteId">
+                    <option value="">— none —</option>
+                    @foreach (var s in sites)
+                    {
+                        <option value="@s.Id" selected="@(s.Id == ev.SiteId ? "selected" : null)">@s.Name</option>
+                    }
+                </select>
+            </label>
+        </div>
+    </div>
+
+    <div class="form-block">
+        <h3>Schedule &amp; place</h3>
+        <div class="form-grid">
+            <label>Start <input type="datetime-local" name="startDate" value="@Start(ev.StartDate)" required /></label>
+            <label>End <input type="datetime-local" name="endDate" value="@Start(ev.EndDate)" required /></label>
+            <label class="full">Venue <input name="venue" value="@ev.Venue" /></label>
+        </div>
+    </div>
+
+    <div class="form-block">
+        <h3>Content</h3>
+        <div class="form-grid">
+            <label class="full">Description <textarea name="description" rows="3">@ev.Description</textarea></label>
+        </div>
+    </div>
+
+    <div class="action-row">
+        <button class="btn btn-primary" type="submit">Save programme</button>
+        <a class="btn btn-ghost" href="/admin/events">Cancel</a>
+    </div>
+</form>

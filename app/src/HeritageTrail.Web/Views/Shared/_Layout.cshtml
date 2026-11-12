@@ -12,6 +12,26 @@
     <title>@title — HeritageTrail</title>
     <style>@Html.Raw(Tokens.ToCss())</style>
     <link rel="stylesheet" href="/css/atoms.css" />
+    @if (ViewData["PaletteVars"] is string paletteVars)
+    {
+        <style>:root{@Html.Raw(paletteVars)}</style>
+    }
+    @if (ViewData["TypeVars"] is string typeVars)
+    {
+        <style>:root{@Html.Raw(typeVars)}</style>
+    }
+    @if (ViewData["RadiusVars"] is string radiusVars)
+    {
+        <style>:root{@Html.Raw(radiusVars)}</style>
+    }
+    @if (ViewData["SpaceVars"] is string spaceVars)
+    {
+        <style>:root{@Html.Raw(spaceVars)}</style>
+    }
+    @if (ViewData["ButtonCss"] is string buttonCss && !string.IsNullOrWhiteSpace(buttonCss))
+    {
+        <style>@Html.Raw(buttonCss)</style>
+    }
 </head>
 <body>
 @if (Env.Badge is not null)
@@ -22,22 +42,51 @@
     <a class="wordmark" href="/">HeritageTrail</a>
     <nav class="nav-stub" aria-label="Primary">
         <a href="/">Home</a>
-        <a href="#">Heritage Sites</a>
-        <a href="#">Explore</a>
-        <a href="#">About us</a>
-        <a href="#">Events</a>
-        <a href="#">Gallery</a>
-        <a class="nav-register" href="#">REGISTER</a>
+        <a href="/heritage-sites">Heritage Sites</a>
+        <a href="/heritage-sites">Explore</a>
+        <a href="/about/what-we-do">About us</a>
+        <a href="/events">Events</a>
+        <a href="/gallery">Gallery</a>
+        @if (User.Identity?.IsAuthenticated == true)
+        {
+            <a class="nav-register" href="/account">ACCOUNT</a>
+            @if (User.IsInRole("admin"))
+            {
+                <a class="nav-register" href="/admin">ADMIN</a>
+            }
+        }
+        else
+        {
+            <a class="nav-register" href="/auth/register">REGISTER</a>
+        }
     </nav>
+    <div class="nav-actions">
+        @if (User.Identity?.IsAuthenticated == true)
+        {
+            <form method="post" action="/auth/logout">
+                @Html.AntiForgeryToken()
+                <button class="linkbtn" type="submit">Log out</button>
+            </form>
+        }
+        else
+        {
+            <a href="/auth/login">Log in</a>
+        }
+    </div>
 </header>
 <main class="page">
+    @if (TempData["Notice"] is string notice)
+    {
+        <div class="notice">@notice</div>
+    }
     @RenderBody()
 </main>
 <footer class="site-foot">
-    <span>HeritageTrail · @Env.Name pipeline</span>
+    <span>HeritageTrail · heritage walks, talks and exhibitions</span>
     <span class="foot-links">
-        <a href="/healthz">health</a>
-        <a href="/atoms">atoms</a>
+        <a href="/contact">Contact</a>
+        <a href="/about/read-about-us">About us</a>
+        <a href="/auth/register">Register</a>
     </span>
 </footer>
 <script src="/js/motion.js"></script>

@@ -1,0 +1,104 @@
+@using System.Text.Json.Nodes
+@using HeritageTrail.Web.Services
+@inject TokenProvider Tokens
+@{
+    Layout = null;
+    var p = (JsonObject)ViewData["Mock"]!;
+    var color = p["color"]!.AsObject();
+    var sb = new System.Text.StringBuilder();
+    foreach (var (k, v) in color)
+    {
+        if (v is JsonValue jv && jv.GetValueKind() == System.Text.Json.JsonValueKind.String)
+        {
+            sb.Append("--color-").Append(CssNaming.Kebab(k)).Append(':').Append(jv.GetValue<string>()).Append(';');
+        }
+    }
+    string S(JsonNode? n, string fallback = "") => n is JsonValue v && v.GetValueKind() == System.Text.Json.JsonValueKind.String ? v.GetValue<string>() : fallback;
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>@S(p["id"]) · @S(p["name"])</title>
+    <style>@Html.Raw(Tokens.ToCss())</style>
+    <style>:root{@Html.Raw(sb.ToString())}</style>
+    <link rel="stylesheet" href="/css/atoms.css" />
+    <style>
+        .palette { display: grid; grid-template-columns: repeat(6, 1fr); gap: 10px 16px; padding: 16px 28px 18px; border-bottom: 1px solid var(--color-border); }
+        .palette .sw { display: flex; flex-direction: column; gap: 5px; }
+        .palette .swatch-color { height: 54px; border-radius: 2px; border: 1px solid var(--color-border); }
+        .palette .lbl { font-family: Consolas, monospace; font-size: 11px; color: var(--color-ink-muted); }
+    </style>
+</head>
+<body>
+    <div class="specimen-bar">
+        <span class="spec-id">@S(p["id"])</span>
+        <span class="spec-name">@S(p["name"])</span>
+    </div>
+
+    <section class="palette">
+        @foreach (var (k, v) in color)
+        {
+            var hex = S(v);
+            <div class="sw">
+                <div class="swatch-color" style="background:@hex"></div>
+                <span class="lbl">@CssNaming.Kebab(k) · @hex</span>
+            </div>
+        }
+    </section>
+
+    <div class="page">
+        <header class="site-head">
+            <a class="wordmark" href="#">HeritageTrail</a>
+            <nav class="nav-stub" aria-label="Primary">
+                <a href="#">Home</a>
+                <a href="#">Heritage Sites</a>
+                <a href="#">Explore</a>
+                <a href="#">About us</a>
+                <a href="#">Events</a>
+                <a href="#">Gallery</a>
+                <a class="nav-register" href="#">REGISTER</a>
+            </nav>
+        </header>
+
+        <section class="hero">
+            <div class="hero-copy">
+                <p class="eyebrow">Mỹ Sơn · Quảng Nam</p>
+                <h1 class="display">Nine centuries of Cham towers</h1>
+                <p class="lede">Brick towers from the 4th–13th centuries; UNESCO listed in 1999; 70 km from Đà Nẵng.</p>
+                <div class="action-row">
+                    <a class="btn btn-primary" href="#">Plan a visit</a>
+                    <a class="btn btn-ghost" href="#">Explore sites</a>
+                </div>
+            </div>
+        </section>
+
+        <section class="strip">
+            <div class="chips">
+                <span class="chip">Temples</span>
+                <span class="chip">UNESCO 1999</span>
+            </div>
+            <div class="cards">
+                <article class="site-card">
+                    <div class="card-media" aria-hidden="true"></div>
+                    <div class="card-body">
+                        <h2 class="card-title">Hội An Ancient Town</h2>
+                        <p class="card-fact">Old-town ticket covers five heritage houses.</p>
+                    </div>
+                </article>
+                <article class="event-row">
+                    <div class="event-date">
+                        <span class="event-day">14</span>
+                        <span class="event-month">lunar night</span>
+                    </div>
+                    <div class="event-body">
+                        <h3 class="event-title">Lantern Night</h3>
+                    </div>
+                    <span class="event-cta">Interested</span>
+                </article>
+            </div>
+        </section>
+    </div>
+</body>
+</html>

@@ -1,0 +1,33 @@
+@using HeritageTrail.Web.Models
+@{
+    ViewData["Title"] = "Admin · Events";
+    var events = (List<Event>)ViewData["Events"]!;
+    var counts = (Dictionary<string, int>)ViewData["InterestCounts"]!;
+}
+<div class="section-head">
+    <h2>Programmes</h2>
+    <a href="/admin/events/new">+ New event</a>
+</div>
+<table class="table">
+    <tr><th>Title</th><th>Start</th><th>Venue</th><th>Interested</th><th class="actions"></th></tr>
+    @foreach (var ev in events)
+    {
+        <tr>
+            <td>@ev.Title</td>
+            <td>@ev.StartDate.ToString("dd MMM yyyy HH:mm")</td>
+            <td>@ev.Venue</td>
+            <td><a href="/admin/events/@ev.Id/interested" style="color:var(--color-accent)">@(counts.TryGetValue(ev.Id, out var c) ? c : 0)</a></td>
+            <td class="actions">
+                <a href="/admin/events/@ev.Id/edit" style="color:var(--color-accent)">Edit</a>
+                <form method="post" action="/admin/events/@ev.Id/delete" style="display:inline">
+                    @Html.AntiForgeryToken()
+                    <button class="inline-del" type="submit">Delete</button>
+                </form>
+            </td>
+        </tr>
+    }
+</table>
+@if (events.Count == 0)
+{
+    <p class="empty">No programmes yet.</p>
+}

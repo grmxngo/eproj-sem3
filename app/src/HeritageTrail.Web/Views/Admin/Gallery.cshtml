@@ -1,0 +1,46 @@
+@using HeritageTrail.Web.Models
+@{
+    ViewData["Title"] = "Admin · Gallery";
+    var items = (List<GalleryItem>)ViewData["Items"]!;
+}
+<div class="section-head">
+    <h2>Gallery</h2>
+    <span class="eyebrow" style="margin:0">@items.Count images</span>
+</div>
+<table class="table">
+    <tr><th>Image URL</th><th>Caption</th><th>Ref</th><th>Credit</th><th class="actions"></th></tr>
+    @foreach (var item in items)
+    {
+        <tr>
+            <td>@item.ImageUrl</td>
+            <td>@item.Caption</td>
+            <td>@item.RefType</td>
+            <td>@item.Credit</td>
+            <td class="actions">
+                <form method="post" action="/admin/gallery/@item.Id/delete" style="display:inline">
+                    @Html.AntiForgeryToken()
+                    <button class="inline-del" type="submit">Delete</button>
+                </form>
+            </td>
+        </tr>
+    }
+</table>
+
+<div class="section-head">
+    <h2>Add image</h2>
+</div>
+<form method="post" action="/admin/gallery" class="stack admin-form">
+    @Html.AntiForgeryToken()
+    <label>Image URL <input name="imageUrl" placeholder="/images/preview/card1.jpg" required /></label>
+    <label>Caption <input name="caption" required /></label>
+    <label>Reference
+        <select name="refType">
+            <option value="site">Site</option>
+            <option value="event">Programme</option>
+        </select>
+    </label>
+    <label>Credit <input name="credit" placeholder="Source / author" /></label>
+    <div class="action-row">
+        <button class="btn btn-primary" type="submit">Add image</button>
+    </div>
+</form>

@@ -1,0 +1,65 @@
+DOMAIN WORD COUNTS (whole corpus):
+  23  heritage
+  17  site(s)
+   4  place(s)
+   2  monument(s)
+   1  temple(s)
+   1  palace(s)
+   1  fort(s)
+   1  museum(s)
+   1  landmark(s)
+   3  architecture
+   2  history
+   5  historical
+   5  cultural
+   2  background
+   5  event(s)
+   8  programme(s)
+   3  gallery
+   3  image(s)
+   5  location(s)
+   1  walk(s)
+   1  exhibition(s)
+   1  awareness
+   4  explore/explor*
+   5  register/member
+   4  history+importance+significance
+
+BIGRAMS co-occurring with 'heritage' / key pairs:
+  10  heritage sites
+   6  heritage site
+   4  about us
+   4  the heritage
+   2  historical places
+   2  heritage places
+   2  of heritage
+   1  website heritagetrail
+   1  places heritage
+   1  these heritage
+   1  history importance
+   1  cultural background
+   1  new heritage
+   1  site heritagetrail
+   1  about heritage
+   1  cultural heritage
+   1  heritage various
+   1  home heritage
+   1  editing heritage
+   1  desired heritage
+   1  module heritage
+   1  other heritage
+   1  heritage locations
+   1  cultural locations
+   1  our mission
+   1  website heritage
+   1  associated heritage
+   1  for heritage
+   1  heritage awareness
+   1  cultural activities
+   1  and heritage
+   1  heritage walks
+   1  different heritage
+   1  selected heritage
+   1  or heritage
+   1  heritage events
+   1  file heritagetrail

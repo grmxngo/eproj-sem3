@@ -1,0 +1,26 @@
+@using HeritageTrail.Web.Models
+@{
+    ViewData["Title"] = "Admin · Members";
+    var members = (List<User>)ViewData["Members"]!;
+}
+<div class="section-head">
+    <h2>Members</h2>
+    <span class="eyebrow" style="margin:0">@members.Count registered</span>
+</div>
+<table class="table">
+    <tr><th>Name</th><th>Email</th><th>Phone</th><th>Occupation</th><th>Registered</th></tr>
+    @foreach (var m in members)
+    {
+        <tr>
+            <td>@m.Name</td>
+            <td>@m.Email</td>
+            <td>@m.Phone</td>
+            <td>@m.Occupation</td>
+            <td>@m.CreatedAt.ToString("dd MMM yyyy")</td>
+        </tr>
+    }
+</table>
+@if (members.Count == 0)
+{
+    <p class="empty">No members yet.</p>
+}

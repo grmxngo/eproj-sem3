@@ -1,6 +1,29 @@
 {
   "batch": 1,
   "note": "Preview-only candidates. Promoted into tokens.json only after the user picks in chat (docs/design/decisions.md).",
+  "bases": [
+    {
+      "id": "L1",
+      "name": "Giấy dó — ấm",
+      "desc": "ivory ấm, thiên về giấy cổ; chữ nâu đen rất ấm",
+      "bg": "#F4EFE4",
+      "ink": "#221C13"
+    },
+    {
+      "id": "L2",
+      "name": "Đá vôi — trung tính",
+      "desc": "rất gần trắng, hơi lạnh; chữ xanh-đen trung tính",
+      "bg": "#F0F2EF",
+      "ink": "#18201C"
+    },
+    {
+      "id": "L3",
+      "name": "Vôi rêu — hơi xanh",
+      "desc": "trắng ngả rêu rất nhẹ; chữ xanh rêu đậm",
+      "bg": "#EBF0E6",
+      "ink": "#1A241C"
+    }
+  ],
   "palettes": [
     {
       "id": "A",
@@ -87,9 +110,320 @@
     }
   ],
   "radiusOptions": [
-    { "id": "R1", "name": "Sharp heritage", "sm": "2px", "md": "4px", "lg": "6px" },
-    { "id": "R2", "name": "Soft modern", "sm": "4px", "md": "10px", "lg": "16px" },
-    { "id": "R3", "name": "Organic", "sm": "6px", "md": "14px", "lg": "24px" }
+    {
+      "id": "R1",
+      "name": "Sharp heritage",
+      "sm": "2px",
+      "md": "4px",
+      "lg": "6px"
+    },
+    {
+      "id": "R2",
+      "name": "Soft modern",
+      "sm": "4px",
+      "md": "10px",
+      "lg": "16px"
+    },
+    {
+      "id": "R3",
+      "name": "Organic",
+      "sm": "6px",
+      "md": "14px",
+      "lg": "24px"
+    }
   ],
-  "motionNote": "120ms cho hover nhỏ, 200ms cơ bản, 320ms chuyển section, 480ms hero reveal; easeOut cho vào, easeIn cho thoát. Reduced-motion sẽ tắt hết."
+  "motionNote": "120ms cho hover nhỏ, 200ms cơ bản, 320ms chuyển section, 480ms hero reveal; easeOut cho vào, easeIn cho thoát. Reduced-motion sẽ tắt hết.",
+  "derivedPalette": {
+    "note": "Derived by counting domain words in the 3 original English docs, then mapping each object to the colours that appear with it in reality (the docs contain no colour words).",
+    "roles": [
+      {
+        "id": "bg",
+        "role": "Base — giấy / đá vôi",
+        "hex": "#F5EFE3",
+        "source": "giấy tài liệu, đá vôi",
+        "evidence": "heritage sites 17 · gallery 3 · image 3"
+      },
+      {
+        "id": "surface",
+        "role": "Surface",
+        "hex": "#EAE4D5",
+        "source": "đá vôi sáng",
+        "evidence": "danh sách site, form"
+      },
+      {
+        "id": "ink",
+        "role": "Ink — mực than",
+        "hex": "#241C14",
+        "source": "mực in trên giấy",
+        "evidence": "document 5 · history 2 · background 2"
+      },
+      {
+        "id": "muted",
+        "role": "Ink muted",
+        "hex": "#6B6152",
+        "source": "mực nhạt",
+        "evidence": "meta, caption"
+      },
+      {
+        "id": "border",
+        "role": "Border",
+        "hex": "#CFC7B6",
+        "source": "đường kẻ đá",
+        "evidence": "dividers"
+      },
+      {
+        "id": "accent",
+        "role": "Accent — sơn mài",
+        "hex": "#A63A24",
+        "source": "cửa đền sơn mài, đèn lồng",
+        "evidence": "temple 1 · palace 1 · event 5 · programme 8"
+      },
+      {
+        "id": "gold",
+        "role": "Accent alt — vàng lá",
+        "hex": "#C79A3F",
+        "source": "vàng lá đền/cung điện",
+        "evidence": "palace 1 · exhibition 1"
+      },
+      {
+        "id": "moss",
+        "role": "Support — rêu",
+        "hex": "#5C6B4A",
+        "source": "rêu trên gạch/đá",
+        "evidence": "site 17 · architecture 3"
+      },
+      {
+        "id": "onaccent",
+        "role": "On accent",
+        "hex": "#FFF8EC",
+        "source": "giấy sáng",
+        "evidence": "chữ trên nền accent"
+      },
+      {
+        "id": "success",
+        "role": "Success",
+        "hex": "#4F7A4F",
+        "source": "rêu",
+        "evidence": "semantic"
+      },
+      {
+        "id": "warning",
+        "role": "Warning",
+        "hex": "#C79A3F",
+        "source": "vàng",
+        "evidence": "semantic"
+      },
+      {
+        "id": "danger",
+        "role": "Danger",
+        "hex": "#B3261E",
+        "source": "sơn mài đậm",
+        "evidence": "semantic"
+      }
+    ]
+  },
+  "mockPalettes": {
+    "note": "Bolder editorial palettes: high contrast paper, saturated deep accent, events band in ink.",
+    "palettes": [
+      {
+        "id": "P1",
+        "name": "Sơn mài trầm",
+        "desc": "giấy ấm + đỏ sơn mài đậm, event band tối",
+        "color": {
+          "bg": "#F5EDDD",
+          "surface": "#EADCC3",
+          "surfaceRaised": "#DCC9A8",
+          "ink": "#1E140E",
+          "inkMuted": "#6A563F",
+          "border": "#C9B490",
+          "accent": "#9A2B14",
+          "onAccent": "#FFF3E4",
+          "accentAlt": "#C08A2E",
+          "success": "#3F6E3A",
+          "warning": "#B07A26",
+          "danger": "#7E1A10"
+        }
+      },
+      {
+        "id": "P2",
+        "name": "Mực & đá",
+        "desc": "nền đá lạnh + navy đậm, đồng cho nhấn",
+        "color": {
+          "bg": "#EAEFF0",
+          "surface": "#DCE4E6",
+          "surfaceRaised": "#CBD7DA",
+          "ink": "#101A21",
+          "inkMuted": "#53646C",
+          "border": "#B2C3C7",
+          "accent": "#1B4D6B",
+          "onAccent": "#F2F8FA",
+          "accentAlt": "#B36A2C",
+          "success": "#2F6B55",
+          "warning": "#B36A2C",
+          "danger": "#8E2A20"
+        }
+      },
+      {
+        "id": "P3",
+        "name": "Rêu đậm",
+        "desc": "nền rêu nhạt + rêu đậm, đất nung cho event",
+        "color": {
+          "bg": "#E9F0DF",
+          "surface": "#D9E5C9",
+          "surfaceRaised": "#C7D6B2",
+          "ink": "#121B0F",
+          "inkMuted": "#566449",
+          "border": "#A8BC93",
+          "accent": "#2F4A2A",
+          "onAccent": "#F5FAEE",
+          "accentAlt": "#C25B2E",
+          "success": "#356B33",
+          "warning": "#B07A26",
+          "danger": "#8E2415"
+        }
+      },
+      {
+        "id": "P4",
+        "name": "Gạch & nắng",
+        "desc": "nền cát + gạch nung đậm, teal sông cho event",
+        "color": {
+          "bg": "#F4E6CF",
+          "surface": "#E7D3B4",
+          "surfaceRaised": "#D5BE99",
+          "ink": "#1F1209",
+          "inkMuted": "#745C42",
+          "border": "#C0A67E",
+          "accent": "#A63014",
+          "onAccent": "#FFF4E8",
+          "accentAlt": "#175B54",
+          "success": "#3F6E3A",
+          "warning": "#B07A26",
+          "danger": "#7E1A10"
+        }
+      }
+    ]
+  },
+  "homePalettes": {
+    "note": "Three complete-home palettes. Same structure (real data); only token colours change via ?palette=hN.",
+    "palettes": [
+      {
+        "id": "H1",
+        "name": "Night museum",
+        "desc": "charcoal + cream + vermilion",
+        "color": {
+          "bg": "#111111",
+          "surface": "#1b1b1b",
+          "surfaceRaised": "#262626",
+          "ink": "#f2ece1",
+          "inkMuted": "#a89f90",
+          "border": "#3a3a3a",
+          "accent": "#d6452e",
+          "onAccent": "#ffffff",
+          "accentAlt": "#d9a441",
+          "success": "#6fae6f",
+          "warning": "#d9a441",
+          "danger": "#b5311f"
+        }
+      },
+      {
+        "id": "H2",
+        "name": "Deep forest",
+        "desc": "deep green + cream + antique gold",
+        "color": {
+          "bg": "#0f2a22",
+          "surface": "#15362c",
+          "surfaceRaised": "#1c4437",
+          "ink": "#eef0e2",
+          "inkMuted": "#9fb3a6",
+          "border": "#2e5347",
+          "accent": "#e0a53c",
+          "onAccent": "#1a1408",
+          "accentAlt": "#d97a3f",
+          "success": "#7fae7f",
+          "warning": "#e0a53c",
+          "danger": "#c0452f"
+        }
+      },
+      {
+        "id": "H3",
+        "name": "Cool archive",
+        "desc": "cool grey-green paper + rust + ink",
+        "color": {
+          "bg": "#eef0ea",
+          "surface": "#e2e6dd",
+          "surfaceRaised": "#d5dacf",
+          "ink": "#141a17",
+          "inkMuted": "#5d6a62",
+          "border": "#b9c2b6",
+          "accent": "#b5311f",
+          "onAccent": "#ffffff",
+          "accentAlt": "#2f6b5e",
+          "success": "#3f6e3a",
+          "warning": "#b07a26",
+          "danger": "#7e1a10"
+        }
+      }
+    ]
+  },
+  "typeSets": {
+    "note": "Typography systems applied to the complete homepage for comparison.",
+    "sets": [
+      {
+        "id": "T1",
+        "name": "Classical editorial",
+        "desc": "serif display + sans body",
+        "display": "'Palatino Linotype','Book Antiqua',Georgia,serif",
+        "body": "'Segoe UI','Segoe UI Variable Text',system-ui,sans-serif",
+        "mono": "Consolas,'Cascadia Mono',monospace"
+      },
+      {
+        "id": "T2",
+        "name": "Museum modern",
+        "desc": "grotesk display + sans body",
+        "display": "'Bahnschrift','Segoe UI Variable Display','Segoe UI',sans-serif",
+        "body": "'Segoe UI','Segoe UI Variable Text',system-ui,sans-serif",
+        "mono": "Consolas,'Cascadia Mono',monospace"
+      },
+      {
+        "id": "T3",
+        "name": "Signage condensed",
+        "desc": "condensed display + humanist sans body",
+        "display": "'Franklin Gothic Medium','Arial Narrow',sans-serif",
+        "body": "'Trebuchet MS','Segoe UI',system-ui,sans-serif",
+        "mono": "Consolas,'Cascadia Mono',monospace"
+      }
+    ]
+  },
+  "radiusSets": {
+    "note": "Radius systems applied to the complete home page.",
+    "sets": [
+      {
+        "id": "R1",
+        "name": "Sharp heritage",
+        "desc": "near-square corners",
+        "sm": "2px",
+        "md": "4px",
+        "lg": "6px",
+        "pill": "999px"
+      },
+      {
+        "id": "R2",
+        "name": "Soft modern",
+        "desc": "rounded but restrained",
+        "sm": "6px",
+        "md": "12px",
+        "lg": "20px",
+        "pill": "999px"
+      },
+      {
+        "id": "R3",
+        "name": "Organic",
+        "desc": "large soft corners",
+        "sm": "10px",
+        "md": "18px",
+        "lg": "28px",
+        "pill": "999px"
+      }
+    ]
+  }
 }

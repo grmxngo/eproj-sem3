@@ -1,0 +1,53 @@
+@using HeritageTrail.Web.Models
+@{
+    var site = (HeritageSite)ViewData["Site"]!;
+    var cats = (List<Category>)ViewData["Categories"]!;
+    var isNew = string.IsNullOrWhiteSpace(site.Slug);
+}
+<div class="section-head">
+    <h2>@(isNew ? "New site" : "Edit site")</h2>
+    <a href="/admin/sites">← Back to sites</a>
+</div>
+<form method="post" action="/admin/sites" class="stack admin-form">
+    @Html.AntiForgeryToken()
+    <input type="hidden" name="id" value="@(isNew ? "" : site.Id)" />
+
+    <div class="form-block">
+        <h3>Basics</h3>
+        <div class="form-grid">
+            <label>Name <input name="name" value="@site.Name" required /></label>
+            <label>Slug (optional) <input name="slug" value="@site.Slug" placeholder="auto from name" /></label>
+            <label>Category
+                <select name="category">
+                    @foreach (var c in cats)
+                    {
+                        <option value="@c.Name" selected="@(c.Name == site.Category ? "selected" : null)">@c.Name</option>
+                    }
+                </select>
+            </label>
+            <label>Location <input name="location" value="@site.Location" required /></label>
+        </div>
+    </div>
+
+    <div class="form-block">
+        <h3>Content</h3>
+        <div class="form-grid">
+            <label class="full">Historical background <textarea name="historicalBackground" rows="3">@site.HistoricalBackground</textarea></label>
+            <label class="full">Architecture and significance <textarea name="architectureSignificance" rows="3">@site.ArchitectureSignificance</textarea></label>
+            <label class="full">Cultural background <textarea name="culturalBackground" rows="2">@site.CulturalBackground</textarea></label>
+        </div>
+    </div>
+
+    <div class="form-block">
+        <h3>Media &amp; flags</h3>
+        <div class="form-grid">
+            <label class="full">Image URLs (comma separated) <input name="imagesCsv" value="@string.Join(", ", site.Images)" /></label>
+            <label class="check"><input type="checkbox" name="isAssociated" value="true" checked="@(site.IsAssociated ? "checked" : null)" /> Associated site</label>
+        </div>
+    </div>
+
+    <div class="action-row">
+        <button class="btn btn-primary" type="submit">Save site</button>
+        <a class="btn btn-ghost" href="/admin/sites">Cancel</a>
+    </div>
+</form>

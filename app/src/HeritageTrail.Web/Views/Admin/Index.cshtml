@@ -1,0 +1,37 @@
+@using HeritageTrail.Web.Models
+@{
+    ViewData["Title"] = "Admin";
+    var recent = (List<Query>)ViewData["RecentQueries"]!;
+}
+<div class="stat-cards">
+    <div class="stat-card"><b>@ViewData["Sites"]</b><span>heritage sites</span></div>
+    <div class="stat-card"><b>@ViewData["Events"]</b><span>programmes</span></div>
+    <div class="stat-card"><b>@ViewData["Members"]</b><span>registered members</span></div>
+    <div class="stat-card"><b>@ViewData["OpenQueries"]</b><span>open queries</span></div>
+</div>
+
+<div class="quick-actions">
+    <a class="btn btn-primary" href="/admin/sites/new">+ New site</a>
+    <a class="btn btn-ghost" href="/admin/events/new">+ New programme</a>
+    <a class="btn btn-ghost" href="/admin/queries">Open queries (@ViewData["OpenQueries"])</a>
+</div>
+
+<div class="section-head">
+    <h2>Recent queries</h2>
+    <a href="/admin/queries">All queries →</a>
+</div>
+<table class="table">
+    <tr><th>Subject</th><th>Status</th><th>Created</th></tr>
+    @foreach (var q in recent)
+    {
+        <tr>
+            <td>@q.Subject</td>
+            <td>@q.Status</td>
+            <td>@q.CreatedAt.ToString("dd MMM yyyy")</td>
+        </tr>
+    }
+</table>
+@if (recent.Count == 0)
+{
+    <p class="empty">No queries yet.</p>
+}

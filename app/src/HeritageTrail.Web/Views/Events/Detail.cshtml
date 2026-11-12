@@ -1,0 +1,34 @@
+@using HeritageTrail.Web.Models
+@{
+    var ev = (Event)ViewData["Event"]!;
+    var site = ViewData["Site"] as HeritageSite;
+    var interested = (bool)ViewData["Interested"]!;
+    ViewData["Title"] = ev.Title;
+}
+<nav class="breadcrumb">
+    <a href="/">Home</a> / <a href="/events">Events</a> / <span>@ev.Title</span>
+</nav>
+
+<article class="detail">
+    <p class="card-kicker">@ev.Type</p>
+    <h1 class="page-title">@ev.Title</h1>
+    <p class="detail-meta">@ev.StartDate.ToString("ddd dd MMM yyyy · HH:mm") — @ev.Venue</p>
+    <p>@ev.Description</p>
+
+    @if (site is not null)
+    {
+        <p><a href="/heritage-sites/@site.Slug">Site: @site.Name</a></p>
+    }
+
+    @if (User.Identity?.IsAuthenticated == true)
+    {
+        <form method="post" action="/events/@ev.Id/interest" style="margin-top: var(--space-md)">
+            @Html.AntiForgeryToken()
+            <button class="btn btn-primary" type="submit">@(interested ? "Remove interest" : "Interested")</button>
+        </form>
+    }
+    else
+    {
+        <p><a href="/auth/login?returnUrl=/events/@ev.Slug">Log in</a> to register your interest.</p>
+    }
+</article>

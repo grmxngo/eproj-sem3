@@ -1,0 +1,32 @@
+@using HeritageTrail.Web.Models
+@{
+    ViewData["Title"] = "Admin · Queries";
+    var queries = (List<Query>)ViewData["Queries"]!;
+    var users = (List<User>)ViewData["Users"]!;
+}
+<div class="section-head">
+    <h2>Queries</h2>
+    <span class="eyebrow" style="margin:0">@queries.Count total</span>
+</div>
+@foreach (var q in queries)
+{
+    var member = users.FirstOrDefault(u => u.Id == q.UserId);
+    <div style="border: 1px solid var(--color-border); padding: var(--space-md); margin-bottom: var(--space-sm)">
+        <p class="card-kicker">@q.Status · @q.CreatedAt.ToString("dd MMM yyyy HH:mm") · @(member?.Name ?? "member")</p>
+        <h3 class="card-title">@q.Subject</h3>
+        <p class="card-fact">@q.Message</p>
+        @if (!string.IsNullOrWhiteSpace(q.Reply))
+        {
+            <p class="card-fact">Reply: @q.Reply</p>
+        }
+        <form method="post" action="/admin/queries/@q.Id/reply" class="inline-form" style="margin-top: var(--space-sm)">
+            @Html.AntiForgeryToken()
+            <input name="reply" value="@q.Reply" placeholder="Reply to member" required style="flex: 1; min-width: 16rem" />
+            <button class="btn btn-primary" type="submit">Save reply</button>
+        </form>
+    </div>
+}
+@if (queries.Count == 0)
+{
+    <p class="empty">No queries yet.</p>
+}

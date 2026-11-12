@@ -1,5 +1,6 @@
 using HeritageTrail.Web.Data;
 using HeritageTrail.Web.Services;
+using Microsoft.AspNetCore.Authentication.Cookies;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -16,12 +17,38 @@ builder.Services.AddSingleton<EnvironmentInfo>();
 builder.Services.AddSingleton<TokenProvider>();
 builder.Services.AddSingleton<CandidatesProvider>();
 builder.Services.AddSingleton<MongoContext>();
+builder.Services.AddSingleton<AuthService>();
 builder.Services.AddControllersWithViews();
+
+builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+    .AddCookie(options =>
+    {
+        options.Cookie.Name = "ht.auth";
+        options.LoginPath = "/auth/login";
+        options.AccessDeniedPath = "/auth/login";
+    });
+builder.Services.AddAuthorization();
 
 var app = builder.Build();
 
+using (var scope = app.Services.CreateScope())
+{
+    var db = scope.ServiceProvider.GetRequiredService<MongoContext>();
+    var logger = scope.ServiceProvider.GetRequiredService<ILogger<Program>>();
+    try
+    {
+        await SeedService.RunAsync(db, envConfig, logger);
+    }
+    catch (Exception ex)
+    {
+        logger.LogWarning(ex, "Seed skipped — MongoDB unreachable? Health endpoint will report degraded.");
+    }
+}
+
 app.UseStaticFiles();
 app.UseRouting();
+app.UseAuthentication();
+app.UseAuthorization();
 
 app.MapGet("/healthz", (EnvironmentInfo env, MongoContext db) => Results.Json(new
 {

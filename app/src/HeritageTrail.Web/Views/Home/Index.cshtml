@@ -1,11 +1,297 @@
+@using HeritageTrail.Web.Models
 @{
     ViewData["Title"] = "Home";
+    var events = (List<Event>)ViewData["Upcoming"]!;
+    var past = (List<Event>)ViewData["Past"]!;
+    var sites = (List<HeritageSite>)ViewData["Sites"]!;
+    var categories = (List<Category>)ViewData["Categories"]!;
+    var about = (List<AboutPage>)ViewData["About"]!;
+    var gallery = (List<GalleryItem>)ViewData["Gallery"]!;
+    var imgs = new[] { "/images/preview/card1.jpg", "/images/preview/card2.jpg", "/images/preview/card3.jpg", "/images/preview/hero.jpg" };
+    var nextEvent = events.FirstOrDefault();
+    var hero = ViewData["Hero"] as string ?? "c";
+    var eventsStyle = ViewData["Events"] as string ?? "e3";
+    var cardsStyle = ViewData["Cards"] as string ?? "s1";
+    var gallStyle = ViewData["GalleryStyle"] as string ?? "g1";
 }
-<div class="specimen-bar">
-    <span class="spec-id">PIPELINE CHECK</span>
-    <span class="spec-name">tokens.json → CSS vars → atoms</span>
-    <span class="spec-desc">trang tạm của Phase A — atom thật sẽ thay sau khi bạn duyệt batch</span>
+@if (hero == "b")
+{
+    <section class="hero-b">
+        <img src="/images/preview/hero.jpg" alt="Heritage landscape — preview" />
+        <div class="copy">
+            <p class="eyebrow">HeritageTrail · worldwide</p>
+            <h1 class="display">Heritage sites, walks and exhibitions</h1>
+            <p class="lede">Eight sites on four continents — what survives, when it opens, how to reach it.</p>
+            <div class="action-row">
+                <a class="btn btn-primary" href="/events">See what's on</a>
+                <a class="btn btn-ghost" href="/heritage-sites">Explore sites</a>
+            </div>
+        </div>
+    </section>
+}
+else if (hero == "c")
+{
+    <section class="hero-c">
+        <img class="image" src="/images/preview/hero.jpg" alt="Heritage landscape — preview" />
+        <div class="copy">
+            <div>
+                <p class="eyebrow">HeritageTrail · worldwide</p>
+                <h1 class="display">Heritage sites, walks and exhibitions</h1>
+            </div>
+            <div class="right">
+                <p class="lede">Eight sites on four continents — what survives, when it opens, how to reach it, and the programmes we run there.</p>
+                <div class="action-row">
+                    <a class="btn btn-primary" href="/events">See what's on</a>
+                    <a class="btn btn-ghost" href="/heritage-sites">Explore sites</a>
+                </div>
+            </div>
+        </div>
+</section>
+}
+else
+{
+    <section class="home-hero">
+        <div class="copy">
+            <p class="eyebrow">HeritageTrail · worldwide</p>
+            <h1 class="display">Heritage sites, walks and exhibitions</h1>
+            <p class="lede">Eight sites on four continents — what survives, when it opens, how to reach it, and the programmes we run there.</p>
+            <div class="action-row">
+                <a class="btn btn-primary" href="/events">See what's on</a>
+                <a class="btn btn-ghost" href="/heritage-sites">Explore sites</a>
+            </div>
 </div>
-<div class="specimen-wrap">
-    @await Html.PartialAsync("~/Views/Atoms/Batch1/_Slice.cshtml")
-</div>
+        <div class="media">
+            <img src="/images/preview/hero.jpg" alt="Heritage landscape — preview" />
+            @if (nextEvent is not null)
+            {
+                <div class="home-next">
+                    <p class="card-kicker">Next up</p>
+                    <h2 class="card-title">@nextEvent.Title</h2>
+                    <p class="card-fact">@nextEvent.StartDate.ToString("ddd dd MMM · HH:mm") · @nextEvent.Venue</p>
+                    <a class="btn btn-primary" href="/events/@nextEvent.Slug">Interested</a>
+                </div>
+            }
+        </div>
+    </section>
+}
+
+<section class="home-band">
+    <div class="band-head">
+        <h2>What's on</h2>
+        <a href="/events">All events →</a>
+    </div>
+    @if (eventsStyle == "e2")
+    {
+        <div class="band-grid band-grid-img">
+            @for (var j = 0; j < Math.Min(3, events.Count); j++)
+            {
+                var ev = events[j];
+                <a class="band-card band-card-img" href="/events/@ev.Slug">
+                    <img src="@imgs[j % imgs.Length]" alt="@ev.Title — preview" />
+                    <span class="band-date">@ev.StartDate.ToString("ddd HH:mm")</span>
+                    <h3>@ev.Title</h3>
+                    <p>@ev.Venue</p>
+                    <span class="band-cta">Interested →</span>
+                </a>
+            }
+        </div>
+    }
+    else if (eventsStyle == "e3")
+    {
+        <div class="band-grid band-grid-typo">
+            @for (var j = 0; j < Math.Min(3, events.Count); j++)
+            {
+                var ev = events[j];
+                <a class="band-card band-card-typo" href="/events/@ev.Slug">
+                    <span class="band-day">@ev.StartDate.ToString("dd")</span>
+                    <span class="band-month">@ev.StartDate.ToString("MMM") · @ev.StartDate.ToString("HH:mm")</span>
+                    <h3>@ev.Title</h3>
+                    <p>@ev.Venue</p>
+                    <span class="band-cta">Interested →</span>
+                </a>
+            }
+        </div>
+    }
+    else
+    {
+        <div class="band-grid">
+            @foreach (var ev in events.Take(3))
+            {
+                <a class="band-card" href="/events/@ev.Slug">
+                    <span class="band-date">@ev.StartDate.ToString("ddd HH:mm")</span>
+                    <h3>@ev.Title</h3>
+                    <p>@ev.Venue</p>
+                    <span class="band-cta">Interested →</span>
+                </a>
+            }
+        </div>
+    }
+</section>
+
+<section>
+    <div class="section-head">
+        <h2>Featured sites</h2>
+        <a href="/heritage-sites">Explore all sites →</a>
+    </div>
+    @if (cardsStyle == "s2")
+    {
+        <div class="cards cards-rows">
+            @for (var i = 0; i < sites.Count; i++)
+            {
+                var s = sites[i];
+                <a class="site-card card-row" href="/heritage-sites/@s.Slug">
+                    <div class="card-media"><img src="@imgs[i % imgs.Length]" alt="@s.Name — preview" /></div>
+                    <div class="card-body">
+                        <p class="card-kicker">@s.Category · @s.Location</p>
+                        <h2 class="card-title">@s.Name</h2>
+                        <p class="card-fact">@s.ArchitectureSignificance</p>
+                    </div>
+                </a>
+            }
+        </div>
+    }
+    else if (cardsStyle == "s3")
+    {
+        <div class="cards cards-rows">
+            @for (var i = 0; i < sites.Count; i++)
+            {
+                var s = sites[i];
+                <a class="site-card card-mini" href="/heritage-sites/@s.Slug">
+                    <div class="thumb"><img src="@imgs[i % imgs.Length]" alt="@s.Name — preview" /></div>
+                    <div class="card-body">
+                        <p class="card-kicker">@s.Category · @s.Location</p>
+                        <h2 class="card-title">@s.Name</h2>
+                        <p class="card-fact">@s.ArchitectureSignificance</p>
+                    </div>
+                    <span class="arrow">→</span>
+                </a>
+            }
+        </div>
+    }
+    else
+    {
+        <div class="cards">
+            @{ var i = 0; }
+            @foreach (var s in sites)
+            {
+                <a class="site-card" href="/heritage-sites/@s.Slug">
+                    <div class="card-media"><img src="@imgs[i % imgs.Length]" alt="@s.Name — preview" /></div>
+                    <div class="card-body">
+                        <p class="card-kicker">@s.Category · @s.Location</p>
+                        <h2 class="card-title">@s.Name</h2>
+                        <p class="card-fact">@s.ArchitectureSignificance</p>
+                    </div>
+                </a>
+                i++;
+            }
+        </div>
+    }
+</section>
+
+<section class="home-categories">
+    <div class="section-head">
+        <h2>Browse by category</h2>
+        <a href="/heritage-sites">All sites →</a>
+    </div>
+    <div class="chips">
+        @foreach (var c in categories)
+        {
+            <a class="chip" href="/heritage-sites?cat=@Uri.EscapeDataString(c.Name)">@c.Name</a>
+        }
+    </div>
+</section>
+
+<section class="about-block">
+    <div>
+        <h2>What we do</h2>
+        <p>We run heritage walks, talks and exhibitions at sites across the world — and publish the facts behind each site, with dates and access.</p>
+        <div class="chips" style="margin-top: var(--space-sm)">
+            @foreach (var a in about)
+            {
+                <a class="chip chip-sm" href="/about/@a.Slug">@a.Title</a>
+            }
+        </div>
+    </div>
+    <div class="about-actions">
+        <a class="btn btn-ghost" href="/about/what-we-do">About us</a>
+        <a class="btn btn-primary" href="/auth/register">Register</a>
+    </div>
+</section>
+
+@if (past.Count > 0)
+{
+    <section>
+        <div class="section-head">
+            <h2>Recently conducted</h2>
+            <a href="/events">All programmes →</a>
+        </div>
+        <div class="event-list">
+            @foreach (var ev in past)
+            {
+                <a class="event-row" href="/events/@ev.Slug">
+                    <div class="event-date"><span class="event-day">@ev.StartDate.ToString("MMM")</span><span class="event-month">@ev.StartDate.ToString("dd")</span></div>
+                    <div class="event-body"><h3 class="event-title">@ev.Title</h3><p class="event-meta">@ev.Venue</p></div>
+                    <span class="event-cta">View →</span>
+                </a>
+            }
+        </div>
+    </section>
+}
+
+<section>
+    <div class="section-head">
+        <h2>From past programmes</h2>
+        <a href="/gallery">Gallery →</a>
+    </div>
+    @if (gallStyle == "g2")
+    {
+        <div class="gallery-grid gallery-overlay">
+            @{ var g2 = 0; }
+            @foreach (var item in gallery)
+            {
+                <figure class="tile tile-overlay">
+                    <img src="@imgs[g2 % imgs.Length]" alt="Gallery preview" />
+                    <figcaption>@item.Caption</figcaption>
+                </figure>
+                g2++;
+            }
+        </div>
+    }
+    else if (gallStyle == "g3")
+    {
+        <div class="gallery-strip">
+            @{ var g3 = 0; }
+            @foreach (var item in gallery)
+            {
+                <figure class="tile">
+                    <img src="@imgs[g3 % imgs.Length]" alt="Gallery preview" />
+                    <figcaption>@item.Caption</figcaption>
+                </figure>
+                g3++;
+            }
+        </div>
+    }
+    else
+    {
+        <div class="gallery-grid">
+            @{ var g = 0; }
+            @foreach (var item in gallery)
+            {
+                <figure class="tile">
+                    <img class="art" src="@imgs[g % imgs.Length]" alt="Gallery preview" />
+                    <figcaption>@item.Caption</figcaption>
+                </figure>
+                g++;
+            }
+        </div>
+    }
+</section>
+
+<section class="home-cta">
+    <h2>Join a programme</h2>
+    <p>Register to record interest, invite friends and ask questions — the organisation answers every query.</p>
+    <div class="action-row">
+        <a class="btn btn-primary" href="/auth/register">Register</a>
+        <a class="btn btn-ghost" href="/auth/login">Log in</a>
+    </div>
+</section>

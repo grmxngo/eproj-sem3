@@ -1,0 +1,65 @@
+@using System.Text.Json.Nodes
+@{
+    Layout = null;
+    var derived = (JsonObject)ViewData["Derived"]!;
+    var roles = derived["roles"]!.AsArray();
+    string S(JsonNode? n, string fallback = "") => n is JsonValue v && v.GetValueKind() == System.Text.Json.JsonValueKind.String ? v.GetValue<string>() : fallback;
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>A-01 · Palette derived from word counts</title>
+    <style>
+        *, *::before, *::after { box-sizing: border-box; }
+        body { margin: 0; background: #F5EFE3; color: #241C14; font-family: 'Segoe UI', system-ui, sans-serif; }
+        .sheet-bar { display: flex; gap: 14px; align-items: baseline; flex-wrap: wrap; padding: 12px 28px; border-bottom: 1px solid #D8D1C1; }
+        .sheet-tag { font-family: Consolas, monospace; font-size: 13px; color: #A63A24; letter-spacing: .08em; }
+        .sheet-note { font-size: 13px; color: #6B6152; }
+        .grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; padding: 28px; }
+        .role { background: #fff; border: 1px solid #E2DBCB; border-radius: 4px; overflow: hidden; }
+        .role .swatch { height: 132px; }
+        .role .meta { padding: 12px 14px; display: flex; flex-direction: column; gap: 4px; }
+        .role .name { font-size: 14px; font-weight: 600; }
+        .role .hex { font-family: Consolas, monospace; font-size: 12px; color: #6B6152; }
+        .role .src { font-size: 12px; color: #4A4237; }
+        .role .ev { font-size: 11px; color: #8A7F6C; }
+        .big { grid-column: span 2; }
+        .big .swatch { height: 210px; }
+        .note { padding: 0 28px 30px; font-size: 13px; color: #6B6152; max-width: 980px; }
+    </style>
+</head>
+<body>
+    <div class="sheet-bar">
+        <span class="sheet-tag">A-01 · PALETTE — SUY TỪ TẦN SỐ TỪ</span>
+        <span class="sheet-note">mỗi màu gắn với một "đồ vật" trong tài liệu gốc; không có từ chỉ màu trong đề nên màu là vật liệu của vật đó</span>
+    </div>
+    <div class="grid">
+        @for (var i = 0; i < roles.Count; i++)
+        {
+            var r = roles[i]!.AsObject();
+            var id = S(r["id"]);
+            var hex = S(r["hex"]);
+            var role = S(r["role"]);
+            var src = S(r["source"]);
+            var ev = S(r["evidence"]);
+            var swatchStyle = $"background:{hex}";
+            <div class="role @(i == 0 ? "big" : "")">
+                <div class="swatch" style="@swatchStyle"></div>
+                <div class="meta">
+                    <span class="name">@role</span>
+                    <span class="hex">@hex</span>
+                    <span class="src">vật liệu: @src</span>
+                    <span class="ev">từ: @ev</span>
+                </div>
+            </div>
+        }
+    </div>
+    <p class="note">
+        Cách suy: (1) đếm từ nội dung trong 3 tài liệu tiếng Anh gốc (bỏ từ quy trình như project/website/status);
+        (2) nhóm thành vật thể — heritage site = gạch đá rêu ngoài trời; programme/event = sơn mài đỏ, vàng lá;
+        gallery = giấy; history = mực. (3) lấy màu mà vật liệu đó xuất hiện trong thực tế.
+    </p>
+</body>
+</html>

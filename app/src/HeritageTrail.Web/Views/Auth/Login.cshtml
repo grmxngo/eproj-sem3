@@ -1,0 +1,31 @@
+@{
+    ViewData["Title"] = "Log in";
+    var returnUrl = ViewData["ReturnUrl"] as string;
+}
+<section class="auth-doc">
+    <p class="eyebrow">HeritageTrail · membership</p>
+    <h1>Log in</h1>
+    <p class="lede">Programme interests, invitations and queries — one place.</p>
+    <div class="auth-cols">
+        <div>
+            @if (ViewData["Error"] is string error)
+            {
+                <p class="form-error">@error</p>
+            }
+            <form method="post" action="/auth/login" class="stack form-mono form-f1">
+                @Html.AntiForgeryToken()
+                <input type="hidden" name="returnUrl" value="@returnUrl" />
+                <label>Email <input type="email" name="email" required /></label>
+                <label>Password <input type="password" name="password" required /></label>
+                <div class="action-row">
+                    <button class="btn btn-primary" type="submit">Log in</button>
+                </div>
+            </form>
+            <p class="small">Need an account? <a href="/auth/register">Register</a></p>
+        </div>
+        <aside class="auth-margin">
+            <img src="/images/preview/login.jpg" alt="Visitors at a site — preview" />
+            <p class="mono-note">Site visit — preview photo</p>
+        </aside>
+    </div>
+</section>

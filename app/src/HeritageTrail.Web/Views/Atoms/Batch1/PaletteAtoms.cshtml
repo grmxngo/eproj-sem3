@@ -1,0 +1,202 @@
+@using System.Text.Json.Nodes
+@using HeritageTrail.Web.Services
+@{
+    Layout = null;
+    var palettes = (JsonArray)ViewData["MockPalettes"]!;
+    string S(JsonNode? n, string fallback = "") => n is JsonValue v && v.GetValueKind() == System.Text.Json.JsonValueKind.String ? v.GetValue<string>() : fallback;
+    string Vars(JsonObject p)
+    {
+        var sb = new System.Text.StringBuilder();
+        foreach (var (k, v) in p["color"]!.AsObject())
+        {
+            if (v is JsonValue jv && jv.GetValueKind() == System.Text.Json.JsonValueKind.String)
+            {
+                sb.Append("--color-").Append(CssNaming.Kebab(k)).Append(':').Append(jv.GetValue<string>()).Append(';');
+            }
+        }
+        return sb.ToString();
+    }
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>A-01 · Palette applied to small atoms</title>
+    <style>
+        *, *::before, *::after { box-sizing: border-box; }
+        body { margin: 0; background: #ffffff; color: #1b1b1b; font-family: 'Segoe UI', system-ui, sans-serif; }
+        .sheet-bar { display: flex; gap: 14px; align-items: baseline; padding: 12px 24px; border-bottom: 1px solid #e3e3e3; }
+        .sheet-tag { font-family: Consolas, monospace; font-size: 13px; color: #8a5a00; letter-spacing: .06em; }
+        .sheet-note { font-size: 13px; color: #666; }
+        .grid { display: grid; grid-template-columns: 150px repeat(4, 1fr); }
+        .lbl { padding: 12px 16px; border-bottom: 1px solid #ececec; font-size: 12px; color: #555; display: flex; align-items: center; }
+        .colhead { padding: 12px 16px; border-bottom: 1px solid #d8d8d8; border-left: 1px solid #eee; font-size: 13px; font-weight: 600; }
+        .colhead small { display: block; font-weight: 400; color: #777; font-size: 11px; margin-top: 2px; }
+        .cell { padding: 12px 16px; border-bottom: 1px solid #ececec; border-left: 1px solid #eee; display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+        .mini { display: flex; gap: 10px; align-items: center; }
+        .mini .sq { width: 26px; height: 26px; border-radius: 3px; border: 1px solid var(--color-border); }
+        .mini .t { font-family: Consolas, monospace; font-size: 10px; color: var(--color-ink-muted); }
+        .linepart { flex: 1; min-width: 40px; height: 1px; background: var(--color-border); }
+    </style>
+</head>
+<body>
+    <div class="sheet-bar">
+        <span class="sheet-tag">A-01 · PALETTE — ATOM NHỎ</span>
+        <span class="sheet-note">chỉ những chỗ màu xuất hiện: nút, link, chữ, chip, input, ngày, nhãn, đường kẻ, trạng thái — không hero/không layout</span>
+    </div>
+    <div class="grid">
+        <div class="lbl">atom</div>
+        @foreach (var item in palettes)
+        {
+            var p = item!.AsObject();
+            <div class="colhead">@S(p["id"]) — @S(p["name"])</div>
+        }
+
+        <div class="lbl">Nền / bề mặt</div>
+        @foreach (var item in palettes)
+        {
+            var p = item!.AsObject();
+            var style = Vars(p);
+            <div class="cell" style="@style;background:var(--color-bg)">
+                <div class="mini">
+                    <div class="sq" style="background:var(--color-bg)"></div>
+                    <div class="sq" style="background:var(--color-surface)"></div>
+                    <div class="sq" style="background:var(--color-surface-raised)"></div>
+                    <div class="sq" style="background:var(--color-border)"></div>
+                </div>
+            </div>
+        }
+
+        <div class="lbl">Nút chính</div>
+        @foreach (var item in palettes)
+        {
+            var style = Vars(item!.AsObject());
+            <div class="cell" style="@style;background:var(--color-bg)">
+                <span class="btn btn-primary">Plan a visit</span>
+            </div>
+        }
+
+        <div class="lbl">Nút phụ</div>
+        @foreach (var item in palettes)
+        {
+            var style = Vars(item!.AsObject());
+            <div class="cell" style="@style;background:var(--color-bg)">
+                <span class="btn btn-ghost">Explore sites</span>
+            </div>
+        }
+
+        <div class="lbl">Link</div>
+        @foreach (var item in palettes)
+        {
+            var style = Vars(item!.AsObject());
+            <div class="cell" style="@style;background:var(--color-bg)">
+                <a href="#" style="color:var(--color-accent);font-size:13px;text-decoration:none">View details →</a>
+            </div>
+        }
+
+        <div class="lbl">Tiêu đề</div>
+        @foreach (var item in palettes)
+        {
+            var style = Vars(item!.AsObject());
+            <div class="cell" style="@style;background:var(--color-bg)">
+                <span style="font-family:var(--font-display);font-size:var(--fs-h3);color:var(--color-ink)">Nine centuries</span>
+            </div>
+        }
+
+        <div class="lbl">Chữ</div>
+        @foreach (var item in palettes)
+        {
+            var style = Vars(item!.AsObject());
+            <div class="cell" style="@style;background:var(--color-bg)">
+                <span style="font-size:var(--fs-small);color:var(--color-ink)">Brick towers from the 4th–13th centuries.</span>
+            </div>
+        }
+
+        <div class="lbl">Chữ mờ</div>
+        @foreach (var item in palettes)
+        {
+            var style = Vars(item!.AsObject());
+            <div class="cell" style="@style;background:var(--color-bg)">
+                <span style="font-size:var(--fs-small);color:var(--color-ink-muted)">UNESCO 1999 · Quảng Nam</span>
+            </div>
+        }
+
+        <div class="lbl">Chip</div>
+        @foreach (var item in palettes)
+        {
+            var style = Vars(item!.AsObject());
+            <div class="cell" style="@style;background:var(--color-bg)">
+                <span class="chip">Temples</span>
+            </div>
+        }
+
+        <div class="lbl">Ô tìm kiếm</div>
+        @foreach (var item in palettes)
+        {
+            var style = Vars(item!.AsObject());
+            <div class="cell" style="@style;background:var(--color-bg)">
+                <input type="search" placeholder="Search heritage sites" aria-label="Search"
+                       style="flex:1;min-width:9rem;padding:5px 8px;border:1px solid var(--color-border);border-radius:var(--radius-sm);background:var(--color-surface);color:var(--color-ink);font-size:12px" />
+            </div>
+        }
+
+        <div class="lbl">Ngày / số</div>
+        @foreach (var item in palettes)
+        {
+            var style = Vars(item!.AsObject());
+            <div class="cell" style="@style;background:var(--color-bg)">
+                <span style="font-family:var(--font-display);font-size:var(--fs-h3);color:var(--color-accent)">14</span>
+                <span style="font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--color-ink-muted)">lunar night</span>
+            </div>
+        }
+
+        <div class="lbl">Nhãn nhỏ</div>
+        @foreach (var item in palettes)
+        {
+            var style = Vars(item!.AsObject());
+            <div class="cell" style="@style;background:var(--color-bg)">
+                <span style="font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--color-accent)">NEXT UP</span>
+            </div>
+        }
+
+        <div class="lbl">Nhấn phụ</div>
+        @foreach (var item in palettes)
+        {
+            var style = Vars(item!.AsObject());
+            <div class="cell" style="@style;background:var(--color-bg)">
+                <span class="chip" style="border-color:var(--color-accent-alt);color:var(--color-accent-alt)">Event</span>
+            </div>
+        }
+
+        <div class="lbl">Đường kẻ</div>
+        @foreach (var item in palettes)
+        {
+            var style = Vars(item!.AsObject());
+            <div class="cell" style="@style;background:var(--color-bg)">
+                <span class="linepart"></span>
+            </div>
+        }
+
+        <div class="lbl">Trạng thái</div>
+        @foreach (var item in palettes)
+        {
+            var style = Vars(item!.AsObject());
+            <div class="cell" style="@style;background:var(--color-bg)">
+                <span style="font-size:12px;color:var(--color-success)">✓ Registered</span>
+                <span style="font-size:12px;color:var(--color-warning)">• Few spots</span>
+                <span style="font-size:12px;color:var(--color-danger)">! Invalid email</span>
+            </div>
+        }
+
+        <div class="lbl">Khối nền</div>
+        @foreach (var item in palettes)
+        {
+            var style = Vars(item!.AsObject());
+            <div class="cell" style="@style;background:var(--color-bg)">
+                <div style="padding:6px 10px;background:var(--color-surface);border:1px solid var(--color-border);border-radius:3px;font-size:11px;color:var(--color-ink)">surface · 1px border</div>
+            </div>
+        }
+    </div>
+</body>
+</html>

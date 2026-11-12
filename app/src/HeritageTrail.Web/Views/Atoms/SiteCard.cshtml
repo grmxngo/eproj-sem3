@@ -1,0 +1,69 @@
+@using HeritageTrail.Web.Services
+@inject TokenProvider Tokens
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>A-33 · Site card (3 variants)</title>
+<style>@Html.Raw(Tokens.ToCss())</style>
+<link rel="stylesheet" href="/css/atoms.css" />
+<style>
+    body { margin: 0; background: var(--color-bg); color: var(--color-ink); font-family: var(--font-body); padding: 28px; }
+    .sheet-bar { display: flex; gap: 14px; align-items: baseline; margin-bottom: 20px; font-size: var(--fs-small); color: var(--color-ink-muted); }
+    .sheet-bar b { font-family: var(--font-mono); color: var(--color-accent); font-weight: 400; }
+    .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; align-items: start; }
+    .variant { display: flex; flex-direction: column; gap: 10px; }
+    .variant > .label { font-family: var(--font-mono); font-size: 11px; color: var(--color-ink-muted); letter-spacing: .06em; }
+    .site-card { display: flex; flex-direction: column; }
+    .card-media { background: linear-gradient(150deg, var(--color-surface-raised), var(--color-surface)); }
+    .v2 .site-card { flex-direction: row; }
+    .v2 .card-media { width: 42%; min-height: 150px; }
+    .v2 .card-body { width: 58%; }
+    .v3 .site-card { flex-direction: row; align-items: center; gap: var(--space-sm); background: transparent; border: 0; border-bottom: 1px solid var(--color-border); border-radius: 0; padding: var(--space-sm) 0; }
+    .v3 .thumb { width: 64px; height: 64px; flex: none; background: linear-gradient(150deg, var(--color-surface-raised), var(--color-surface)); }
+    .v3 .arrow { margin-left: auto; color: var(--color-accent); font-size: var(--fs-small); }
+</style>
+</head>
+<body>
+<div class="sheet-bar"><b>A-33 · SITE CARD</b><span>3 biến thể — chọn 1</span></div>
+<div class="grid">
+    <div class="variant v1">
+        <span class="label">S1 · Image top</span>
+        <a class="site-card" href="#">
+            <div class="card-media" style="aspect-ratio:16/9"></div>
+            <div class="card-body">
+                <p class="card-kicker">Temples · Cambodia</p>
+                <h2 class="card-title">Angkor Wat</h2>
+                <p class="card-fact">12th-c. temple; the moat runs 190 m wide.</p>
+            </div>
+        </a>
+    </div>
+    <div class="variant v2">
+        <span class="label">S2 · Image left (row)</span>
+        <a class="site-card" href="#">
+            <div class="card-media"></div>
+            <div class="card-body">
+                <p class="card-kicker">Monuments · Jordan</p>
+                <h2 class="card-title">Petra</h2>
+                <p class="card-fact">Nabataean capital; the Treasury is 39 m tall.</p>
+            </div>
+        </a>
+    </div>
+    <div class="variant v3">
+        <span class="label">S3 · Text-forward (thumb)</span>
+        <a class="site-card" href="#">
+            <div class="thumb"></div>
+            <div class="card-body">
+                <p class="card-kicker">Monuments · Peru</p>
+                <h2 class="card-title">Machu Picchu</h2>
+                <p class="card-fact">15th-c. Inca estate; 2,430 m ridge.</p>
+            </div>
+            <span class="arrow">→</span>
+        </a>
+    </div>
+</div>
+</body>
+</html>

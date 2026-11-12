@@ -1,0 +1,27 @@
+@using HeritageTrail.Web.Models
+@{
+    ViewData["Title"] = "Admin · Sites";
+    var sites = (List<HeritageSite>)ViewData["Sites"]!;
+}
+<div class="section-head">
+    <h2>Sites</h2>
+    <a href="/admin/sites/new">+ New site</a>
+</div>
+<table class="table">
+    <tr><th>Name</th><th>Category</th><th>Location</th><th class="actions"></th></tr>
+    @foreach (var s in sites)
+    {
+        <tr>
+            <td>@s.Name</td>
+            <td>@s.Category</td>
+            <td>@s.Location</td>
+            <td class="actions">
+                <a href="/admin/sites/@s.Id/edit" style="color:var(--color-accent)">Edit</a>
+                <form method="post" action="/admin/sites/@s.Id/delete" style="display:inline">
+                    @Html.AntiForgeryToken()
+                    <button class="inline-del" type="submit">Delete</button>
+                </form>
+            </td>
+        </tr>
+    }
+</table>

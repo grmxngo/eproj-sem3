@@ -16,6 +16,6 @@ The website shows **only information the visitor does not already know**. No fil
 - "This is a …", "Welcome to our website", "We have many …", "Click here", "Beautiful", "Amazing".
 - Any sentence that restates the heading.
 
-## Example page copy (staging, English)
-- Hero: "Huế Imperial City: 143 buildings surviving of 600; the Meridian Gate opens at 07:00, last entry 17:00."
-- Event chip: "Hội An Lantern Night — 14th lunar night · An Hội, Hội An".
+## Example page copy (staging, English, worldwide heritage)
+- Hero: "Angkor Wat: built in the 12th century under Suryavarman II; the moat runs 190 m wide; five towers stand at the centre."
+- Event chip: "Temple walk — Angkor · Sat 07:00".

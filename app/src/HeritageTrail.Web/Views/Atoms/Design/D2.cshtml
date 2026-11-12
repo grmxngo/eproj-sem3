@@ -1,0 +1,73 @@
+@{ Layout = null; }
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>D2 — Museum green</title>
+<style>
+    * { box-sizing: border-box; }
+    body { margin: 0; background: #12352c; color: #f2ead8; font-family: 'Bahnschrift', 'Segoe UI', sans-serif; }
+    a { color: inherit; text-decoration: none; }
+    header { display: flex; justify-content: space-between; align-items: center; padding: 22px 48px; border-bottom: 1px solid rgb(242 234 216 / .18); }
+    .brand { font-size: 20px; letter-spacing: .16em; text-transform: uppercase; }
+    nav { display: flex; gap: 26px; font-size: 12px; letter-spacing: .12em; text-transform: uppercase; color: rgb(242 234 216 / .7); }
+    .register { font-size: 11px; letter-spacing: .18em; text-transform: uppercase; color: #d8a13f; }
+    .hero { display: grid; grid-template-columns: 1.1fr .9fr; gap: 48px; padding: 64px 48px 40px; max-width: 1280px; margin: 0 auto; align-items: center; }
+    .eyebrow { font-size: 11px; letter-spacing: .22em; text-transform: uppercase; color: #d8a13f; margin: 0 0 18px; }
+    h1 { font-size: clamp(56px, 7vw, 104px); line-height: .9; letter-spacing: -.01em; text-transform: uppercase; margin: 0 0 22px; font-weight: 600; }
+    .lede { font-size: 15px; line-height: 1.55; color: rgb(242 234 216 / .75); max-width: 40ch; margin: 0 0 26px; }
+    .actions { display: flex; gap: 18px; align-items: center; }
+    .btn { background: #d8a13f; color: #12352c; padding: 13px 24px; font-size: 11px; letter-spacing: .16em; text-transform: uppercase; }
+    .ghost { font-size: 11px; letter-spacing: .16em; text-transform: uppercase; border-bottom: 1px solid rgb(242 234 216 / .4); padding-bottom: 3px; }
+    .hero-img { Height: 520px; overflow: hidden; }
+    .hero-img img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .section { max-width: 1280px; margin: 0 auto; padding: 40px 48px 56px; }
+    .section h2 { font-size: 13px; letter-spacing: .2em; text-transform: uppercase; color: #d8a13f; margin: 0 0 18px; }
+    .event { display: grid; grid-template-columns: 56px 1fr auto; gap: 22px; align-items: baseline; padding: 16px 0; border-top: 1px solid rgb(242 234 216 / .18); }
+    .num { font-size: 13px; color: #d8a13f; letter-spacing: .1em; }
+    .title { font-size: 26px; letter-spacing: .01em; }
+    .meta { font-size: 12px; color: rgb(242 234 216 / .6); margin-top: 4px; }
+    .cta { font-size: 11px; letter-spacing: .16em; text-transform: uppercase; }
+    .sites { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; }
+    .site img { width: 100%; height: 220px; object-fit: cover; display: block; }
+    .site b { display: block; font-size: 22px; font-weight: 500; margin: 14px 0 4px; }
+    .site span { font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: rgb(242 234 216 / .6); }
+    footer { padding: 22px 48px; border-top: 1px solid rgb(242 234 216 / .18); font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: rgb(242 234 216 / .5); display: flex; justify-content: space-between; }
+</style>
+</head>
+<body>
+<header>
+    <a class="brand" href="#">HeritageTrail</a>
+    <nav><a href="#">Sites</a><a href="#">Events</a><a href="#">Gallery</a><a href="#">About</a></nav>
+    <a class="register" href="#">Register</a>
+</header>
+
+<section class="hero">
+    <div>
+        <p class="eyebrow">Worldwide · est. 2019</p>
+        <h1>Sites<br />Walks<br />Exhibitions</h1>
+        <p class="lede">We run heritage programmes on site — and publish what survives, when it opens, and how to reach it.</p>
+        <div class="actions"><a class="btn" href="#">See what's on</a><a class="ghost" href="#">Explore sites</a></div>
+    </div>
+    <div class="hero-img"><img src="/images/preview/hero.jpg" alt="Heritage landscape — preview placeholder" /></div>
+</section>
+
+<section class="section">
+    <h2>What's on</h2>
+    <div class="event"><span class="num">01</span><div><div class="title">Temple Walk — Angkor</div><div class="meta">Sat 07:00 · Angkor Wat west causeway</div></div><span class="cta">Interested →</span></div>
+    <div class="event"><span class="num">02</span><div><div class="title">Petra by Night</div><div class="meta">20:30 · The Siq, Petra</div></div><span class="cta">Interested →</span></div>
+</section>
+
+<section class="section" style="padding-top:0">
+    <h2>Sites</h2>
+    <div class="sites">
+        <a class="site" href="#"><img src="/images/preview/card1.jpg" alt="Angkor — preview" /><b>Angkor Wat</b><span>Temples · Cambodia</span></a>
+        <a class="site" href="#"><img src="/images/preview/card2.jpg" alt="Petra — preview" /><b>Petra</b><span>Monuments · Jordan</span></a>
+        <a class="site" href="#"><img src="/images/preview/card3.jpg" alt="Machu Picchu — preview" /><b>Machu Picchu</b><span>Monuments · Peru</span></a>
+    </div>
+</section>
+
+<footer><span>HeritageTrail</span><span>Preview — placeholder photos</span></footer>
+</body>
+</html>

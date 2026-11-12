@@ -1,0 +1,21 @@
+@using HeritageTrail.Web.Models
+@{
+    var about = (AboutPage)ViewData["Page"]!;
+    var pages = (List<AboutPage>)ViewData["Pages"]!;
+    ViewData["Title"] = about.Title;
+}
+<nav class="breadcrumb">
+    <a href="/">Home</a> / <a href="/about/what-we-do">About us</a> / <span>@about.Title</span>
+</nav>
+
+<article class="detail">
+    <h1 class="page-title">@about.Title</h1>
+    <p>@about.Content</p>
+</article>
+
+<div class="chips" style="margin: var(--space-lg) 0">
+    @foreach (var p in pages)
+    {
+        <a class="chip" href="/about/@p.Slug">@p.Title</a>
+    }
+</div>

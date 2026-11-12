@@ -1,0 +1,56 @@
+@using HeritageTrail.Web.Models
+@{
+    ViewData["Title"] = "My account";
+    var events = (List<Event>)ViewData["Events"]!;
+    var queries = (List<Query>)ViewData["Queries"]!;
+    var invitations = (List<Invitation>)ViewData["Invitations"]!;
+}
+<h1 class="page-title">My account</h1>
+
+<h2 class="section-title">My interests</h2>
+<ul class="account-list">
+    @foreach (var ev in events)
+    {
+        <li><a href="/events/@ev.Slug">@ev.Title</a> — @ev.StartDate.ToString("ddd dd MMM · HH:mm"), @ev.Venue</li>
+    }
+</ul>
+@if (events.Count == 0)
+{
+    <p class="empty">No interests yet — open a programme and press Interested.</p>
+}
+
+<h2 class="section-title">My queries</h2>
+<form method="post" action="/account/queries" class="stack" style="max-width: 34rem">
+    @Html.AntiForgeryToken()
+    <label>Subject <input name="subject" required /></label>
+    <label>Message <textarea name="message" rows="3" required></textarea></label>
+    <button class="btn btn-primary" type="submit">Send query</button>
+</form>
+<ul class="account-list">
+    @foreach (var q in queries)
+    {
+        <li>
+            <b>@q.Subject</b> — @q.Status
+            @if (!string.IsNullOrWhiteSpace(q.Reply))
+            {
+                <span> · Reply: @q.Reply</span>
+            }
+        </li>
+    }
+</ul>
+@if (queries.Count == 0)
+{
+    <p class="empty">No queries yet.</p>
+}
+
+<h2 class="section-title">My invitations</h2>
+<ul class="account-list">
+    @foreach (var i in invitations)
+    {
+        <li>@i.ToEmail — @i.SentAt.ToString("dd MMM yyyy")</li>
+    }
+</ul>
+@if (invitations.Count == 0)
+{
+    <p class="empty">No invitations sent yet — open a site and invite a friend.</p>
+}

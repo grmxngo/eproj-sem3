@@ -1,0 +1,78 @@
+@using HeritageTrail.Web.Services
+@inject TokenProvider Tokens
+@inject EnvironmentInfo Env
+@{
+    var title = ViewData["Title"] as string ?? "Admin";
+    var path = Context.Request.Path.Value ?? "/admin";
+    string On(string p) => p == "/admin"
+        ? (path == "/admin" ? "on" : "")
+        : (path.StartsWith(p, StringComparison.OrdinalIgnoreCase) ? "on" : "");
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>@title — HeritageTrail Admin</title>
+    <style>@Html.Raw(Tokens.ToCss())</style>
+    <link rel="stylesheet" href="/css/atoms.css" />
+    <style>
+        .admin-root { background: var(--color-bg); }
+        .admin-top { display: flex; justify-content: space-between; align-items: center; gap: 16px; background: var(--color-ink); color: var(--color-bg); padding: 12px 24px; font-size: var(--fs-small); }
+        .admin-brand { font-family: var(--font-display); font-size: var(--fs-h3); color: var(--color-bg); text-decoration: none; }
+        .admin-brand span { font-family: var(--font-mono); font-size: var(--fs-micro); letter-spacing: .12em; text-transform: uppercase; color: var(--color-accent-alt); margin-left: 8px; }
+        .admin-top-right { display: flex; gap: 16px; align-items: center; }
+        .admin-top-right a, .admin-top-right .linkbtn { color: var(--color-bg); text-decoration: none; opacity: .8; font-size: var(--fs-small); }
+        .admin-top-right .linkbtn { background: none; border: 0; cursor: pointer; font: inherit; }
+        .admin-top-right a:hover, .admin-top-right .linkbtn:hover { opacity: 1; }
+        .admin-shell { display: grid; grid-template-columns: 220px 1fr; min-height: calc(100vh - 54px); }
+        .admin-side { border-right: 1px solid var(--color-border); padding: var(--space-md); background: var(--color-surface); }
+        .admin-side nav { display: flex; flex-direction: column; gap: 2px; position: sticky; top: var(--space-md); }
+        .admin-side a { display: block; padding: 8px 10px; color: var(--color-ink-muted); text-decoration: none; border-left: 2px solid transparent; font-size: var(--fs-small); }
+        .admin-side a:hover { color: var(--color-ink); }
+        .admin-side a.on { border-left-color: var(--color-accent); color: var(--color-ink); background: var(--color-bg); }
+        .admin-main { padding: var(--space-lg); max-width: 1200px; }
+        .admin-main .section-head { margin-top: 0; }
+        .admin-main .table td, .admin-main .table th { padding: 10px; }
+        .admin-main .stat-cards { margin-bottom: var(--space-lg); }
+    </style>
+</head>
+<body class="admin-root">
+@if (Env.Badge is not null)
+{
+    <div class="env-badge">@Env.Badge</div>
+}
+<header class="admin-top">
+    <a class="admin-brand" href="/">HeritageTrail <span>admin</span></a>
+    <div class="admin-top-right">
+        <a href="/">View site</a>
+        <span>@User.Identity?.Name</span>
+        <form method="post" action="/auth/logout">
+            @Html.AntiForgeryToken()
+            <button class="linkbtn" type="submit">Log out</button>
+        </form>
+    </div>
+</header>
+<div class="admin-shell">
+    <aside class="admin-side">
+        <nav>
+            <a class="@On("/admin")" href="/admin">Dashboard</a>
+            <a class="@On("/admin/sites")" href="/admin/sites">Sites</a>
+            <a class="@On("/admin/events")" href="/admin/events">Events</a>
+            <a class="@On("/admin/about")" href="/admin/about">About pages</a>
+            <a class="@On("/admin/gallery")" href="/admin/gallery">Gallery</a>
+            <a class="@On("/admin/members")" href="/admin/members">Members</a>
+            <a class="@On("/admin/queries")" href="/admin/queries">Queries</a>
+            <a class="@On("/admin/contact")" href="/admin/contact">Contact</a>
+        </nav>
+    </aside>
+    <main class="admin-main">
+        @if (TempData["Notice"] is string notice)
+        {
+            <div class="notice">@notice</div>
+        }
+        @RenderBody()
+    </main>
+</div>
+</body>
+</html>

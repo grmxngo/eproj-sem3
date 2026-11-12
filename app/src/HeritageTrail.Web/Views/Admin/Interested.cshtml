@@ -1,0 +1,27 @@
+@using HeritageTrail.Web.Models
+@{
+    var ev = (Event)ViewData["Event"]!;
+    var users = (List<User>)ViewData["Users"]!;
+    var interests = (List<EventInterest>)ViewData["Interests"]!;
+    ViewData["Title"] = "Admin · Interested";
+}
+<div class="section-head">
+    <h2>Interested — @ev.Title</h2>
+    <a href="/admin/events">← Back to programmes</a>
+</div>
+<table class="table">
+    <tr><th>Name</th><th>Email</th><th>Recorded</th></tr>
+    @foreach (var u in users)
+    {
+        var i = interests.FirstOrDefault(x => x.UserId == u.Id);
+        <tr>
+            <td>@u.Name</td>
+            <td>@u.Email</td>
+            <td>@(i is null ? "" : i.CreatedAt.ToString("dd MMM yyyy HH:mm"))</td>
+        </tr>
+    }
+</table>
+@if (users.Count == 0)
+{
+    <p class="empty">No interests recorded yet.</p>
+}

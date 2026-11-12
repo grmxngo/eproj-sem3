@@ -1,0 +1,20 @@
+@using HeritageTrail.Web.Models
+@{
+    ViewData["Title"] = "Admin · About";
+    var pages = (List<AboutPage>)ViewData["Pages"]!;
+}
+<div class="section-head">
+    <h2>About pages</h2>
+    <span class="eyebrow" style="margin:0">6 fixed pages</span>
+</div>
+<table class="table">
+    <tr><th>Title</th><th>Slug</th><th class="actions"></th></tr>
+    @foreach (var p in pages)
+    {
+        <tr>
+            <td>@p.Title</td>
+            <td>@p.Slug</td>
+            <td class="actions"><a href="/admin/about/@p.Slug" style="color:var(--color-accent)">Edit</a></td>
+        </tr>
+    }
+</table>

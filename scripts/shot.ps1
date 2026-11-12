@@ -39,7 +39,10 @@ $args = @(
 )
 
 for ($i = 1; $i -le 3; $i++) {
-    & $brave @args 2>$null | Out-Null
+    $prev = $ErrorActionPreference
+    $ErrorActionPreference = "Continue"
+    & $brave @args 2>&1 | Out-Null
+    $ErrorActionPreference = $prev
     Start-Sleep -Milliseconds 800
     if (Test-Path $outPath) { break }
     "retry $i for $Url"

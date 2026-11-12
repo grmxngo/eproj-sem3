@@ -1,0 +1,18 @@
+@using HeritageTrail.Web.Models
+@{
+    var aboutPage = (AboutPage)ViewData["Page"]!;
+    ViewData["Title"] = "Admin · About page";
+}
+<div class="section-head">
+    <h2>Edit — @aboutPage.Title</h2>
+    <a href="/admin/about">← Back to About pages</a>
+</div>
+<form method="post" action="/admin/about/@aboutPage.Slug" class="stack admin-form">
+    @Html.AntiForgeryToken()
+    <label>Title <input name="title" value="@aboutPage.Title" required /></label>
+    <label>Content <textarea name="content" rows="6" required>@aboutPage.Content</textarea></label>
+    <div class="action-row">
+        <button class="btn btn-primary" type="submit">Save</button>
+        <a class="btn btn-ghost" href="/admin/about">Cancel</a>
+    </div>
+</form>

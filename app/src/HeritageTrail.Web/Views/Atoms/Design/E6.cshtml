@@ -1,0 +1,94 @@
+@{ Layout = null; }
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>E6 — Catalogue complete</title>
+<style>
+    * { box-sizing: border-box; }
+    body { margin: 0; background: #e9ece3; color: #15201a; font-family: 'Segoe UI', system-ui, sans-serif; }
+    a { color: inherit; text-decoration: none; }
+    header { display: flex; justify-content: space-between; align-items: center; padding: 16px 44px; border-bottom: 1px solid rgb(21 32 26 / .18); }
+    .brand { font-family: Georgia, serif; font-size: 22px; }
+    nav { display: flex; gap: 20px; font-size: 12px; color: rgb(21 32 26 / .7); }
+    .btn { display: inline-block; background: #b5311f; color: #fff; padding: 11px 18px; font-size: 11px; letter-spacing: .16em; text-transform: uppercase; }
+    .intro { display: flex; justify-content: space-between; align-items: flex-end; gap: 30px; padding: 44px 44px 18px; }
+    .kicker { font-size: 11px; letter-spacing: .24em; text-transform: uppercase; color: #b5311f; margin: 0 0 12px; }
+    h1 { font-family: Georgia, serif; font-size: clamp(40px, 5vw, 68px); line-height: 1; margin: 0; font-weight: 400; }
+    .meta { font-size: 12px; letter-spacing: .1em; text-transform: uppercase; color: rgb(21 32 26 / .6); text-align: right; line-height: 1.8; }
+    .strip { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; padding: 0 44px 26px; }
+    .strip figure { margin: 0; position: relative; }
+    .strip img { width: 100%; height: 180px; object-fit: cover; display: block; filter: grayscale(.15); }
+    .strip figcaption { position: absolute; left: 10px; bottom: 8px; font-size: 10px; letter-spacing: .1em; text-transform: uppercase; background: rgb(21 32 26 / .65); color: #e9ece3; padding: 3px 7px; }
+    .catalogue { display: grid; grid-template-columns: 220px 1fr; gap: 40px; padding: 6px 44px 26px; }
+    aside h2 { font-size: 10px; letter-spacing: .2em; text-transform: uppercase; color: rgb(21 32 26 / .55); margin: 0 0 10px; }
+    aside ul { list-style: none; margin: 0 0 26px; padding: 0; font-size: 14px; }
+    aside li { display: flex; justify-content: space-between; padding: 7px 0; border-bottom: 1px solid rgb(21 32 26 / .12); }
+    aside li b { font-weight: 400; color: #b5311f; font-size: 11px; }
+    aside .prog { font-size: 12px; line-height: 1.8; color: rgb(21 32 26 / .75); }
+    .rows .head { display: grid; grid-template-columns: 40px 1.5fr 1.3fr 100px 110px; gap: 14px; font-size: 10px; letter-spacing: .16em; text-transform: uppercase; color: rgb(21 32 26 / .55); padding-bottom: 8px; }
+    .row { display: grid; grid-template-columns: 40px 1.5fr 1.3fr 100px 110px; gap: 14px; padding: 13px 0; border-top: 1px solid rgb(21 32 26 / .16); align-items: baseline; font-size: 14px; }
+    .row .no { font-size: 11px; color: #b5311f; }
+    .row .name { font-family: Georgia, serif; font-size: 20px; }
+    .row .loc, .row .era, .row .cat { font-size: 12px; color: rgb(21 32 26 / .65); }
+    .eventsbar { display: flex; gap: 26px; align-items: center; background: #15201a; color: #e9ece3; padding: 15px 44px; font-size: 12px; flex-wrap: wrap; }
+    .eventsbar b { font-size: 10px; letter-spacing: .18em; text-transform: uppercase; color: #d97a5f; }
+    .eventsbar a { margin-left: auto; font-size: 10px; letter-spacing: .14em; text-transform: uppercase; border-bottom: 1px solid; }
+    footer { display: flex; justify-content: space-between; padding: 20px 44px; border-top: 1px solid rgb(21 32 26 / .18); font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: rgb(21 32 26 / .6); }
+</style>
+</head>
+<body>
+<header>
+    <a class="brand" href="#">HeritageTrail</a>
+    <nav><a href="#">Home</a><a href="#">Heritage Sites</a><a href="#">Explore</a><a href="#">About us</a><a href="#">Events</a><a href="#">Gallery</a></nav>
+    <a class="btn" href="#">Register</a>
+</header>
+
+<div class="intro">
+    <div>
+        <p class="kicker">Archive · 2026</p>
+        <h1>Heritage catalogue</h1>
+    </div>
+    <div class="meta">8 sites · 5 categories<br />4 continents · 4th c. BCE – 15th c. CE</div>
+</div>
+
+<div class="strip">
+    <figure><img src="/images/preview/card1.jpg" alt="Angkor preview" /><figcaption>Angkor Wat · Cambodia</figcaption></figure>
+    <figure><img src="/images/preview/card2.jpg" alt="Petra preview" /><figcaption>Petra · Jordan</figcaption></figure>
+    <figure><img src="/images/preview/card3.jpg" alt="Machu Picchu preview" /><figcaption>Machu Picchu · Peru</figcaption></figure>
+</div>
+
+<div class="catalogue">
+    <aside>
+        <h2>Categories</h2>
+        <ul>
+            <li><span>Temples</span><b>1</b></li>
+            <li><span>Monuments</span><b>3</b></li>
+            <li><span>Forts</span><b>1</b></li>
+            <li><span>Palaces</span><b>2</b></li>
+            <li><span>Museums</span><b>1</b></li>
+        </ul>
+        <h2>Programmes</h2>
+        <div class="prog">Sat 07:00 — Temple Walk<br />20:30 — Petra by Night<br />Sun 15:00 — Marble Talk</div>
+    </aside>
+    <div class="rows">
+        <div class="head"><span>No.</span><span>Site</span><span>Location</span><span>Era</span><span>Category</span></div>
+        <a class="row" href="#"><span class="no">01</span><span class="name">Angkor Wat</span><span class="loc">Siem Reap, Cambodia</span><span class="era">12th c.</span><span class="cat">Temples</span></a>
+        <a class="row" href="#"><span class="no">02</span><span class="name">Petra</span><span class="loc">Ma'an, Jordan</span><span class="era">4th c. BCE</span><span class="cat">Monuments</span></a>
+        <a class="row" href="#"><span class="no">03</span><span class="name">Machu Picchu</span><span class="loc">Cusco, Peru</span><span class="era">15th c.</span><span class="cat">Monuments</span></a>
+        <a class="row" href="#"><span class="no">04</span><span class="name">Taj Mahal</span><span class="loc">Agra, India</span><span class="era">1632–53</span><span class="cat">Monuments</span></a>
+        <a class="row" href="#"><span class="no">05</span><span class="name">The Great Wall</span><span class="loc">Northern China</span><span class="era">7th c. BCE</span><span class="cat">Forts</span></a>
+        <a class="row" href="#"><span class="no">06</span><span class="name">Forbidden City</span><span class="loc">Beijing, China</span><span class="era">1420</span><span class="cat">Palaces</span></a>
+    </div>
+</div>
+
+<div class="eventsbar">
+    <b>What's on</b>
+    <span>Sat 07:00 · Temple Walk — Angkor</span>
+    <span>20:30 · Petra by Night</span>
+    <a href="#">All events →</a>
+</div>
+
+<footer><span>HeritageTrail · worldwide</span><span>Preview — placeholder photos</span></footer>
+</body>
+</html>

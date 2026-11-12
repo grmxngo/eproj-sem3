@@ -6,7 +6,8 @@ Status: `pending` → `preview-sent` → `approved` → `in-code`
 
 | ID | Atom | Batch | Status | Notes |
 |---|---|---|---|---|
-| A-01 | Color system (3 directions) | 1 | preview-sent | rendered as hero/card slice, not flat swatches |
+| A-01a | Base (nền + chữ) | 1 | preview-sent | L1/L2/L3 — /atoms/batch1/base |
+| A-01b | Accent (màu nhấn) | 1 | pending | chờ chốt base |
 | A-02 | Typography (font pair + scale) | 1 | preview-sent | 3 options |
 | A-03 | Spacing scale (ladder) | 1 | preview-sent | clamp-based |
 | A-04 | Radius + elevation | 1 | preview-sent | 3 radius options |

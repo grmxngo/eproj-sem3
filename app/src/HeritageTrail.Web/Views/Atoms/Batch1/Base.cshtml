@@ -1,0 +1,66 @@
+@using System.Text.Json.Nodes
+@{
+    Layout = null;
+    var bases = (JsonArray)ViewData["Bases"]!;
+    string S(JsonNode? n, string fallback = "") => n is JsonValue v && v.GetValueKind() == System.Text.Json.JsonValueKind.String ? v.GetValue<string>() : fallback;
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>A-01a · Base (nền + chữ)</title>
+    <style>
+        *, *::before, *::after { box-sizing: border-box; }
+        body { margin: 0; background: #ffffff; font-family: 'Segoe UI', system-ui, sans-serif; color: #1b1b1b; }
+        .sheet-bar { display: flex; gap: 12px; align-items: baseline; padding: 10px 24px; border-bottom: 1px solid #e5e5e5; font-size: 13px; }
+        .sheet-tag { font-family: Consolas, monospace; color: #8a5a00; letter-spacing: .08em; }
+        .sheet-note { color: #666; }
+        .base-grid { display: grid; grid-template-columns: repeat(3, 1fr); }
+        .base-cell { border-right: 1px solid #e5e5e5; }
+        .base-cell:last-child { border-right: 0; }
+        .base-swatch {
+            min-height: 620px;
+            padding: 40px 36px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        .base-eyebrow { font-size: 12px; letter-spacing: .16em; text-transform: uppercase; margin: 0 0 10px; opacity: .75; }
+        .base-line { font-size: 27px; line-height: 1.25; margin: 0 0 18px; font-weight: 500; max-width: 20ch; }
+        .base-body { font-size: 15px; line-height: 1.5; margin: 0; opacity: .8; max-width: 30ch; }
+        .base-meta { font-family: Consolas, monospace; font-size: 11px; margin: 0; opacity: .7; }
+        .base-label { padding: 12px 24px; font-size: 13px; display: flex; gap: 10px; align-items: baseline; background: #fff; }
+        .base-label b { font-family: Consolas, monospace; color: #8a5a00; }
+    </style>
+</head>
+<body>
+    <div class="sheet-bar">
+        <span class="sheet-tag">A-01a · NỀN + CHỮ</span>
+        <span class="sheet-note">chỉ so sánh cặp nền/chữ — font, layout, component chưa phải quyết định ở bước này</span>
+    </div>
+    <div class="base-grid">
+        @foreach (var item in bases)
+        {
+            var b = item!.AsObject();
+            var id = S(b["id"]);
+            var name = S(b["name"]);
+            var desc = S(b["desc"]);
+            var bg = S(b["bg"]);
+            var ink = S(b["ink"]);
+            var swatchStyle = $"background:{bg};color:{ink}";
+            <div class="base-cell">
+                <div class="base-swatch" style="@swatchStyle">
+                    <div>
+                        <p class="base-eyebrow">@id · @name</p>
+                        <p class="base-line">Mỹ Sơn: chín thế kỷ tháp Chăm, một thung lũng</p>
+                        <p class="base-body">Tháp Chăm xây từ thế kỷ 4 đến 13; UNESCO công nhận năm 1999; cách Đà Nẵng 70 km về phía tây nam.</p>
+                    </div>
+                    <p class="base-meta">nền @bg · chữ @ink</p>
+                </div>
+                <div class="base-label"><b>@id</b><span>@desc</span></div>
+            </div>
+        }
+    </div>
+</body>
+</html>

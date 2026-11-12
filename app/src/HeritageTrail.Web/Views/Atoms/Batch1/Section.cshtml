@@ -1,0 +1,146 @@
+@using System.Text.Json.Nodes
+@using HeritageTrail.Web.Services
+@inject TokenProvider Tokens
+@{
+    Layout = null;
+    var p = (JsonObject)ViewData["Mock"]!;
+    var color = p["color"]!.AsObject();
+    var sb = new System.Text.StringBuilder();
+    foreach (var (k, v) in color)
+    {
+        if (v is JsonValue jv && jv.GetValueKind() == System.Text.Json.JsonValueKind.String)
+        {
+            sb.Append("--color-").Append(CssNaming.Kebab(k)).Append(':').Append(jv.GetValue<string>()).Append(';');
+        }
+    }
+    string S(JsonNode? n, string fallback = "") => n is JsonValue v && v.GetValueKind() == System.Text.Json.JsonValueKind.String ? v.GetValue<string>() : fallback;
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>@S(p["id"]) · @S(p["name"])</title>
+    <style>@Html.Raw(Tokens.ToCss())</style>
+    <style>:root{@Html.Raw(sb.ToString())}</style>
+    <link rel="stylesheet" href="/css/atoms.css" />
+    <style>
+        .band {
+            background: var(--color-ink); color: var(--color-bg);
+            border-radius: var(--radius-md); padding: var(--space-lg);
+            margin: var(--space-lg) 0;
+        }
+        .band h2 { font-family: var(--font-display); font-weight: 400; margin: 0 0 var(--space-sm); color: var(--color-bg); }
+        .band .event-row { background: transparent; border-color: color-mix(in srgb, var(--color-bg) 22%, transparent); }
+        .band .event-title { color: var(--color-bg); }
+        .band .event-meta { color: color-mix(in srgb, var(--color-bg) 68%, transparent); }
+        .band .event-day { color: var(--color-accent-alt); }
+        .band .event-cta { color: var(--color-accent-alt); }
+        .atoms-row {
+            display: flex; gap: var(--space-md); align-items: center; flex-wrap: wrap;
+            padding: var(--space-md) 0; border-top: 1px solid var(--color-border); border-bottom: 1px solid var(--color-border);
+            margin: var(--space-md) 0 var(--space-lg);
+        }
+        .atoms-row input {
+            padding: 5px 8px; border: 1px solid var(--color-border); border-radius: var(--radius-sm);
+            background: var(--color-surface); color: var(--color-ink); font: inherit; font-size: var(--fs-small);
+        }
+        .atoms-row a { color: var(--color-accent); font-size: var(--fs-small); text-decoration: none; }
+        .sites { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-md); }
+        .about-strip { display: flex; justify-content: space-between; align-items: center; gap: var(--space-md); padding: var(--space-lg) 0; border-top: 1px solid var(--color-border); }
+        .about-strip h2 { font-family: var(--font-display); font-weight: 400; margin: 0 0 var(--space-2xs); font-size: var(--fs-h2); }
+        .about-strip p { margin: 0; color: var(--color-ink-muted); font-size: var(--fs-small); }
+    </style>
+</head>
+<body>
+    <div class="specimen-bar">
+        <span class="spec-id">@S(p["id"]) · @S(p["name"])</span>
+        <span class="spec-desc">@S(p["desc"]) · dữ liệu mẫu · logo placeholder</span>
+    </div>
+
+    <div class="page">
+        <header class="site-head">
+            <a class="wordmark" href="#">HeritageTrail</a>
+            <nav class="nav-stub" aria-label="Primary">
+                <a href="#">Home</a>
+                <a href="#">Heritage Sites</a>
+                <a href="#">Explore</a>
+                <a href="#">About us</a>
+                <a href="#">Events</a>
+                <a href="#">Gallery</a>
+                <a class="nav-register" href="#">REGISTER</a>
+            </nav>
+        </header>
+
+        <section class="hero">
+            <div class="hero-copy">
+                <p class="eyebrow">HeritageTrail · Vietnam</p>
+                <h1 class="display">Heritage sites and programmes</h1>
+                <p class="lede">Walks, talks and exhibitions across Vietnam — and the sites behind them.</p>
+                <div class="action-row">
+                    <a class="btn btn-primary" href="#">See what's on</a>
+                    <a class="btn btn-ghost" href="#">Explore sites</a>
+                </div>
+            </div>
+        </section>
+
+        <section class="band">
+            <h2>Upcoming programmes</h2>
+            <div class="event-list">
+                <article class="event-row">
+                    <div class="event-date"><span class="event-day">Sat</span><span class="event-month">07:00</span></div>
+                    <div class="event-body"><h3 class="event-title">Cham Tower Walk — Mỹ Sơn</h3></div>
+                    <span class="event-cta">Interested</span>
+                </article>
+                <article class="event-row">
+                    <div class="event-date"><span class="event-day">14</span><span class="event-month">lunar night</span></div>
+                    <div class="event-body"><h3 class="event-title">Lantern Night — Hội An</h3></div>
+                    <span class="event-cta">Interested</span>
+                </article>
+            </div>
+        </section>
+
+        <div class="atoms-row">
+            <a class="btn btn-primary" href="#">Plan a visit</a>
+            <a href="#">View details →</a>
+            <span class="chip">Temples</span>
+            <input type="search" placeholder="Search heritage sites" aria-label="Search" />
+            <span style="font-family:var(--font-display);font-size:var(--fs-h3);color:var(--color-accent)">14</span>
+        </div>
+
+        <section>
+            <div class="section-head" style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:var(--space-md)">
+                <h2 style="font-family:var(--font-display);font-weight:400;margin:0;font-size:var(--fs-h2)">Featured sites</h2>
+                <a href="#" style="color:var(--color-accent);font-size:var(--fs-small);text-decoration:none">Explore all →</a>
+            </div>
+            <div class="sites">
+                <article class="site-card">
+                    <div class="card-media" aria-hidden="true"></div>
+                    <div class="card-body"><p class="card-kicker">Temples</p><h2 class="card-title">Mỹ Sơn Sanctuary</h2></div>
+                </article>
+                <article class="site-card">
+                    <div class="card-media" aria-hidden="true"></div>
+                    <div class="card-body"><p class="card-kicker">Palaces</p><h2 class="card-title">Hoàng thành Thăng Long</h2></div>
+                </article>
+                <article class="site-card">
+                    <div class="card-media" aria-hidden="true"></div>
+                    <div class="card-body"><p class="card-kicker">Monuments</p><h2 class="card-title">Cố đô Huế</h2></div>
+                </article>
+            </div>
+        </section>
+
+        <section class="about-strip">
+            <div>
+                <h2>What we do</h2>
+                <p>Heritage walks, exhibitions and awareness programmes — with the sites behind them.</p>
+            </div>
+            <a class="btn btn-ghost" href="#">About us</a>
+        </section>
+
+        <footer class="site-foot" style="padding-left:0;padding-right:0">
+            <span>HeritageTrail · walks &amp; exhibitions</span>
+            <span class="foot-links"><a href="#">Contact</a><a href="#">Register</a></span>
+        </footer>
+    </div>
+</body>
+</html>

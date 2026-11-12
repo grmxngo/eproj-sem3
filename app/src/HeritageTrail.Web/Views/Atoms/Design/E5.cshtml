@@ -1,0 +1,56 @@
+@{ Layout = null; }
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>E5 — Cinematic film</title>
+<style>
+    * { box-sizing: border-box; }
+    body { margin: 0; background: #0f0f0f; color: #f2ead9; font-family: 'Segoe UI', system-ui, sans-serif; }
+    a { color: inherit; text-decoration: none; }
+    header { display: flex; justify-content: space-between; align-items: center; padding: 16px 34px; border-bottom: 1px solid rgb(242 234 217 / .14); }
+    .brand { font-family: Georgia, serif; font-size: 22px; }
+    nav { display: flex; gap: 20px; font-size: 12px; color: rgb(242 234 217 / .65); }
+    .btn { background: #d9a441; color: #0f0f0f; padding: 10px 18px; font-size: 11px; letter-spacing: .14em; text-transform: uppercase; }
+    .film { position: relative; height: 620px; overflow: hidden; }
+    .film img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .film::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, rgb(15 15 15 / .1) 30%, rgb(15 15 15 / .92) 90%); }
+    .cap { position: absolute; left: 34px; right: 34px; bottom: 34px; z-index: 2; }
+    .chapter { font-size: 11px; letter-spacing: .24em; text-transform: uppercase; color: #d9a441; margin: 0 0 12px; }
+    .cap h1 { font-family: Georgia, serif; font-size: clamp(44px, 5.5vw, 84px); line-height: .98; margin: 0 0 14px; font-weight: 400; }
+    .cap p { font-size: 15px; color: rgb(242 234 217 / .75); max-width: 46ch; margin: 0 0 20px; }
+    .stills { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; padding: 12px 34px; }
+    .still { position: relative; }
+    .still img { width: 100%; height: 210px; object-fit: cover; display: block; }
+    .still figcaption { position: absolute; left: 10px; bottom: 10px; font-size: 10px; letter-spacing: .1em; text-transform: uppercase; background: rgb(15 15 15 / .7); padding: 4px 8px; }
+    .cta { display: flex; align-items: center; justify-content: space-between; gap: 20px; background: #d9a441; color: #0f0f0f; padding: 18px 34px; }
+    .cta h2 { font-family: Georgia, serif; font-weight: 400; font-size: 26px; margin: 0; }
+    .cta a { background: #0f0f0f; color: #f2ead9; padding: 11px 18px; font-size: 11px; letter-spacing: .14em; text-transform: uppercase; }
+</style>
+</head>
+<body>
+<header>
+    <a class="brand" href="#">HeritageTrail</a>
+    <nav><a href="#">Home</a><a href="#">Heritage Sites</a><a href="#">Explore</a><a href="#">About us</a><a href="#">Events</a><a href="#">Gallery</a></nav>
+    <a class="btn" href="#">Register</a>
+</header>
+<section class="film">
+    <img src="/images/preview/hero.jpg" alt="Preview photograph" />
+    <div class="cap">
+        <p class="chapter">Chapter 01 · Angkor, Cambodia</p>
+        <h1>Nine centuries under the forest</h1>
+        <p>The temple's moat runs 190 m wide; the outer gallery carries more than a kilometre of reliefs. Walk it on Saturday, 07:00.</p>
+        <div style="display:flex;gap:16px;align-items:center"><a class="btn" href="#">See what's on</a><a href="#" style="font-size:11px;letter-spacing:.14em;text-transform:uppercase;border-bottom:1px solid rgb(242 234 217 / .4);padding-bottom:3px">Explore sites →</a></div>
+    </div>
+</section>
+<div class="stills">
+    <figure class="still"><img src="/images/preview/card1.jpg" alt="Angkor preview" /><figcaption>Temple Walk — Angkor · Sat 07:00</figcaption></figure>
+    <figure class="still"><img src="/images/preview/card2.jpg" alt="Petra preview" /><figcaption>Petra by Night · 20:30</figcaption></figure>
+    <figure class="still"><img src="/images/preview/card3.jpg" alt="Machu Picchu preview" /><figcaption>Sunrise Walk — Machu Picchu · Sun 05:30</figcaption></figure>
+</div>
+<div class="cta">
+    <h2>Join a programme at a site</h2>
+    <a href="#">Register</a>
+</div>
+</body>
+</html>

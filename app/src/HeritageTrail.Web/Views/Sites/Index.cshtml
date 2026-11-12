@@ -1,0 +1,39 @@
+@using HeritageTrail.Web.Models
+@{
+    ViewData["Title"] = "Heritage Sites";
+    var sites = (List<HeritageSite>)ViewData["Sites"]!;
+    var categories = (List<Category>)ViewData["Categories"]!;
+    var q = ViewData["Q"] as string;
+    var cat = ViewData["Cat"] as string;
+}
+<form class="searchbar" method="get" action="/heritage-sites">
+    <input type="search" name="q" value="@q" placeholder="Search sites or locations" aria-label="Search heritage sites" />
+    <button class="btn btn-primary" type="submit">Search</button>
+</form>
+
+<div class="chips" style="margin: var(--space-md) 0">
+    <a class="chip" href="/heritage-sites">All</a>
+    @foreach (var c in categories)
+    {
+        <a class="chip" href="/heritage-sites?cat=@Uri.EscapeDataString(c.Name)">@c.Name</a>
+    }
+</div>
+
+<div class="cards">
+    @foreach (var s in sites)
+    {
+        <a class="site-card" href="/heritage-sites/@s.Slug">
+            <div class="card-media" aria-hidden="true"></div>
+            <div class="card-body">
+                <p class="card-kicker">@s.Category</p>
+                <h2 class="card-title">@s.Name</h2>
+                <p class="card-fact">@s.Location</p>
+            </div>
+        </a>
+    }
+</div>
+
+@if (sites.Count == 0)
+{
+    <p class="empty">No heritage site found for this search.</p>
+}

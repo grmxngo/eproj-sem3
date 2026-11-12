@@ -1,0 +1,17 @@
+@{
+    var formStyle = ViewData["FormStyle"] as string ?? "f1";
+}
+@if (ViewData["Error"] is string error)
+{
+    <p class="form-error">@error</p>
+}
+<form method="post" action="/auth/register" class="stack form-mono form-@formStyle">
+    @Html.AntiForgeryToken()
+    <label>Full name <input name="name" required /></label>
+    <label>Email <input type="email" name="email" required /></label>
+    <label>Password (8+ characters) <input type="password" name="password" minlength="8" required /></label>
+    <div class="action-row">
+        <button class="btn btn-primary" type="submit">Register</button>
+    </div>
+</form>
+<p class="small">Already registered? <a href="/auth/login">Log in</a></p>

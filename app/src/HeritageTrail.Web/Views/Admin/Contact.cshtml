@@ -1,0 +1,40 @@
+@using HeritageTrail.Web.Models
+@{
+    ViewData["Title"] = "Admin · Contact";
+    var info = ViewData["Info"] as ContactInfo;
+    var messages = (List<ContactMessage>)ViewData["Messages"]!;
+}
+<div class="section-head">
+    <h2>Contact info</h2>
+</div>
+<form method="post" action="/admin/contact" class="stack admin-form">
+    @Html.AntiForgeryToken()
+    <label>Address <input name="address" value="@info?.Address" /></label>
+    <label>Phone <input name="phone" value="@info?.Phone" /></label>
+    <label>Email <input name="email" value="@info?.Email" /></label>
+    <label>Note <input name="note" value="@info?.Note" /></label>
+    <div class="action-row">
+        <button class="btn btn-primary" type="submit">Save contact info</button>
+    </div>
+</form>
+
+<div class="section-head">
+    <h2>Messages</h2>
+    <span class="eyebrow" style="margin:0">@messages.Count messages</span>
+</div>
+<table class="table">
+    <tr><th>Name</th><th>Email</th><th>Message</th><th>Date</th></tr>
+    @foreach (var m in messages)
+    {
+        <tr>
+            <td>@m.Name</td>
+            <td>@m.Email</td>
+            <td>@m.Message</td>
+            <td>@m.CreatedAt.ToString("dd MMM yyyy HH:mm")</td>
+        </tr>
+    }
+</table>
+@if (messages.Count == 0)
+{
+    <p class="empty">No messages yet.</p>
+}
