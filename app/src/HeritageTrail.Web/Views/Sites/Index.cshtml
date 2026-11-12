@@ -8,6 +8,7 @@
     var cat = ViewData["Cat"] as string;
     var imgs = new[] { "/images/preview/card1.jpg", "/images/preview/card2.jpg", "/images/preview/card3.jpg", "/images/preview/hero.jpg" };
     var hasLead = sites.Count > 0 && string.IsNullOrWhiteSpace(q) && string.IsNullOrWhiteSpace(cat);
+    string ImgOf(HeritageSite s, int i) => s.Images.Count > 0 ? s.Images[0] : imgs[i % imgs.Length];
 }
 <section class="page-head">
     <p class="eyebrow">Explore · worldwide</p>
@@ -19,10 +20,14 @@
 {
     var lead = sites[0];
     <a class="lead-card" href="/heritage-sites/@lead.Slug">
-        <img src="/images/preview/hero.jpg" alt="@lead.Name — preview" />
+        <img src="@ImgOf(lead, 0)" alt="@lead.Name" />
         <div class="lead-overlay">
             <p class="eyebrow">Featured · @lead.Category · @lead.Location</p>
             <h2 class="lead-title">@lead.Name</h2>
+            @if (!string.IsNullOrWhiteSpace(lead.Video))
+            {
+                <p class="lead-fact">Footage available on the site page</p>
+            }
         </div>
     </a>
 }
@@ -50,7 +55,7 @@
                 <p class="card-kicker">@s.Category · @s.Location</p>
                 <h2 class="row-title">@s.Name</h2>
             </div>
-            <div class="thumb"><img src="@imgs[i % imgs.Length]" alt="@s.Name — preview" /></div>
+            <div class="thumb"><img src="@ImgOf(s, i)" alt="@s.Name" /></div>
         </a>
         i++;
     }
@@ -77,7 +82,7 @@
                     <p class="card-kicker">Associated · @s.Category · @s.Location</p>
                     <h2 class="row-title">@s.Name</h2>
                 </div>
-                <div class="thumb"><img src="@imgs[a % imgs.Length]" alt="@s.Name — preview" /></div>
+                <div class="thumb"><img src="@ImgOf(s, a)" alt="@s.Name" /></div>
             </a>
             a++;
         }

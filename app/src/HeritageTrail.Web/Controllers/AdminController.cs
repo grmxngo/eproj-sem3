@@ -75,7 +75,7 @@ public sealed class AdminController : Controller
     public async Task<IActionResult> SiteSave(
         string? id, string name, string? slug, string category, string location,
         string historicalBackground, string architectureSignificance,
-        string? culturalBackground, string? imagesCsv, string? factsText, bool isAssociated)
+        string? culturalBackground, string? imagesCsv, string? factsText, string? video, bool isAssociated)
     {
         if (string.IsNullOrWhiteSpace(name) || string.IsNullOrWhiteSpace(location))
         {
@@ -100,6 +100,7 @@ public sealed class AdminController : Controller
                 CulturalBackground = culturalBackground,
                 Images = images,
                 Facts = ParseFacts(factsText),
+                Video = string.IsNullOrWhiteSpace(video) ? null : video.Trim(),
                 IsAssociated = isAssociated
             });
             TempData["Notice"] = "Site created.";
@@ -118,6 +119,7 @@ public sealed class AdminController : Controller
                     .Set(s => s.CulturalBackground, culturalBackground)
                     .Set(s => s.Images, images)
                     .Set(s => s.Facts, ParseFacts(factsText))
+                    .Set(s => s.Video, string.IsNullOrWhiteSpace(video) ? null : video.Trim())
                     .Set(s => s.IsAssociated, isAssociated));
             TempData["Notice"] = "Site updated.";
         }

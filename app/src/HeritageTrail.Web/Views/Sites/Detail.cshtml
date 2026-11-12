@@ -3,16 +3,21 @@
     var site = (HeritageSite)ViewData["Site"]!;
     var events = (List<Event>)ViewData["Events"]!;
     ViewData["Title"] = site.Name;
-    var hero = site.Images.Count > 0 && !string.IsNullOrWhiteSpace(site.Images[0])
-        ? site.Images[0]
-        : "/images/preview/hero.jpg";
+    var hero = site.Images.Count > 0 ? site.Images[0] : "/images/preview/hero.jpg";
 }
 <nav class="breadcrumb">
     <a href="/">Home</a> / <a href="/heritage-sites">Heritage Sites</a> / <span>@site.Name</span>
 </nav>
 
 <section class="detail-hero">
-    <img src="@hero" alt="@site.Name" />
+    @if (!string.IsNullOrWhiteSpace(site.Video))
+    {
+        <video autoplay muted loop playsinline poster="@hero" src="@site.Video"></video>
+    }
+    else
+    {
+        <img src="@hero" alt="@site.Name" />
+    }
     <div class="hero-copy">
         <p class="eyebrow">@site.Category · @site.Location</p>
         <h1 class="display">@site.Name</h1>
@@ -91,3 +96,22 @@
         </div>
     </aside>
 </div>
+
+@if (site.Images.Count > 1)
+{
+    <section>
+        <div class="section-head">
+            <h2>Site images</h2>
+            <span class="eyebrow" style="margin:0">@site.Images.Count frames</span>
+        </div>
+        <div class="gallery-grid">
+            @for (var i = 1; i < site.Images.Count; i++)
+            {
+                <figure class="tile">
+                    <img class="art" src="@site.Images[i]" alt="@site.Name — image @(i + 1)" />
+                    <figcaption>@site.Name, @site.Location</figcaption>
+                </figure>
+            }
+        </div>
+    </section>
+}
