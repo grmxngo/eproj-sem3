@@ -1,7 +1,7 @@
 namespace HeritageTrail.Web.Services;
 
 /// <summary>Bound from Content/config/environments.json (SSOT for staging/prod split).</summary>
-public sealed class EnvironmentConfig
+public sealed record EnvironmentConfig
 {
     public int AppPort { get; init; }
     public int MongoPort { get; init; }

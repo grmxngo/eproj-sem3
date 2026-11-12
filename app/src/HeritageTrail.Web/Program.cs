@@ -13,6 +13,20 @@ var envConfig = builder.Configuration.GetSection($"environments:{envName}").Get<
     ?? throw new InvalidOperationException(
         $"Missing 'environments:{envName}' in Content/config/environments.json. Set ASPNETCORE_ENVIRONMENT to Staging or Production.");
 
+// Test/CI overrides (used by the integration test suite to point at an isolated Mongo).
+if (int.TryParse(Environment.GetEnvironmentVariable("HT_MONGO_PORT"), out var htMongoPort))
+    envConfig = envConfig with { MongoPort = htMongoPort };
+if (Environment.GetEnvironmentVariable("HT_DB_NAME") is { Length: > 0 } htDb)
+    envConfig = envConfig with { Database = htDb };
+if (Environment.GetEnvironmentVariable("HT_SEED") is { Length: > 0 } htSeed)
+    envConfig = envConfig with { SeedMode = htSeed };
+if (Environment.GetEnvironmentVariable("HT_UPLOADS") is { Length: > 0 } htUploads)
+    envConfig = envConfig with { Uploads = htUploads };
+if (Environment.GetEnvironmentVariable("HT_MAIL") is { Length: > 0 } htMail)
+    envConfig = envConfig with { MailOutbox = htMail };
+if (Environment.GetEnvironmentVariable("HT_ATOMS") is { Length: > 0 } htAtoms)
+    envConfig = envConfig with { AtomsGallery = bool.TryParse(htAtoms, out var a) && a };
+
 builder.Services.AddSingleton(envConfig);
 builder.Services.AddSingleton<EnvironmentInfo>();
 builder.Services.AddSingleton<TokenProvider>();

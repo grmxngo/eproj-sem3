@@ -33,8 +33,8 @@ Mapping every spec requirement (T01–T33) to the current implementation. Status
 | T27 | Send interest to take part in upcoming programmes | ✅ | `Interested` toggle (upcoming only, one per user); admin sees list per event |
 | T28 | Code comments, logic explained, proper documentation, project report (synopsis+code+docs) | 🟡 | Code commented; docs live in `docs/`; full project report (13 documents) pending |
 | T29 | Daily data backup | ✅ | scripts/backup.ps1 (mongodump per env → artifacts/backup); schedule note in docs |
-| T30 | 13 documentation items (Certificate … Final Check List) | ⬜ | To be produced from `docs/` + BA analysis |
-| T31 | 2 status mails (subjects STATUS:/DOUBT:/PROJECT SUBMISSION:) + feedback form | ⬜ | Process for the student; templates to be added in `docs/` |
+| T30 | 13 documentation items (Certificate … Final Check List) | ✅ | docs/eproject/ (01–13 + status-mail-template) |
+| T31 | 2 status mails (subjects STATUS:/DOUBT:/PROJECT SUBMISSION:) + feedback form | ✅ | docs/eproject/status-mail-template.md; forms in reference/ |
 | T32 | Software: MongoDB 6.0+, NodeJS 18.x, Python SDK 3.x, VS2022 Professional, Cloud Tool (either/combination) | ✅ | MongoDB 9.0.4 + .NET 10 (VS 2022 Professional family) |
 | T33 | Single ZIP: source + docs (login credentials) + DB backup; name = Batch/Group/Title; only one submission | ✅ | scripts/package.ps1 (source+docs+reference+latest backup → artifacts/HeritageTrail-submission-*.zip); credentials seeded |
 
