@@ -14,7 +14,8 @@
     var eventsStyle = ViewData["Events"] as string ?? "e3";
     var cardsStyle = ViewData["Cards"] as string ?? "s1";
     var heroSite = sites.FirstOrDefault(s => s.Slug == "angkor-wat");
-    string CardImage(HeritageSite s, int i) => s.Images.Count > 0 ? s.Images[0] : imgs[i % imgs.Length];
+    string Sm(string p) => p[..p.LastIndexOf('.')] + "-sm.jpg";
+    string CardImage(HeritageSite s, int i) => s.Images.Count > 0 ? Sm(s.Images[0]) : imgs[i % imgs.Length];
 }
 @if (hero == "b")
 {

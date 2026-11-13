@@ -8,7 +8,8 @@
     var cat = ViewData["Cat"] as string;
     var imgs = new[] { "/images/preview/card1.jpg", "/images/preview/card2.jpg", "/images/preview/card3.jpg", "/images/preview/hero.jpg" };
     var hasLead = sites.Count > 0 && string.IsNullOrWhiteSpace(q) && string.IsNullOrWhiteSpace(cat);
-    string ImgOf(HeritageSite s, int i) => s.Images.Count > 0 ? s.Images[0] : imgs[i % imgs.Length];
+    string Sm(string p) => p[..p.LastIndexOf('.')] + "-sm.jpg";
+    string ImgOf(HeritageSite s, int i) => s.Images.Count > 0 ? Sm(s.Images[0]) : imgs[i % imgs.Length];
 }
 <section class="page-head">
     <p class="eyebrow">Explore · worldwide</p>

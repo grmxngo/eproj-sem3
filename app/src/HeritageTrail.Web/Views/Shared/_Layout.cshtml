@@ -3,6 +3,14 @@
 @inject EnvironmentInfo Env
 @{
     var title = ViewData["Title"] as string ?? "HeritageTrail";
+    var desc = ViewData["Description"] as string ??
+        "Heritage walks, talks and exhibitions at heritage sites worldwide — facts, stories, footage and programmes.";
+}
+@functions {
+    string NavClass(string path) =>
+        path == "/"
+            ? (Context.Request.Path == "/" ? "on" : "")
+            : (Context.Request.Path.StartsWithSegments(path) ? "on" : "");
 }
 <!DOCTYPE html>
 <html lang="en">
@@ -10,6 +18,15 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>@title — HeritageTrail</title>
+    <meta name="description" content="@desc" />
+    <meta property="og:title" content="@title — HeritageTrail" />
+    <meta property="og:description" content="@desc" />
+    <meta property="og:type" content="website" />
+    <meta property="og:image" content="/images/preview/hero.jpg" />
+    @if (Env.IsStaging)
+    {
+        <meta name="robots" content="noindex" />
+    }
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <style>@Html.Raw(Tokens.ToCss())</style>
     <link rel="stylesheet" href="/css/atoms.css" />
@@ -27,6 +44,7 @@
     }
 </head>
 <body>
+<a class="skip-link" href="#main">Skip to content</a>
 @if (Env.Badge is not null)
 {
     <div class="env-badge">@Env.Badge</div>
@@ -42,12 +60,12 @@
         HeritageTrail
     </a>
     <nav class="nav-stub" aria-label="Primary">
-        <a href="/">Home</a>
-        <a href="/heritage-sites">Heritage Sites</a>
-        <a href="/explore">Explore</a>
-        <a href="/about/what-we-do">About us</a>
-        <a href="/events">Events</a>
-        <a href="/gallery">Gallery</a>
+        <a class="@NavClass("/")" href="/">Home</a>
+        <a class="@NavClass("/heritage-sites")" href="/heritage-sites">Heritage Sites</a>
+        <a class="@NavClass("/explore")" href="/explore">Explore</a>
+        <a class="@NavClass("/about")" href="/about/what-we-do">About us</a>
+        <a class="@NavClass("/events")" href="/events">Events</a>
+        <a class="@NavClass("/gallery")" href="/gallery">Gallery</a>
         @if (User.Identity?.IsAuthenticated == true)
         {
             <a class="nav-register" href="/account">ACCOUNT</a>
@@ -75,7 +93,7 @@
         }
     </div>
 </header>
-<main class="page">
+<main class="page" id="main">
     @if (TempData["Notice"] is string notice)
     {
         <div class="notice">@notice</div>

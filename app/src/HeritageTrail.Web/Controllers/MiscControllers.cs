@@ -123,3 +123,23 @@ public sealed class ExploreController : Controller
         return View();
     }
 }
+
+
+/// <summary>/error/{code} — designed error pages (404, 500, 403).</summary>
+public sealed class ErrorController : Controller
+{
+    [HttpGet("/error/{code:int}")]
+    public IActionResult Index(int code)
+    {
+        Response.StatusCode = code is >= 400 and <= 599 ? code : 500;
+        ViewData["Code"] = code;
+        ViewData["Title"] = "Error " + code;
+        ViewData["Message"] = code switch
+        {
+            404 => "The page you asked for does not exist on this site.",
+            403 => "You do not have permission to open this page.",
+            _ => "Something went wrong on our side. Please try again."
+        };
+        return View();
+    }
+}

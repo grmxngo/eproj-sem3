@@ -74,6 +74,9 @@ app.UseStaticFiles(new StaticFileOptions
 });
 
 app.UseRouting();
+
+app.UseExceptionHandler("/error/500");
+app.UseStatusCodePagesWithReExecute("/error/{0}");
 app.UseAuthentication();
 app.UseAuthorization();
 

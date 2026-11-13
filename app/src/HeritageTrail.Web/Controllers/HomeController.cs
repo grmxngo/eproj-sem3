@@ -28,6 +28,7 @@ public sealed class HomeController : Controller
         ViewData["Past"] = await _db.Events.Find(e => e.StartDate < now).SortByDescending(e => e.StartDate).Limit(1).ToListAsync();
         ViewData["Sites"] = await _db.Sites.Find(FilterDefinition<HeritageSite>.Empty).SortBy(s => s.Name).Limit(6).ToListAsync();
         ViewData["About"] = await _db.AboutPages.Find(FilterDefinition<AboutPage>.Empty).ToListAsync();
+        ViewData["Description"] = "Heritage walks, talks and exhibitions at heritage sites worldwide — what survives, when it opens, and the programmes we run there.";
 
         var heroKey = (hero ?? "c").ToLowerInvariant();
         ViewData["Hero"] = heroKey is "a" or "b" or "c" ? heroKey : "c";

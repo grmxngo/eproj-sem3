@@ -55,6 +55,7 @@ public sealed class SitesController : Controller
         var events = await _db.Events.Find(e => e.SiteId == site.Id).SortBy(e => e.StartDate).ToListAsync();
         ViewData["Site"] = site;
         ViewData["Events"] = events;
+        ViewData["Description"] = $"{site.Name} — {site.ArchitectureSignificance}";
         ViewData["Credits"] = LoadCredits();
         return View();
     }

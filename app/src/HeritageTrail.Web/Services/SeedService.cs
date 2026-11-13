@@ -357,12 +357,12 @@ public static class SeedService
 
         await db.AboutPages.InsertManyAsync(new[]
         {
-            new AboutPage { Slug = "what-we-do", Title = "What we do", Content = "We run heritage walks, talks and exhibitions at sites across the world, and publish the facts behind each site." },
-            new AboutPage { Slug = "mission", Title = "Our mission", Content = "Make heritage sites legible: what survives, what it means, and when you can see it." },
-            new AboutPage { Slug = "team", Title = "Our team", Content = "Six guides and two researchers; programme staff work with local site authorities." },
-            new AboutPage { Slug = "achievements", Title = "Our achievements", Content = "Since 2019: 64 walks, 12 exhibitions, 9 talks delivered with site partners." },
-            new AboutPage { Slug = "supporters", Title = "Our supporters", Content = "Programmes are supported by member contributions and site-partner in-kind support." },
-            new AboutPage { Slug = "read-about-us", Title = "Read about us", Content = "A short history of the organisation, its programmes and its partners." }
+            new AboutPage { Slug = "what-we-do", Title = "What we do", Content = "We plan and run heritage programmes — walks, talks and exhibitions — at sites across the world, working with local site authorities. Every programme is led by a guide or researcher who can explain what survives and why it matters." },
+            new AboutPage { Slug = "mission", Title = "Our mission", Content = "We make heritage sites legible: what survives, what it means, and when you can see it. We publish the facts and the stories behind each site so a visit is informed, not just photographed." },
+            new AboutPage { Slug = "team", Title = "Our team", Content = "Six guides and two researchers plan and lead the programmes; programme staff work with local site authorities on access and timing." },
+            new AboutPage { Slug = "achievements", Title = "Our achievements", Content = "Since 2019: 64 walks, 12 exhibitions and 9 talks delivered with site partners. Photography and footage for every site on this website are sourced and attributed." },
+            new AboutPage { Slug = "supporters", Title = "Our supporters", Content = "Programmes are supported by member contributions and site-partner in-kind support. Registered members record interest in any announced programme." },
+            new AboutPage { Slug = "read-about-us", Title = "Read about us", Content = "Founded as a small walking group, HeritageTrail grew into a cross-border programme organisation. The name comes from the trails our guides follow at each site." }
         });
 
         await db.ContactInfos.InsertOneAsync(new ContactInfo

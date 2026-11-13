@@ -378,3 +378,8 @@ a{ transition: color var(--motion-fast) var(--motion-ease); }
 
 }
 
+
+.nav-stub a.on { color: var(--color-ink); }
+.nav-stub a.on::after { right: 0; }
+.skip-link { position: absolute; left: -9999px; top: 0; z-index: 99; background: var(--color-ink); color: var(--color-bg); padding: var(--space-xs) var(--space-sm); font-family: var(--font-mono); font-size: var(--fs-small); }
+.skip-link:focus { left: 0; }
