@@ -10,8 +10,7 @@ prefersReduced.addEventListener?.('change', apply);
 // Auto-reveal: key blocks rise in on first view (opt out with data-reveal="off").
 const autoSelectors = [
     '.page-head', '.home-band', '.cards', '.site-index', '.gallery-grid',
-    '.footage-grid', '.auth-cols', '.detail-cols', '.home-cta', '.about-block',
-    '.home-categories', '.marquee'
+    '.footage-grid', '.auth-cols', '.detail-cols'
 ];
 if (!prefersReduced.matches) {
     document.querySelectorAll(autoSelectors.join(','))

@@ -21,15 +21,12 @@ public sealed class HomeController : Controller
     }
 
     [HttpGet("/")]
-    public async Task<IActionResult> Index(string? palette = null, string? type = null, string? radius = null, string? hero = null, string? events = null, string? cards = null, string? gallery = null)
+    public async Task<IActionResult> Index(string? palette = null, string? type = null, string? radius = null, string? hero = null, string? events = null, string? cards = null)
     {
         var now = DateTime.UtcNow;
         ViewData["Upcoming"] = await _db.Events.Find(e => e.StartDate >= now).SortBy(e => e.StartDate).Limit(4).ToListAsync();
         ViewData["Past"] = await _db.Events.Find(e => e.StartDate < now).SortByDescending(e => e.StartDate).Limit(1).ToListAsync();
         ViewData["Sites"] = await _db.Sites.Find(FilterDefinition<HeritageSite>.Empty).SortBy(s => s.Name).Limit(6).ToListAsync();
-        ViewData["Categories"] = await _db.Categories.Find(FilterDefinition<Category>.Empty).ToListAsync();
-        ViewData["About"] = await _db.AboutPages.Find(FilterDefinition<AboutPage>.Empty).ToListAsync();
-        ViewData["Gallery"] = await _db.Gallery.Find(FilterDefinition<GalleryItem>.Empty).Limit(4).ToListAsync();
 
         var heroKey = (hero ?? "c").ToLowerInvariant();
         ViewData["Hero"] = heroKey is "a" or "b" or "c" ? heroKey : "c";
@@ -39,9 +36,6 @@ public sealed class HomeController : Controller
 
         var cardsKey = (cards ?? "s1").ToLowerInvariant();
         ViewData["Cards"] = cardsKey is "s2" or "s3" ? cardsKey : "s1";
-
-        var galleryKey = (gallery ?? "g1").ToLowerInvariant();
-        ViewData["GalleryStyle"] = galleryKey is "g2" or "g3" ? galleryKey : "g1";
 
         if (!string.IsNullOrWhiteSpace(palette) && _env.IsStaging)
         {

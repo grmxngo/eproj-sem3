@@ -4,18 +4,12 @@
     var events = (List<Event>)ViewData["Upcoming"]!;
     var past = (List<Event>)ViewData["Past"]!;
     var sites = (List<HeritageSite>)ViewData["Sites"]!;
-    var categories = (List<Category>)ViewData["Categories"]!;
-    var about = (List<AboutPage>)ViewData["About"]!;
-    var gallery = (List<GalleryItem>)ViewData["Gallery"]!;
     var imgs = new[] { "/images/preview/card1.jpg", "/images/preview/card2.jpg", "/images/preview/card3.jpg", "/images/preview/hero.jpg" };
-    var nextEvent = events.FirstOrDefault();
     var hero = ViewData["Hero"] as string ?? "c";
     var eventsStyle = ViewData["Events"] as string ?? "e3";
     var cardsStyle = ViewData["Cards"] as string ?? "s1";
-    var gallStyle = ViewData["GalleryStyle"] as string ?? "g1";
-    var heroSite = sites.FirstOrDefault(s => s.Slug == "angkor-wat") ?? sites.FirstOrDefault();
+    var heroSite = sites.FirstOrDefault(s => s.Slug == "angkor-wat");
     string CardImage(HeritageSite s, int i) => s.Images.Count > 0 ? s.Images[0] : imgs[i % imgs.Length];
-    string GalleryImage(GalleryItem item, int i) => string.IsNullOrWhiteSpace(item.ImageUrl) ? imgs[i % imgs.Length] : item.ImageUrl;
 }
 @if (hero == "b")
 {
@@ -67,7 +61,7 @@ else
         </div>
         <div class="media">
             <img src="/images/preview/hero.jpg" alt="Heritage landscape" />
-            @if (nextEvent is not null)
+            @if (events.FirstOrDefault() is { } nextEvent)
             {
                 <div class="home-next">
                     <p class="card-kicker">Next up</p>
@@ -80,22 +74,9 @@ else
     </section>
 }
 
-<div class="marquee" aria-hidden="true">
-    <div class="marquee-track">
-        @foreach (var ev in events.Take(4))
-        {
-            <span>@ev.StartDate.ToString("ddd dd MMM") · @ev.Title</span>
-        }
-        @foreach (var ev in events.Take(4))
-        {
-            <span>@ev.StartDate.ToString("ddd dd MMM") · @ev.Title</span>
-        }
-    </div>
-</div>
-
 <section class="home-band">
     <div class="band-head">
-        <h2>What's on</h2>
+        <h2><span class="sec-num">01</span>What's on</h2>
         <a href="/events">All events →</a>
     </div>
     @if (eventsStyle == "e2")
@@ -105,7 +86,7 @@ else
             {
                 var ev = events[j];
                 <a class="band-card band-card-img" href="/events/@ev.Slug">
-                    <img src="@(ev.SiteId is null ? "/images/preview/hero.jpg" : heroSite?.Images.FirstOrDefault() ?? "/images/preview/hero.jpg")" alt="@ev.Title" />
+                    <img src="@(heroSite?.Images.FirstOrDefault() ?? "/images/preview/hero.jpg")" alt="@ev.Title" />
                     <span class="band-date">@ev.StartDate.ToString("ddd HH:mm")</span>
                     <h3>@ev.Title</h3>
                     <p>@ev.Venue</p>
@@ -144,11 +125,15 @@ else
             }
         </div>
     }
+    @if (past.FirstOrDefault() is { } recent)
+    {
+        <p class="band-note">Recently conducted — <a href="/events/@recent.Slug">@recent.Title</a> · @recent.Venue</p>
+    }
 </section>
 
 <section>
     <div class="section-head">
-        <h2>Featured sites</h2>
+        <h2><span class="sec-num">02</span>Featured sites</h2>
         <a href="/heritage-sites">Explore all sites →</a>
     </div>
     @if (cardsStyle == "s2")
@@ -208,7 +193,7 @@ else
 
 <section>
     <div class="section-head">
-        <h2>Footage</h2>
+        <h2><span class="sec-num">03</span>Footage</h2>
         <a href="/heritage-sites">All sites →</a>
     </div>
     <div class="footage-grid">
@@ -224,113 +209,5 @@ else
             <video autoplay muted loop playsinline poster="/images/sites/machu-picchu/img0.jpg" src="/videos/machu-picchu.webm"></video>
             <figcaption>Machu Picchu, Peru — footage</figcaption>
         </figure>
-    </div>
-</section>
-
-<section class="home-categories">
-    <div class="section-head">
-        <h2>Browse by category</h2>
-        <a href="/heritage-sites">All sites →</a>
-    </div>
-    <div class="chips">
-        @foreach (var c in categories)
-        {
-            <a class="chip" href="/heritage-sites?cat=@Uri.EscapeDataString(c.Name)">@c.Name</a>
-        }
-    </div>
-</section>
-
-<section class="about-block">
-    <div>
-        <h2>What we do</h2>
-        <p>Walks, talks and exhibitions at sites worldwide — plus the facts behind each site.</p>
-        <div class="chips" style="margin-top: var(--space-sm)">
-            @foreach (var a in about)
-            {
-                <a class="chip chip-sm" href="/about/@a.Slug">@a.Title</a>
-            }
-        </div>
-    </div>
-    <div class="about-actions">
-        <a class="btn btn-ghost" href="/about/what-we-do">About us</a>
-        <a class="btn btn-primary" href="/auth/register">Register</a>
-    </div>
-</section>
-
-@if (past.Count > 0)
-{
-    <section>
-        <div class="section-head">
-            <h2>Recently conducted</h2>
-            <a href="/events">All programmes →</a>
-        </div>
-        <div class="event-list">
-            @foreach (var ev in past)
-            {
-                <a class="event-row" href="/events/@ev.Slug">
-                    <div class="event-date"><span class="event-day">@ev.StartDate.ToString("MMM")</span><span class="event-month">@ev.StartDate.ToString("dd")</span></div>
-                    <div class="event-body"><h3 class="event-title">@ev.Title</h3><p class="event-meta">@ev.Venue</p></div>
-                    <span class="event-cta">View →</span>
-                </a>
-            }
-        </div>
-    </section>
-}
-
-<section>
-    <div class="section-head">
-        <h2>Gallery</h2>
-        <a href="/gallery">Gallery →</a>
-    </div>
-    @if (gallStyle == "g2")
-    {
-        <div class="gallery-grid gallery-overlay">
-            @{ var g2 = 0; }
-            @foreach (var item in gallery)
-            {
-                <figure class="tile tile-overlay">
-                    <img src="@GalleryImage(item, g2)" alt="@item.Caption" />
-                    <figcaption>@item.Caption</figcaption>
-                </figure>
-                g2++;
-            }
-        </div>
-    }
-    else if (gallStyle == "g3")
-    {
-        <div class="gallery-strip">
-            @{ var g3 = 0; }
-            @foreach (var item in gallery)
-            {
-                <figure class="tile">
-                    <img src="@GalleryImage(item, g3)" alt="@item.Caption" />
-                    <figcaption>@item.Caption</figcaption>
-                </figure>
-                g3++;
-            }
-        </div>
-    }
-    else
-    {
-        <div class="gallery-grid">
-            @{ var g = 0; }
-            @foreach (var item in gallery)
-            {
-                <figure class="tile">
-                    <img class="art" src="@GalleryImage(item, g)" alt="@item.Caption" />
-                    <figcaption>@item.Caption</figcaption>
-                </figure>
-                g++;
-            }
-        </div>
-    }
-</section>
-
-<section class="home-cta">
-    <h2>Join a programme</h2>
-    <p>Register to record interest, invite friends and ask questions — the organisation answers every query.</p>
-    <div class="action-row">
-        <a class="btn btn-primary" href="/auth/register">Register</a>
-        <a class="btn btn-ghost" href="/auth/login">Log in</a>
     </div>
 </section>
