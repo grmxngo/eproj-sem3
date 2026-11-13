@@ -30,3 +30,12 @@ Each row records an atom the user approved in chat. No atom goes into code witho
 | Auth layout | **A1 — Document + margin** (áp cho Register + Login) | auth-a1.png approved | 2026-11-11 |
 | Counts | Bỏ toàn bộ số đếm vô nghĩa trên homepage (user: "make no sense") | home-fold.png | 2026-11-11 |
 | Base/Palette exploratory (A-01a/b) | Superseded by H3 | decisions history above | 2026-11-11 |
+
+
+## Later decisions (product polish)
+- Homepage = 4 sections (hero → What's on → Featured sites → Footage); each section has exactly one job; marquee/categories/about/gallery/CTA removed as redundant.
+- Every site has a "The story" section (folklore/legend) — guided, non-redundant copy; intro block "Who we are" carries mission + achievements (editable in About).
+- Footer: dark brand band with 3 link columns and media credit line.
+- Motion/hover: button lift, card image zoom, band lift, chip invert, link underline — all token-timed, reduced-motion safe.
+- Error pages (404/500) designed in the same grammar; active nav state; meta description/OG; noindex on staging; skip-link.
+- Responsive: clamp fluid base + stack rules at 900/640 px (single pattern).

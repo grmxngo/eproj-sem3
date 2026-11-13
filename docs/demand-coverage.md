@@ -27,7 +27,7 @@ Mapping every spec requirement (T01–T33) to the current implementation. Status
 | T21 | Users can view pages but cannot edit content | ✅ | All write routes admin-only (`[Authorize(Roles="admin")]`) |
 | T22 | Register account; few personal and professional data | 🟡 | Register = name/email/password; professional fields removed per user request ("remove all optional") |
 | T23 | Search and view details of heritage sites | ✅ | Search by name/location (case-insensitive) |
-| T24 | View location, history, architecture, images, other details | 🟡 | All text sections live; images = preview placeholders until real photography is supplied |
+| T24 | View location, history, architecture, images, other details | ✅ | History/architecture/culture/story sections + 59 real Wikimedia photos (attributed) + footage on every site |
 | T25 | Send mail to invite friends to explore a site | ✅ | Invitation recorded + mail outbox (`.eml` per environment) |
 | T26 | Raise query | ✅ | Account → My queries → send; admin replies |
 | T27 | Send interest to take part in upcoming programmes | ✅ | `Interested` toggle (upcoming only, one per user); admin sees list per event |
