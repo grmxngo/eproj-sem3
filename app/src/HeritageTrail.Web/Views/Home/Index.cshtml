@@ -4,6 +4,11 @@
     var events = (List<Event>)ViewData["Upcoming"]!;
     var past = (List<Event>)ViewData["Past"]!;
     var sites = (List<HeritageSite>)ViewData["Sites"]!;
+    var about = (List<AboutPage>)ViewData["About"]!;
+    var mission = about.FirstOrDefault(a => a.Slug == "mission")?.Content
+        ?? "We make heritage sites legible.";
+    var achievements = about.FirstOrDefault(a => a.Slug == "achievements")?.Content
+        ?? "Walks, talks and exhibitions delivered with site partners.";
     var imgs = new[] { "/images/preview/card1.jpg", "/images/preview/card2.jpg", "/images/preview/card3.jpg", "/images/preview/hero.jpg" };
     var hero = ViewData["Hero"] as string ?? "c";
     var eventsStyle = ViewData["Events"] as string ?? "e3";
@@ -73,6 +78,16 @@ else
         </div>
     </section>
 }
+
+<section class="intro-block">
+    <p class="eyebrow">Who we are</p>
+    <h2>@mission</h2>
+    <p class="lede">@achievements</p>
+    <div class="action-row">
+        <a class="btn btn-ghost" href="/about/what-we-do">About us</a>
+        <a class="link-arrow" href="/explore">Explore the sites →</a>
+    </div>
+</section>
 
 <section class="home-band">
     <div class="band-head">

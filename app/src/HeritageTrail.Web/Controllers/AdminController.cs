@@ -75,7 +75,7 @@ public sealed class AdminController : Controller
     public async Task<IActionResult> SiteSave(
         string? id, string name, string? slug, string category, string location,
         string historicalBackground, string architectureSignificance,
-        string? culturalBackground, string? imagesCsv, string? factsText, string? video, bool isAssociated)
+        string? culturalBackground, string? story, string? imagesCsv, string? factsText, string? video, bool isAssociated)
     {
         if (string.IsNullOrWhiteSpace(name) || string.IsNullOrWhiteSpace(location))
         {
@@ -98,6 +98,7 @@ public sealed class AdminController : Controller
                 HistoricalBackground = historicalBackground,
                 ArchitectureSignificance = architectureSignificance,
                 CulturalBackground = culturalBackground,
+                Story = string.IsNullOrWhiteSpace(story) ? null : story.Trim(),
                 Images = images,
                 Facts = ParseFacts(factsText),
                 Video = string.IsNullOrWhiteSpace(video) ? null : video.Trim(),
@@ -117,6 +118,7 @@ public sealed class AdminController : Controller
                     .Set(s => s.HistoricalBackground, historicalBackground)
                     .Set(s => s.ArchitectureSignificance, architectureSignificance)
                     .Set(s => s.CulturalBackground, culturalBackground)
+                    .Set(s => s.Story, string.IsNullOrWhiteSpace(story) ? null : story.Trim())
                     .Set(s => s.Images, images)
                     .Set(s => s.Facts, ParseFacts(factsText))
                     .Set(s => s.Video, string.IsNullOrWhiteSpace(video) ? null : video.Trim())

@@ -47,11 +47,19 @@
             </section>
         }
 
+        @if (!string.IsNullOrWhiteSpace(site.Story))
+        {
+            <section>
+                <h2><span class="sec-num">04</span>The story</h2>
+                <p>@site.Story</p>
+            </section>
+        }
+
         @if (events.Count > 0)
         {
             <section class="home-band">
                 <div class="band-head">
-                    <h2><span class="sec-num">04</span>Programmes at this site</h2>
+                    <h2><span class="sec-num">05</span>Programmes at this site</h2>
                     <a href="/events">All events →</a>
                 </div>
                 <div class="band-grid band-grid-typo">
@@ -71,7 +79,7 @@
 
         <section id="invite">
             <div class="section-head">
-                <h2><span class="sec-num">05</span>Invite a friend</h2>
+                <h2><span class="sec-num">06</span>Invite a friend</h2>
             </div>
             @if (User.Identity?.IsAuthenticated == true)
             {

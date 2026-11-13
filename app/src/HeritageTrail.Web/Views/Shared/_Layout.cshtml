@@ -83,12 +83,43 @@
     @RenderBody()
 </main>
 <footer class="site-foot">
-    <span>HeritageTrail · heritage walks, talks and exhibitions</span>
-    <span class="foot-links">
-        <a href="/contact">Contact</a>
-        <a href="/about/what-we-do">About us</a>
-        <a href="/auth/register">Register</a>
-    </span>
+    <div class="foot-brand">
+        <a class="brand wordmark" href="/">
+            <svg class="logo-mark" viewBox="0 0 64 64" aria-hidden="true">
+                <path class="mark-path" d="M8 50 C 20 40, 12 26, 30 24 S 50 30, 56 12" />
+                <circle cx="8" cy="50" r="4" fill="currentColor" />
+                <circle cx="56" cy="12" r="4" fill="currentColor" />
+                <circle cx="32" cy="24" r="3" fill="var(--color-accent-alt)" />
+            </svg>
+            HeritageTrail
+        </a>
+        <p class="foot-mission">Walks, talks and exhibitions at heritage sites worldwide — the facts and the stories behind each place.</p>
+    </div>
+    <div class="foot-cols">
+        <div>
+            <p class="foot-head">Explore</p>
+            <a href="/heritage-sites">Heritage Sites</a>
+            <a href="/explore">Explore</a>
+            <a href="/events">Events</a>
+            <a href="/gallery">Gallery</a>
+        </div>
+        <div>
+            <p class="foot-head">Organisation</p>
+            <a href="/about/what-we-do">About us</a>
+            <a href="/about/achievements">Achievements</a>
+            <a href="/contact">Contact</a>
+        </div>
+        <div>
+            <p class="foot-head">Members</p>
+            <a href="/auth/register">Register</a>
+            <a href="/auth/login">Log in</a>
+            <a href="/account">My account</a>
+        </div>
+    </div>
+    <div class="foot-base">
+        <span>© 2026 HeritageTrail</span>
+        <span>Photography and footage: Wikimedia Commons — attribution on each site page</span>
+    </div>
 </footer>
 <script src="/js/motion.js"></script>
 </body>

@@ -36,6 +36,7 @@ public sealed class HeritageSite
     public string HistoricalBackground { get; set; } = "";
     public string ArchitectureSignificance { get; set; } = "";
     public string? CulturalBackground { get; set; }
+    public string? Story { get; set; }
     public List<string> Images { get; set; } = new();
     public List<string> Facts { get; set; } = new();
     public string? Video { get; set; }

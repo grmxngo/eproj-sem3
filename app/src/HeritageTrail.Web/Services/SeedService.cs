@@ -219,6 +219,37 @@ public static class SeedService
                 Facts = new() { "Greek city founded 10th c. BCE", "Library of Celsus built c. 110 CE", "UNESCO World Heritage since 2015" }
             }
         };
+
+        // The story attached to each site (folklore/legend — the human hook for the page).
+        var storiesBySlug = new Dictionary<string, string>
+        {
+            ["angkor-wat"] = "Khmer legend says the temple was raised in one night by a divine architect; the bas-reliefs of the Churning of the Sea of Milk show gods and demons sharing the world's first ocean.",
+            ["petra"] = "Bedouin tradition says Al-Khazneh held the pharaoh's treasure — visitors once fired bullets at the great urn, hoping to make gold fall.",
+            ["machu-picchu"] = "The Incas knew the site as Pachacuti's royal estate; Hiram Bingham's 1911 expedition introduced the 'lost city' to the world.",
+            ["taj-mahal"] = "Stories say Shah Jahan planned a mirror tomb in black marble across the river — cut short when his son imprisoned him at Agra Fort.",
+            ["great-wall"] = "In the Meng Jiangnü legend, a woman's tears brought the wall down when she learned her husband had died building it.",
+            ["forbidden-city"] = "Popular belief counts 9,999 and a half rooms — half a room short of heaven, so only the Jade Emperor could hold ten thousand.",
+            ["topkapi-palace"] = "For four centuries sultans ruled from Topkapi; the Harem's intrigue fuelled Ottoman histories and European novels alike.",
+            ["acropolis-museum"] = "The missing Parthenon sculptures remain the museum's open story — casts wait beside empty spaces for the originals' return from London.",
+            ["colosseum"] = "Medieval pilgrims said 'as long as the Colosseum stands, Rome stands' — the amphitheatre survived as fortress, quarry and shrine.",
+            ["chichen-itza"] = "At each equinox a serpent shadow crawls down El Castillo's stair — the Maya's Kukulkan descending to earth.",
+            ["giza"] = "Herodotus wrote that a hundred thousand men built Khufu's pyramid in twenty years; later estimates put the workforce in the tens of thousands.",
+            ["stonehenge"] = "Geoffrey of Monmouth had Merlin carry the stones from Ireland by magic; how the 25-tonne sarsens were moved is still debated.",
+            ["borobudur"] = "Pilgrims walk ten galleries that tell the life of Buddha — the journey from the base of desire to the summit of enlightenment.",
+            ["kinkaku-ji"] = "Yoshimitsu gilded his retirement villa until it glowed above the pond; his son converted it into a Zen temple in his memory.",
+            ["alhambra"] = "The last Nasrid king, Boabdil, is said to have sighed at the pass where he last saw Granada — the 'Moor's sigh'.",
+            ["rapa-nui"] = "Islanders say the moai walked from the quarry to their platforms; in 2012 researchers moved a replica standing to test the legend.",
+            ["sigiriya"] = "Kashyapa built his palace on the lion rock after seizing the throne; the great paws of a carved lion still guard the staircase.",
+            ["ephesus"] = "Ephesus held one of the Seven Wonders — the Temple of Artemis — and, by tradition, the tomb of John the Evangelist."
+        };
+        foreach (var site in sites)
+        {
+            if (storiesBySlug.TryGetValue(site.Slug, out var story))
+            {
+                site.Story = story;
+            }
+        }
+
         // Footage: any site with a downloaded clip at wwwroot/videos/{slug}.webm gets it.
         var webRoot = env.WebRootPath ?? Path.Combine(env.ContentRootPath, "wwwroot");
         foreach (var site in sites)

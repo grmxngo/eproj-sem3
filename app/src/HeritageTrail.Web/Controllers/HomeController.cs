@@ -27,6 +27,7 @@ public sealed class HomeController : Controller
         ViewData["Upcoming"] = await _db.Events.Find(e => e.StartDate >= now).SortBy(e => e.StartDate).Limit(4).ToListAsync();
         ViewData["Past"] = await _db.Events.Find(e => e.StartDate < now).SortByDescending(e => e.StartDate).Limit(1).ToListAsync();
         ViewData["Sites"] = await _db.Sites.Find(FilterDefinition<HeritageSite>.Empty).SortBy(s => s.Name).Limit(6).ToListAsync();
+        ViewData["About"] = await _db.AboutPages.Find(FilterDefinition<AboutPage>.Empty).ToListAsync();
 
         var heroKey = (hero ?? "c").ToLowerInvariant();
         ViewData["Hero"] = heroKey is "a" or "b" or "c" ? heroKey : "c";

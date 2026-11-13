@@ -8,6 +8,6 @@ for f in glob.glob(os.path.join(web, "Views", "**", "*.cshtml"), recursive=True)
 for f in glob.glob(os.path.join(web, "wwwroot", "js", "*.js")):
     texts += open(f, encoding="utf-8").read()
 unused = [c for c in classes if not re.search(r'\b' + re.escape(c) + r'\b', texts)]
-print("UNUSED:", len(unused))
-for c in unused:
-    print(c)
+print("UNUSED classes:", unused if unused else "none")
+hexs = re.findall(r'#[0-9a-fA-F]{3,8}\b', css)
+print("hardcoded hex in atoms.css:", len(hexs))
